@@ -1,0 +1,13 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/layer/transcription",
+  "@type": "sc:Layer",
+  "label": "Diplomatic Transcription",
+
+  "otherContent": [
+    "http://example.org/iiif/book1/list/l1",
+    "http://example.org/iiif/book1/list/l2",
+    "http://example.org/iiif/book1/list/l3",
+    "http://example.org/iiif/book1/list/l4"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/collection/c1",
+  "@type": "sc:Collection",
+
+  "within": "http://example.org/iiif/collection/top",
+  "startIndex": 0,
+  "next": "http://example.org/iiif/collection/c2",
+
+  "manifests": []
+}

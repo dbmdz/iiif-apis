@@ -1,0 +1,11 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/list/l1",
+  "@type": "sc:AnnotationList",
+
+  "startIndex": 0,
+  "within": "http://example.org/iiif/book1/layer/transcription",
+  "next": "http://example.org/iiif/book1/list/l2",
+
+  "resources": []
+}

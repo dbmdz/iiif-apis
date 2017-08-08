@@ -1,0 +1,9 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/collection/top",
+  "@type": "sc:Collection",
+  "label": "Example Big Collection",
+
+  "total": 9316290,
+  "first": "http://example.org/iiif/collection/c1"
+}

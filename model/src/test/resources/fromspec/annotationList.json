@@ -1,0 +1,28 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/list/p1",
+  "@type": "sc:AnnotationList",
+
+  "resources": [
+    {
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource":{
+        "@id": "http://example.org/iiif/book1/res/music.mp3",
+        "@type": "dctypes:Sound",
+        "format": "audio/mpeg"
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1"
+    },
+    {
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource":{
+        "@id": "http://example.org/iiif/book1/res/tei-text-p1.xml",
+        "@type": "dctypes:Text",
+        "format": "application/tei+xml"
+      },
+      "on": "http://example.org/iiif/book1/canvas/p1"
+    }
+  ]
+}

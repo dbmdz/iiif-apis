@@ -1,0 +1,51 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/manifest",
+  "@type": "sc:Manifest",
+
+  "sequences": [],
+
+  "structures": [
+    {
+      "@id": "http://example.org/iiif/book1/range/r0",
+      "@type": "sc:Range",
+      "label": "Table of Contents",
+      "viewingHint": "top",
+      "members": [
+        {
+          "@id": "http://example.org/iiif/book1/canvas/cover",
+          "@type": "sc:Canvas",
+          "label": "Front Cover"
+        },
+        {
+          "@id": "http://example.org/iiif/book1/range/r1",
+          "@type": "sc:Range",
+          "label": "Introduction",
+          "contentLayer": "http://example.org/iiif/book1/layer/introTexts"
+        },
+        {
+          "@id": "http://example.org/iiif/book1/canvas/backCover",
+          "@type": "sc:Canvas",
+          "label": "Back Cover"
+        }
+      ]
+    },
+    {
+      "@id": "http://example.org/iiif/book1/range/r1",
+      "@type": "sc:Range",
+      "label": "Introduction",
+      "ranges": ["http://example.org/iiif/book1/range/r1-1"],
+      "canvases": [
+        "http://example.org/iiif/book1/canvas/p1",
+        "http://example.org/iiif/book1/canvas/p2",
+        "http://example.org/iiif/book1/canvas/p3#xywh=0,0,750,300"
+      ]
+    },
+    {
+      "@id": "http://example.org/iiif/book1/range/r1-1",
+      "@type": "sc:Range",
+      "label": "Objectives and Scope",
+      "canvases": ["http://example.org/iiif/book1/canvas/p2#xywh=0,0,500,500"]
+    }
+  ]
+}

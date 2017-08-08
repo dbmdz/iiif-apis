@@ -1,0 +1,5 @@
+{
+  "@context": "http://iiif.io/api/annex/openannotation/context.json",
+  "@type": "iiif:ImageApiSelector",
+  "region": "50,50,1250,1850"
+}
