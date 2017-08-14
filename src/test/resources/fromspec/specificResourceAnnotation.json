@@ -1,0 +1,25 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/annotation/anno1",
+  "@type": "oa:Annotation",
+  "motivation": "sc:painting",
+  "resource": {
+    "@id": "http://www.example.org/iiif/book1-page1/50,50,1250,1850/full/0/default.jpg",
+    "@type": "oa:SpecificResource",
+    "full": {
+      "@id": "http://example.org/iiif/book1-page1/full/full/0/default.jpg",
+      "@type": "dctypes:Image",
+      "service": {
+        "@context": "http://iiif.io/api/image/2/context.json",
+        "@id": "http://example.org/iiif/book1-page1",
+        "profile": "http://iiif.io/api/image/2/level2.json"
+      }
+    },
+    "selector": {
+      "@context": "http://iiif.io/api/annex/openannotation/context.json",
+      "@type": "iiif:ImageApiSelector",
+      "region": "50,50,1250,1850"
+    }
+  },
+  "on": "http://www.example.org/iiif/book1/canvas/p1#xywh=0,0,600,900"
+}

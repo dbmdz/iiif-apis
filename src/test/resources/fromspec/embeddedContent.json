@@ -1,0 +1,13 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/annotation/p1",
+  "@type": "oa:Annotation",
+  "motivation": "sc:painting",
+  "resource":{
+    "@type": "cnt:ContentAsText",
+    "chars": "Here starts book one...",
+    "format": "text/plain",
+    "language": "en"
+  },
+  "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,150,500,25"
+}

@@ -1,0 +1,19 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/annotation/anno1",
+  "@type": "oa:Annotation",
+  "motivation": "sc:painting",
+  "stylesheet":{
+    "@type": ["oa:CssStyle", "cnt:ContentAsText"],
+    "chars": ".red {color: red;}"
+  },
+  "resource":{
+    "@type": "oa:SpecificResource",
+    "style": "red",
+    "full": {
+      "@type": "cnt:ContentAsText",
+      "chars": "Rubrics are Red, ..."
+    }
+  },
+  "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,150,500,30"
+}
