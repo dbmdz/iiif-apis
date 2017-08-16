@@ -2,6 +2,9 @@ package de.digitalcollections.iiif.model.sharedcanvas.annex;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
+import de.digitalcollections.core.model.api.MimeType;
+import de.digitalcollections.iiif.model.ImageContent;
+import de.digitalcollections.iiif.model.PropertyValue;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -10,6 +13,7 @@ import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.iiif.model.service.GenericService;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import org.json.JSONException;
@@ -59,5 +63,27 @@ public class SpecExamplesSerializationTest {
     service.addTile(tileInfo);
 
     assertSerializationEqualsSpec(service, "additionalInfo.json");
+  }
+
+  @Test
+  public void testEmbeddedService() throws Exception {
+    // FIXME: We had to modify the spec example by adding a @context to the logo service
+    //        We should instead find a way to avoid duplicate @contexts in the tree
+    ImageService service = new ImageService("http://www.example.org/image-service/baseImage", ImageApiProfile.LEVEL_TWO);
+    service.addAttribution("Provided by Example Organization");
+    ImageContent logo = new ImageContent("http://example.org/image-service/logo/full/full/0/default.png");
+    logo.addService(new ImageService("http://example.org/image-service/logo", ImageApiProfile.LEVEL_TWO));
+    logo.setFormat((MimeType) null);
+    service.addLogo(logo);
+    assertSerializationEqualsSpec(service, "embeddedService.json");
+  }
+
+  @Test
+  public void testGenericService() throws Exception {
+    GenericService service = new GenericService("http://example.org/ns/jsonld/context.json",
+                                                "http://example.org/service/example.json",
+                                                 "http://example.org/docs/example-service.html");
+    service.setLabel(new PropertyValue("Example Service"));
+    assertSerializationEqualsSpec(service, "genericService.json");
   }
 }
