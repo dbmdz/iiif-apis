@@ -1,0 +1,4 @@
+{
+  "@context" : "http://geojson.org/geojson-ld/geojson-context.jsonld",
+  "@id" : "http://www.example.org/geojson/paris.json"
+}

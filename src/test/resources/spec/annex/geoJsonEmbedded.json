@@ -1,0 +1,10 @@
+{
+  "@context" : "http://geojson.org/geojson-ld/geojson-context.jsonld",
+  "@id" : "http://www.example.org/geojson/paris.json",
+  "type": "Feature",
+  "properties": {"name": "Paris"},
+  "geometry": {
+    "type": "Point",
+    "coordinates" : [48.8567,2.3508]
+  }
+}

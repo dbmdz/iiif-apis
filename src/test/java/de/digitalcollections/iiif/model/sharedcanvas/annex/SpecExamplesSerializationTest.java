@@ -5,6 +5,7 @@ import com.google.common.io.Resources;
 import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.PropertyValue;
+import de.digitalcollections.iiif.model.annex.GeoService;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -15,7 +16,9 @@ import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.service.GenericService;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
+import org.geojson.Point;
 import org.json.JSONException;
 import org.junit.Before;
 import org.junit.Test;
@@ -85,5 +88,21 @@ public class SpecExamplesSerializationTest {
                                                  "http://example.org/docs/example-service.html");
     service.setLabel(new PropertyValue("Example Service"));
     assertSerializationEqualsSpec(service, "genericService.json");
+  }
+
+  @Test
+  public void testGeoJsonEmbedded() throws Exception {
+    org.geojson.Feature feat = new org.geojson.Feature();
+    feat.setProperty("name", "Paris");
+    feat.setGeometry(new Point(48.8567, 2.3508));
+    GeoService service = new GeoService("http://www.example.org/geojson/paris.json", feat);
+    assertSerializationEqualsSpec(service, "geoJsonEmbedded.json");
+  }
+
+  @Test
+  public void testGeoJsonExternal() throws Exception {
+    GeoService service = new GeoService();
+    service.setIdentifier(URI.create("http://www.example.org/geojson/paris.json"));
+    assertSerializationEqualsSpec(service, "geoJsonExternal.json");
   }
 }

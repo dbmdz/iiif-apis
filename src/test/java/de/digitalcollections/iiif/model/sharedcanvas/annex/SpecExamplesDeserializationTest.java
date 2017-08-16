@@ -3,6 +3,7 @@ package de.digitalcollections.iiif.model.sharedcanvas.annex;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.Profile;
+import de.digitalcollections.iiif.model.annex.GeoService;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -14,6 +15,7 @@ import de.digitalcollections.iiif.model.service.GenericService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+import org.geojson.Point;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -88,5 +90,23 @@ public class SpecExamplesDeserializationTest {
     assertThat(service.getProfiles())
         .containsExactly(new Profile(URI.create("http://example.org/docs/example-service.html")));
     assertThat(service.getLabelString()).isEqualTo("Example Service");
+  }
+
+  @Test
+  public void testGeoJsonEmbedded() throws Exception {
+    GeoService service = readFromResources("geoJsonEmbedded.json", GeoService.class);
+    assertThat(service.getFeature().getProperties())
+        .containsEntry("name", "Paris");
+    assertThat(service.getFeature().getGeometry())
+        .isInstanceOf(Point.class);
+    assertThat(((Point) service.getFeature().getGeometry()).getCoordinates())
+        .hasFieldOrPropertyWithValue("longitude", 48.8567)
+        .hasFieldOrPropertyWithValue("latitude", 2.3508);
+  }
+
+  @Test
+  public void testGeoJsonExternal() throws Exception {
+    GeoService service = readFromResources("geoJsonExternal.json", GeoService.class);
+    assertThat(service.getIdentifier().toString()).isEqualTo("http://www.example.org/geojson/paris.json");
   }
 }

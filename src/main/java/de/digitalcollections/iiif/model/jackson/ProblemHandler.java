@@ -19,6 +19,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.stream.StreamSupport;
+import org.geojson.Feature;
 
 public class ProblemHandler extends DeserializationProblemHandler {
   @Override
@@ -78,5 +79,14 @@ public class ProblemHandler extends DeserializationProblemHandler {
       }
     }
     return super.handleUnexpectedToken(ctxt, targetType, t, p, failureMsg);
+  }
+
+  @Override
+  public JavaType handleMissingTypeId(DeserializationContext ctxt, JavaType baseType, TypeIdResolver idResolver,
+      String failureMsg) throws IOException {
+    if (baseType.getRawClass() == Feature.class) {
+      return idResolver.typeFromId(ctxt, "Feature");
+    }
+    return super.handleMissingTypeId(ctxt, baseType, idResolver, failureMsg);
   }
 }
