@@ -1,0 +1,6 @@
+{
+  "@context": "http://example.org/ns/jsonld/context.json",
+  "@id": "http://example.org/service/example.json",
+  "profile": "http://example.org/docs/example-service.html",
+  "label": "Example Service"
+}

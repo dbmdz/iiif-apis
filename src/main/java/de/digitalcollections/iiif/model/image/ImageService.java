@@ -36,7 +36,7 @@ public class ImageService extends Service {
 
   @JsonCreator
   public ImageService(@JsonProperty("@id") String identifier) {
-    super(CONTEXT);
+    super(URI.create(CONTEXT));
     this.setIdentifier(URI.create(identifier));
   }
 

@@ -63,7 +63,7 @@ public class SpecExamplesDeserializationTest {
         .containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
     assertThat(manifest.getNavDate()).isEqualTo("1856-01-01T00:00:00Z");
 
-    assertThat(manifest.getServices().get(0).getContext())
+    assertThat(manifest.getServices().get(0).getContext().toString())
         .isEqualTo("http://example.org/ns/jsonld/context.json");
     assertThat(manifest.getServices().get(0))
         .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/service/example"));

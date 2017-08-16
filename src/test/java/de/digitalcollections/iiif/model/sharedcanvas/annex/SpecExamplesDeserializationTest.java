@@ -2,6 +2,7 @@ package de.digitalcollections.iiif.model.sharedcanvas.annex;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
+import de.digitalcollections.iiif.model.Profile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -9,7 +10,9 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.iiif.model.service.GenericService;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,5 +76,17 @@ public class SpecExamplesDeserializationTest {
         .isEqualTo("http://example.org/image-service/logo");
     assertThat(imageService.getProfiles())
         .containsExactly(ImageApiProfile.LEVEL_TWO);
+  }
+
+  @Test
+  public void testGenericService() throws Exception {
+    GenericService service = readFromResources("genericService.json", GenericService.class);
+    assertThat(service.getContext().toString())
+        .isEqualTo("http://example.org/ns/jsonld/context.json");
+    assertThat(service.getIdentifier().toString())
+        .isEqualTo("http://example.org/service/example.json");
+    assertThat(service.getProfiles())
+        .containsExactly(new Profile(URI.create("http://example.org/docs/example-service.html")));
+    assertThat(service.getLabelString()).isEqualTo("Example Service");
   }
 }

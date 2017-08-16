@@ -12,7 +12,7 @@ public class ContentSearchService extends Service {
 
   @JsonCreator
   public ContentSearchService(@JsonProperty("@id") String identifier) {
-    super(CONTEXT);
+    super(URI.create(CONTEXT));
     this.setIdentifier(URI.create(identifier));
     this.addProfile("http://iiif.io/api/search/1/search");
   }
