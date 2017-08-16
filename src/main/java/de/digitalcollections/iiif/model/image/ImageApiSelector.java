@@ -8,7 +8,6 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import java.net.URI;
 import java.util.Objects;
 
-// TODO: This should return typed Image API enums for quality and format
 // TODO: This should perform validation of the Image API parameters
 @JsonTypeName(ImageApiSelector.TYPE)
 public class ImageApiSelector implements Selector {

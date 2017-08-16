@@ -10,7 +10,6 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 public class Annotation extends Resource {
   public final static String TYPE = "oa:Annotation";
 
-  // TODO: Do we need a separate `AnnotationResource` type?
   private Resource resource;
   private Motivation motivation;
   private Resource on;
@@ -49,7 +48,6 @@ public class Annotation extends Resource {
   }
 
   public void setOn(Resource on) {
-    // TODO: Maybe we should slim this down during serialization in case we're sc:painting and on is a Canvas?
     this.on = on;
   }
 
