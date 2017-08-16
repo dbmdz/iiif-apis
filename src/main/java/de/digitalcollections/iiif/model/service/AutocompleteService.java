@@ -11,7 +11,7 @@ public class AutocompleteService extends Service {
   public AutocompleteService(@JsonProperty("@id") URI identifier) {
     // Doesn't need a context, since it is always a child of ContentSearchService
     super(null);
-    this.setProfile(URI.create(PROFILE));
+    this.addProfile(PROFILE);
     this.setIdentifier(identifier);
   }
 }

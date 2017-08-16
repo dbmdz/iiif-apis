@@ -21,4 +21,23 @@ public class Size {
   public int getHeight() {
     return height;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Size size = (Size) o;
+    return width == size.width && height == size.height;
+  }
+
+  @Override
+  public int hashCode() {
+    int result = width;
+    result = 31 * result + height;
+    return result;
+  }
 }

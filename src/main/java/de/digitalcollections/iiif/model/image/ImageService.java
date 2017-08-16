@@ -22,11 +22,14 @@ public class ImageService extends Service {
   private List<Service> services;
 
   @JsonCreator
-  public ImageService(@JsonProperty("@id") String identifier,
-                      @JsonProperty("profile") ImageApiProfile profile) {
+  public ImageService(@JsonProperty("@id") String identifier) {
     super(CONTEXT);
     this.setIdentifier(URI.create(identifier));
-    this.setProfile(profile.getIdentifier());
+  }
+
+  public ImageService(String identifier, ImageApiProfile profile) {
+    this(identifier);
+    this.addProfile(profile);
   }
 
   public Integer getWidth() {

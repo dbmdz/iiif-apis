@@ -1,0 +1,25 @@
+{
+  "@context" : "http://iiif.io/api/image/2/context.json",
+  "@id" : "http://www.example.org/image-service/abcd1234",
+  "protocol": "http://iiif.io/api/image",
+  "width" : 6000,
+  "height" : 4000,
+  "sizes" : [
+    {"width" : 150, "height" : 100},
+    {"width" : 600, "height" : 400},
+    {"width" : 3000, "height": 2000}
+  ],
+  "tiles": [
+    {"width" : 512, "scaleFactors" : [1,2,4,8,16]}
+  ],
+  "profile" : [
+    "http://iiif.io/api/image/2/level2.json",
+    {
+      "formats" : [ "gif", "pdf" ],
+      "qualities" : [ "color", "gray" ],
+      "supports" : [
+        "canonicalLinkHeader", "rotationArbitrary", "http://example.com/feature"
+      ]
+    }
+  ]
+}

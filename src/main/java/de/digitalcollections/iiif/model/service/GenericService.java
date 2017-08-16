@@ -12,6 +12,6 @@ public class GenericService extends Service {
 
   public GenericService(String context, String identifier, String profile) {
     super(context, identifier);
-    super.setProfile(profile);
+    super.addProfile(profile);
   }
 }

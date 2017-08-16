@@ -3,8 +3,13 @@ package de.digitalcollections.iiif.model.service;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.google.common.collect.Lists;
+import de.digitalcollections.iiif.model.Profile;
 import de.digitalcollections.iiif.model.PropertyValue;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @JsonPropertyOrder({"@context", "@id", "@type"})
 public abstract class Service {
@@ -14,7 +19,8 @@ public abstract class Service {
   @JsonProperty("@id")
   private URI identifier;
 
-  private URI profile;
+  @JsonProperty("profile")
+  private List<Profile> profiles;
 
   private PropertyValue label;
 
@@ -44,16 +50,24 @@ public abstract class Service {
     this.identifier = identifier;
   }
 
-  public URI getProfile() {
-    return profile;
+  public List<Profile> getProfiles() {
+    return profiles;
   }
 
-  public void setProfile(String profile) {
-    setProfile(URI.create(profile));
+  public void setProfiles(List<Profile> profile) {
+    this.profiles = profile;
   }
 
-  public void setProfile(URI profile) {
-    this.profile = profile;
+  public void addProfile(Profile first, Profile... rest) {
+    if (this.profiles == null) {
+      this.profiles = new ArrayList<>();
+    }
+    this.profiles.addAll(Lists.asList(first, rest));
+  }
+
+  public void addProfile(String first, String... rest) {
+    this.addProfile(new Profile(URI.create(first)),
+                    Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
   }
 
   public PropertyValue getLabel() {
