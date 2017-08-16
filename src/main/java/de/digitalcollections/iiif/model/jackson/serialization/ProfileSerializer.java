@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.jackson;
+package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

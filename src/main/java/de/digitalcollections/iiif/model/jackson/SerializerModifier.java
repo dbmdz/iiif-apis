@@ -7,6 +7,9 @@ import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.fasterxml.jackson.databind.ser.impl.IndexedListSerializer;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import de.digitalcollections.iiif.model.Profile;
+import de.digitalcollections.iiif.model.jackson.serialization.IiifIndexedListSerializer;
+import de.digitalcollections.iiif.model.jackson.serialization.ProfileSerializer;
+import de.digitalcollections.iiif.model.jackson.serialization.ResourceSerializer;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.jackson;
+package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonStreamContext;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Objects;
 
-class ResourceSerializer extends JsonSerializer<Resource> {
+public class ResourceSerializer extends JsonSerializer<Resource> {
 
   private final static String IIIF_CONTEXT =  "http://iiif.io/api/presentation/2/context.json";
   private final JsonSerializer<Object> defaultSerializer;

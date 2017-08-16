@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.jackson;
+package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,6 +25,8 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
       } else {
         return new Profile(URI.create(p.getValueAsString()));
       }
+    } else if (p.getCurrentToken() == JsonToken.START_OBJECT){
+      return p.getCodec().readValue(p, ImageApiProfile.class);
     } else {
       return (Profile) defaultDeserializer.deserialize(p, ctxt);
     }
