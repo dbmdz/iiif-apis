@@ -12,6 +12,7 @@
       "service": {
         "@context": "http://iiif.io/api/image/2/context.json",
         "@id": "http://example.org/iiif/book1-page1",
+        "protocol": "http://iiif.io/api/image",
         "profile": "http://iiif.io/api/image/2/level2.json"
       }
     },

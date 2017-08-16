@@ -21,6 +21,7 @@
     "service": {
       "@context": "http://iiif.io/api/image/2/context.json",
       "@id": "http://example.org/images/book1-page1",
+      "protocol": "http://iiif.io/api/image",
       "profile": "http://iiif.io/api/image/2/level1.json"
     }
   },
@@ -37,6 +38,7 @@
     "service": {
       "@context": "http://iiif.io/api/image/2/context.json",
       "@id": "http://example.org/service/inst1",
+      "protocol": "http://iiif.io/api/image",
       "profile": "http://iiif.io/api/image/2/level2.json"
     }
   },

@@ -60,6 +60,7 @@
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
                   "@id": "http://example.org/images/book1-page1",
+                  "protocol": "http://iiif.io/api/image",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 },
                 "height":2000,
@@ -99,6 +100,7 @@
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
                   "@id": "http://example.org/images/book1-page2",
+                  "protocol": "http://iiif.io/api/image",
                   "profile": "http://iiif.io/api/image/2/level1.json",
                   "height":8000,
                   "width":6000,
@@ -133,6 +135,7 @@
                 "service": {
                   "@context": "http://iiif.io/api/image/2/context.json",
                   "@id": "http://example.org/images/book1-page3",
+                  "protocol": "http://iiif.io/api/image",
                   "profile": "http://iiif.io/api/image/2/level1.json"
                 },
                 "height":2000,
