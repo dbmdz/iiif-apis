@@ -58,4 +58,20 @@ public class SpecExamplesDeserializationTest {
         Feature.ROTATION_ARBITRARY,
         new Feature("http://example.com/feature"));
   }
+
+  @Test
+  public void testEmbeddedService() throws Exception {
+    ImageService service = readFromResources("embeddedService.json", ImageService.class);
+    assertThat(service.getAttributionString()).isEqualTo("Provided by Example Organization");
+    assertThat(service.getLogos()).hasSize(1);
+    assertThat(service.getLogos().get(0).getIdentifier().toString())
+        .isEqualTo("http://example.org/image-service/logo/full/full/0/default.png");
+    assertThat(service.getLogos().get(0).getServices().get(0))
+        .isInstanceOf(ImageService.class);
+    ImageService imageService = (ImageService) service.getLogos().get(0).getServices().get(0);
+    assertThat(imageService.getIdentifier().toString())
+        .isEqualTo("http://example.org/image-service/logo");
+    assertThat(imageService.getProfiles())
+        .containsExactly(ImageApiProfile.LEVEL_TWO);
+  }
 }

@@ -1,0 +1,15 @@
+{
+  "@context" : "http://iiif.io/api/image/2/context.json",
+  "@id" : "http://www.example.org/image-service/baseImage",
+  "protocol" : "http://iiif.io/api/image",
+
+  "attribution" : "Provided by Example Organization",
+  "logo" : {
+    "@id": "http://example.org/image-service/logo/full/full/0/default.png",
+    "service": {
+      "@id": "http://example.org/image-service/logo",
+      "protocol": "http://iiif.io/api/image",
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  }
+}
