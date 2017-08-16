@@ -32,6 +32,7 @@ public class ImageApiProfile extends Profile {
       return mimeType;
     }
 
+    @JsonValue
     @Override
     public String toString() {
       return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
@@ -39,8 +40,9 @@ public class ImageApiProfile extends Profile {
   }
 
   public enum Quality {
-    COLOR, GRAY, BITRONAL, DEFAULT;
+    COLOR, GRAY, BITONAL, DEFAULT;
 
+    @JsonValue
     @Override
     public String toString() {
       return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
