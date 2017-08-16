@@ -13,8 +13,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ImageService extends Service {
+  // FIXME: This should be static, but for some reason Jackson ignores it if it's not
+  //        on the instance...
   @JsonProperty("protocol")
-  public static final String PROTOCOL = "http://iiif.io/api/image";
+  public final String PROTOCOL = "http://iiif.io/api/image";
+
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
 
