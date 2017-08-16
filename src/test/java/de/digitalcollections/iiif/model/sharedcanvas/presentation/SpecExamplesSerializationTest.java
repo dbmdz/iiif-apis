@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.sharedcanvas;
+package de.digitalcollections.iiif.model.sharedcanvas.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
@@ -22,6 +22,13 @@ import de.digitalcollections.iiif.model.openannotation.CssStyle;
 import de.digitalcollections.iiif.model.openannotation.SpecificResource;
 import de.digitalcollections.iiif.model.openannotation.SvgSelector;
 import de.digitalcollections.iiif.model.service.GenericService;
+import de.digitalcollections.iiif.model.sharedcanvas.AnnotationList;
+import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
+import de.digitalcollections.iiif.model.sharedcanvas.Collection;
+import de.digitalcollections.iiif.model.sharedcanvas.Layer;
+import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
+import de.digitalcollections.iiif.model.sharedcanvas.Range;
+import de.digitalcollections.iiif.model.sharedcanvas.Sequence;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -45,7 +52,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-        Resources.getResource("fromspec/" + filename), Charset.defaultCharset());
+        Resources.getResource("spec/presentation/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {

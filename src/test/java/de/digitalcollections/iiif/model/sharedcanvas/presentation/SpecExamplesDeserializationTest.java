@@ -1,10 +1,11 @@
-package de.digitalcollections.iiif.model.sharedcanvas;
+package de.digitalcollections.iiif.model.sharedcanvas.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.OtherContent;
+import de.digitalcollections.iiif.model.Profile;
 import de.digitalcollections.iiif.model.api.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
@@ -17,12 +18,17 @@ import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.openannotation.SpecificResource;
 import de.digitalcollections.iiif.model.openannotation.SvgSelector;
+import de.digitalcollections.iiif.model.sharedcanvas.AnnotationList;
+import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
+import de.digitalcollections.iiif.model.sharedcanvas.Collection;
+import de.digitalcollections.iiif.model.sharedcanvas.Layer;
+import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
+import de.digitalcollections.iiif.model.sharedcanvas.Range;
+import de.digitalcollections.iiif.model.sharedcanvas.Sequence;
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 import java.util.Locale;
 import org.assertj.core.api.Assertions;
-import org.assertj.core.api.Condition;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,9 +37,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SpecExamplesDeserializationTest {
   private ObjectMapper mapper;
 
-  private Condition<List<?>> HAS_ONE_ELEMENT = new Condition<>(
-      l -> l.size() == 1, "Has exactly one element.");
-
   @Before
   public void setup() {
     mapper = new IiifObjectMapper();
@@ -41,7 +44,7 @@ public class SpecExamplesDeserializationTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-        Resources.getResource("fromspec/" + filename), clz);
+        Resources.getResource("spec/presentation/" + filename), clz);
   }
 
   @Test
@@ -64,8 +67,8 @@ public class SpecExamplesDeserializationTest {
         .isEqualTo("http://example.org/ns/jsonld/context.json");
     assertThat(manifest.getServices().get(0))
         .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/service/example"));
-    assertThat(manifest.getServices().get(0))
-        .hasFieldOrPropertyWithValue("profile", URI.create("http://example.org/docs/example-service.html"));
+    assertThat(manifest.getServices().get(0).getProfiles())
+        .containsExactly(new Profile(URI.create("http://example.org/docs/example-service.html")));
 
     assertThat(manifest.getSeeAlso().get(0).getFormat())
         .isEqualTo(MimeType.fromTypename("application/marc"));
@@ -86,9 +89,6 @@ public class SpecExamplesDeserializationTest {
         .hasFieldOrPropertyWithValue("height", 2000);
     Assertions.assertThat(firstCanvas.getImages().get(0).getResource().getServices().get(0))
         .isInstanceOf(ImageService.class);
-
-    assertThat(firstCanvas.getOtherContent())
-        .has(HAS_ONE_ELEMENT);
 
     assertThat(firstCanvas.getOtherContent().get(0).getWithin().get(0))
         .isInstanceOf(Layer.class)
@@ -205,7 +205,7 @@ public class SpecExamplesDeserializationTest {
         .hasFieldOrPropertyWithValue("height", 2000);
     assertThat(img.getServices().get(0)).isInstanceOf(ImageService.class);
     ImageService imgService = (ImageService) img.getServices().get(0);
-    assertThat(imgService.getProfile()).isEqualTo(ImageApiProfile.LEVEL_TWO.getIdentifier());
+    assertThat(imgService.getProfiles()).containsExactly(ImageApiProfile.LEVEL_TWO);
   }
 
   @Test
@@ -234,8 +234,8 @@ public class SpecExamplesDeserializationTest {
     assertThat(thumb.getIdentifier().toString())
         .isEqualTo("http://example.org/images/book1-page1/full/80,100/0/default.jpg");
     assertThat(thumb.getServices().get(0)).isInstanceOf(ImageService.class);
-    assertThat(thumb.getServices().get(0).getProfile())
-        .isEqualTo(ImageApiProfile.LEVEL_ONE.getIdentifier());
+    assertThat(thumb.getServices().get(0).getProfiles())
+        .containsExactly(ImageApiProfile.LEVEL_ONE);
     assertThat(manifest.getViewingDirection()).isEqualTo(ViewingDirection.RIGHT_TO_LEFT);
     assertThat(manifest.getViewingHints()).containsExactly(ViewingHint.PAGED);
     assertThat(manifest.getLogos()).hasSize(1);
