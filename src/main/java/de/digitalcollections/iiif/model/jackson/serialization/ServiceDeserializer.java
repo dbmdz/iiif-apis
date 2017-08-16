@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableSet;
+import de.digitalcollections.iiif.model.annex.GeoService;
+import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.service.AutocompleteService;
@@ -40,6 +42,10 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       } else {
         return mapper.treeToValue(obj, ContentSearchService.class);
       }
+    } else if (Objects.equals(context, GeoService.CONTEXT)) {
+      return mapper.treeToValue(obj, GeoService.class);
+    } else if (Objects.equals(context, PhysicalDimensionsService.CONTEXT)) {
+      return mapper.treeToValue(obj, PhysicalDimensionsService.class);
     } else {
       return mapper.treeToValue(obj, GenericService.class);
     }

@@ -1,0 +1,6 @@
+{
+  "@context": "http://iiif.io/api/annex/services/physdim/1/context.json",
+  "profile": "http://iiif.io/api/annex/services/physdim",
+  "physicalScale": 0.0025,
+  "physicalUnits": "in"
+}

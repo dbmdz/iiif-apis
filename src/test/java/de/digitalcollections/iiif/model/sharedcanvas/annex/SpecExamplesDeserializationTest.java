@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.Profile;
 import de.digitalcollections.iiif.model.annex.GeoService;
+import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
+import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService.Unit;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -108,5 +110,13 @@ public class SpecExamplesDeserializationTest {
   public void testGeoJsonExternal() throws Exception {
     GeoService service = readFromResources("geoJsonExternal.json", GeoService.class);
     assertThat(service.getIdentifier().toString()).isEqualTo("http://www.example.org/geojson/paris.json");
+  }
+
+  @Test
+  public void testPhysicalDimensionsService() throws Exception {
+    PhysicalDimensionsService service = readFromResources("physicalDimensions.json", PhysicalDimensionsService.class);
+    assertThat(service)
+        .hasFieldOrPropertyWithValue("physicalScale", 0.0025)
+        .hasFieldOrPropertyWithValue("physicalUnits", Unit.INCHES);
   }
 }

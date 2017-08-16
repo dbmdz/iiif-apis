@@ -6,6 +6,8 @@ import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.PropertyValue;
 import de.digitalcollections.iiif.model.annex.GeoService;
+import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
+import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService.Unit;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -104,5 +106,11 @@ public class SpecExamplesSerializationTest {
     GeoService service = new GeoService();
     service.setIdentifier(URI.create("http://www.example.org/geojson/paris.json"));
     assertSerializationEqualsSpec(service, "geoJsonExternal.json");
+  }
+
+  @Test
+  public void testPhysicalDimensionsService() throws Exception {
+    PhysicalDimensionsService service = new PhysicalDimensionsService(0.0025, Unit.INCHES);
+    assertSerializationEqualsSpec(service, "physicalDimensions.json");
   }
 }

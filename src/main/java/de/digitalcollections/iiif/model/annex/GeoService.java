@@ -5,7 +5,7 @@ import de.digitalcollections.iiif.model.service.Service;
 import java.net.URI;
 
 public class GeoService extends Service {
-  private static final String CONTEXT = "http://geojson.org/geojson-ld/geojson-context.jsonld";
+  public static final String CONTEXT = "http://geojson.org/geojson-ld/geojson-context.jsonld";
 
   @JsonUnwrapped
   private org.geojson.Feature feature;
