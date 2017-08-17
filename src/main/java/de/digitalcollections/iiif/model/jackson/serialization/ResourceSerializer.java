@@ -47,12 +47,15 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     }
     if (Objects.equals(containingField, "within") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       // It's also redundant in these cases, since the specification prescribes a convention
-      String parentType = ((Resource) gen.getCurrentValue()).getType();
+      String parentType = null;
+      if (gen.getCurrentValue() != null) {
+        parentType = ((Resource) gen.getCurrentValue()).getType();
+      }
       String withinType = value.getType();
       boolean skipType = (
-              (parentType.equals("sc:Manifest") && withinType.equals("sc:Collection")) ||
-              (parentType.equals("sc:AnnotationList") && withinType.equals("sc:Layer")) ||
-              (parentType.equals("sc:Collection") && withinType.equals("sc:Collection")));
+              ("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType)) ||
+              ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType)) ||
+              ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
@@ -60,12 +63,12 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       boolean skipType = (
             value instanceof Canvas &&
             gen.getCurrentValue() instanceof Annotation &&
-            ((Annotation) gen.getCurrentValue()).getMotivation().equals(Motivation.PAINTING));
+            Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else {
-      ImmutableSet<String> skipParents = ImmutableSet.of("otherContent", "contentLayer", "ranges");
+      ImmutableSet<String> skipParents = ImmutableSet.of("otherContent", "contentLayer", "ranges", "annotations");
       boolean shouldSkip = (
             Arrays.asList("prev", "next", "first", "last").contains(containingField) ||
             (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
