@@ -14,14 +14,17 @@ public class GeoService extends Service {
     super(URI.create(CONTEXT));
   };
 
+  public GeoService(String identifier) {
+    this();
+    this.setIdentifier(URI.create(identifier));
+  }
+
   public GeoService(org.geojson.Feature feature) {
     this(null, feature);
   }
 
   public GeoService(String identifier, org.geojson.Feature feature) {
-    this();
-    this.setIdentifier(URI.create(identifier));
-
+    this(identifier);
     // Don't set null-ish Features
     if (!isFeatureEmpty(feature)) {
       this.feature = feature;

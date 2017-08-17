@@ -35,7 +35,11 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     }
 
     String context = obj.get("@context").asText();
-    String profile = obj.get("profile").asText();
+    JsonNode profileNode = obj.get("profile");
+    String profile = null;
+    if (profileNode != null) {
+      profile = profileNode.asText();
+    }
     if (Objects.equals(context, ContentSearchService.CONTEXT)) {
       if (Objects.equals(profile, AutocompleteService.PROFILE)) {
         return mapper.treeToValue(obj, AutocompleteService.class);
@@ -53,13 +57,16 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
 
   public boolean isImageService(ObjectNode node) {
     JsonNode ctxNode = node.get("@context");
+    JsonNode profileNode = node.get("profile");
     if (ctxNode != null && ImageService.CONTEXT.equals(ctxNode.textValue())) {
       return true;
-    } else {
+    } else if (profileNode != null) {
       return ImmutableSet.of(ImageApiProfile.LEVEL_ONE.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_TWO.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_ZERO.getIdentifier().toString())
-            .contains(node.get("profile").asText());
+            .contains(profileNode.asText());
+    } else {
+      return false;
     }
   }
 }
