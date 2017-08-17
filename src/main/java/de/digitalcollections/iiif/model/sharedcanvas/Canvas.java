@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 public class Canvas extends Resource {
   public final static String TYPE = "sc:Canvas";
 
-  private List<Resource> within;
   private List<Annotation> images;
   private List<AnnotationList> otherContent;
   private Integer width;
@@ -40,21 +39,6 @@ public class Canvas extends Resource {
   @Override
   public String getType() {
     return TYPE;
-  }
-
-  public void setWithin(List<Resource> within) {
-    this.within = within;
-  }
-
-  public void addWithin(Resource... withins) {
-    if (this.within == null) {
-      this.within = new ArrayList<>();
-    }
-    this.within.addAll(Arrays.asList(withins));
-  }
-
-  public List<Resource> getWithin() {
-    return within;
   }
 
   public List<Annotation> getImages() {
