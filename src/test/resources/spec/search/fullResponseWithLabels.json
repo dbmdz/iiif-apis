@@ -1,0 +1,20 @@
+{
+  "@context": "http://iiif.io/api/search/1/context.json",
+  "@id": "http://example.org/service/identifier/autocomplete?q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fb&motivation=tagging",
+  "@type": "search:TermList",
+  "ignored": ["user"],
+  "terms": [
+    {
+      "match": "http://semtag.example.org/tag/bird",
+      "url": "http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbird",
+      "count": 15,
+      "label": "bird"
+    },
+    {
+      "match": "http://semtag.example.org/tag/biro",
+      "url": "http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbiro",
+      "count": 3,
+      "label": "biro"
+    }
+  ]
+}

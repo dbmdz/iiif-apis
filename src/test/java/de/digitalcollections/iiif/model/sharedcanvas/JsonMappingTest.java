@@ -5,7 +5,7 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.revinate.assertj.json.JsonPathAssert;
 import de.digitalcollections.iiif.model.OtherContent;
-import de.digitalcollections.iiif.model.service.ContentSearchService;
+import de.digitalcollections.iiif.model.search.ContentSearchService;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.MetadataEntry;
 import de.digitalcollections.iiif.model.PropertyValue;

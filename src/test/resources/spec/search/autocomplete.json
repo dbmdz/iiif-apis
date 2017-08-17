@@ -1,0 +1,9 @@
+{
+  "@context": "http://iiif.io/api/search/1/context.json",
+  "@id": "http://example.org/services/identifier/search",
+  "profile": "http://iiif.io/api/search/1/search",
+  "service": {
+    "@id": "http://example.org/services/identifier/autocomplete",
+    "profile": "http://iiif.io/api/search/1/autocomplete"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "@context":[
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://iiif.io/api/search/1/context.json"
+  ],
+  "@id":"http://example.org/service/manifest/search?q=hand+is",
+  "@type":"sc:AnnotationList",
+
+  "resources": [
+    {
+      "@id": "http://example.org/identifier/annotation/anno-bird",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@type": "cnt:ContentAsText",
+        "chars": "A bird in the hand"
+      },
+      "on": "http://example.org/identifier/canvas1#xywh=200,100,150,30"
+    },
+    {
+      "@id": "http://example.org/identifier/annotation/anno-are",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@type": "cnt:ContentAsText",
+        "chars": "is worth two in the bush"
+      },
+      "on": "http://example.org/identifier/canvas1#xywh=200,140,170,30"
+    }
+  ],
+
+  "hits": [
+    {
+      "@type": "search:Hit",
+      "annotations": [
+        "http://example.org/identifier/annotation/anno-bird",
+        "http://example.org/identifier/annotation/anno-are"
+      ],
+      "match": "hand is",
+      "before": "A bird in the ",
+      "after": " worth two in the bush"
+    }
+  ]
+}

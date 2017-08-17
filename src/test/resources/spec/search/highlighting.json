@@ -1,0 +1,44 @@
+{
+  "@context":[
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://iiif.io/api/search/1/context.json"
+  ],
+  "@id":"http://example.org/service/manifest/search?q=b*&page=1",
+  "@type":"sc:AnnotationList",
+
+  "resources": [
+    {
+      "@id": "http://example.org/identifier/annotation/anno-line",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@type": "cnt:ContentAsText",
+        "chars": "There are two birds in the bush."
+      },
+      "on": "http://example.org/identifier/canvas1#xywh=200,100,40,20"
+    }
+  ],
+
+  "hits": [
+    {
+      "@type": "search:Hit",
+      "annotations": [
+        "http://example.org/identifier/annotation/anno-line"
+      ],
+      "selectors": [
+        {
+          "@type": "oa:TextQuoteSelector",
+          "exact": "birds",
+          "prefix": "There are two ",
+          "suffix": " in the bush"
+        },
+        {
+          "@type": "oa:TextQuoteSelector",
+          "exact": "bush",
+          "prefix": "two birds in the ",
+          "suffix": "."
+        }
+      ]
+    }
+  ]
+}

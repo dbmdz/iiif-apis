@@ -1,0 +1,24 @@
+{
+  "@context":[
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://iiif.io/api/search/1/context.json"
+  ],
+  "@id":"http://example.org/service/manifest/search?q=bird&page=1",
+  "@type":"sc:AnnotationList",
+
+  "resources": [
+    {
+      "@id": "http://example.org/identifier/annotation/anno1",
+      "@type": "oa:Annotation"
+    }
+  ],
+
+  "hits": [
+    {
+      "@type": "search:Hit",
+      "annotations": [
+        "http://example.org/identifier/annotation/anno1"
+      ]
+    }
+  ]
+}

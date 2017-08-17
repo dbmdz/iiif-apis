@@ -1,0 +1,32 @@
+{
+  "@context":[
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://iiif.io/api/search/1/context.json"
+  ],
+  "@id":"http://example.org/service/manifest/search?q=bird",
+  "@type":"sc:AnnotationList",
+
+  "resources": [
+    {
+      "@id": "http://example.org/identifier/annotation/anno-bird",
+      "@type": "oa:Annotation",
+      "motivation": "sc:painting",
+      "resource": {
+        "@type": "cnt:ContentAsText",
+        "chars": "birds"
+      },
+      "on": "http://example.org/identifier/canvas1#xywh=200,100,40,20"
+    }
+  ],
+
+  "hits": [
+    {
+      "@type": "search:Hit",
+      "annotations": [
+        "http://example.org/identifier/annotation/anno-bird"
+      ],
+      "before": "There are two ",
+      "after": " in the bush"
+    }
+  ]
+}

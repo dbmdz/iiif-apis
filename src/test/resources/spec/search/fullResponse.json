@@ -1,0 +1,28 @@
+{
+  "@context": "http://iiif.io/api/search/1/context.json",
+  "@id": "http://example.org/service/identifier/autocomplete?q=bir&motivation=painting",
+  "@type": "search:TermList",
+  "ignored": ["user"],
+  "terms": [
+    {
+      "match": "bird",
+      "url": "http://example.org/service/identifier/search?motivation=painting&q=bird",
+      "count": 15
+    },
+    {
+      "match": "biro",
+      "url": "http://example.org/service/identifier/search?motivation=painting&q=biro",
+      "count": 3
+    },
+    {
+      "match": "birth",
+      "url": "http://example.org/service/identifier/search?motivation=painting&q=birth",
+      "count": 9
+    },
+    {
+      "match": "birthday",
+      "url": "http://example.org/service/identifier/search?motivation=painting&q=birthday",
+      "count": 21
+    }
+  ]
+}

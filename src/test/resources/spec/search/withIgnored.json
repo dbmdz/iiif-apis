@@ -1,0 +1,19 @@
+{
+  "@context":[
+    "http://iiif.io/api/presentation/2/context.json",
+    "http://iiif.io/api/search/1/context.json"
+  ],
+  "@id":"http://example.org/service/manifest/search?q=bird&page=1",
+  "@type":"sc:AnnotationList",
+
+  "within": {
+    "@type": "sc:Layer",
+    "total": 125,
+    "ignored": ["user"]
+  },
+  "next": "http://example.org/service/identifier/search?q=bird&page=2",
+  "startIndex": 0,
+
+  "resources": [
+  ]
+}
