@@ -21,8 +21,12 @@ public class Annotation extends Resource {
     this.motivation = motivation;
   }
 
-  public Annotation(String identifier, Motivation motivation) {
+  public Annotation(String identifier) {
     super(identifier);
+  }
+
+  public Annotation(String identifier, Motivation motivation) {
+    this(identifier);
     this.motivation = motivation;
   }
 

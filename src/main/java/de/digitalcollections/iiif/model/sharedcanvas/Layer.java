@@ -34,6 +34,8 @@ public class Layer extends Resource implements PageContainer<AnnotationList> {
     this.addLabel(label);
   }
 
+  public Layer() { }
+
   @Override
   public String getType() {
     return TYPE;
