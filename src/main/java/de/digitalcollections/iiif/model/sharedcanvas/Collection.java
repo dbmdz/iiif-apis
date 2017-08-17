@@ -49,7 +49,7 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
 
   public Collection(String identifier, String label) {
     super(identifier);
-    this.setLabel(label);
+    this.addLabel(label);
   }
 
   @Override

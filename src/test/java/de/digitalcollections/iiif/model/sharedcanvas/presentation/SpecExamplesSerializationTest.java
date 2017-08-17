@@ -71,7 +71,7 @@ public class SpecExamplesSerializationTest {
     multiValue.addValue(Locale.FRENCH, "Paris, environ 14eme siecle");
     manifest.addMetadata(new MetadataEntry(new PropertyValue("Published"),
                                            multiValue));
-    manifest.setDescription("A longer description of this example book. It should give some real information.");
+    manifest.addDescription("A longer description of this example book. It should give some real information.");
     manifest.setNavDate(OffsetDateTime.of(1856, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
     manifest.addLicense("https://creativecommons.org/publicdomain/zero/1.0/");
     manifest.addAttribution("Provided by Example Organization");
@@ -85,12 +85,12 @@ public class SpecExamplesSerializationTest {
         "application/marc",
         "http://example.org/profiles/marc21"));
     OtherContent rendering = new OtherContent("http://example.org/iiif/book1.pdf");
-    rendering.addLabel(new PropertyValue("Download as PDF"));
+    rendering.addLabel("Download as PDF");
     manifest.addRendering(rendering);
     manifest.addWithin(new Collection("http://example.org/collections/books/"));
 
     Sequence seq = new Sequence("http://example.org/iiif/book1/sequence/normal");
-    seq.setLabel("Current Page Order");
+    seq.addLabel("Current Page Order");
     seq.setViewingDirection(ViewingDirection.LEFT_TO_RIGHT);
     seq.addViewingHint(ViewingHint.PAGED);
 
@@ -184,7 +184,7 @@ public class SpecExamplesSerializationTest {
   public void testAnnotationListWithinLayer() throws Exception {
     AnnotationList list = new AnnotationList("http://example.org/iiif/book1/list/l1");
     Layer within = new Layer("http://example.org/iiif/book1/layer/transcription");
-    within.setLabel("Diplomatic Transcription");
+    within.addLabel("Diplomatic Transcription");
     list.addWithin(within);
     assertSerializationEqualsSpec(list, "annotationListWithinLayer.json");
   }
@@ -195,10 +195,10 @@ public class SpecExamplesSerializationTest {
     anno.setOn(new Canvas("http://example.org/iiif/book1/canvas/p1"));
     ImageContent color = new ImageContent("http://example.org/iiif/book1/res/page1.jpg");
     color.setFormat((MimeType) null);  // Spec example doesn't have format, so we skip it
-    color.setLabel("Color");
+    color.addLabel("Color");
     ImageContent blackWhite = new ImageContent("http://example.org/iiif/book1/res/page1-blackandwhite.jpg");
     blackWhite.setFormat((MimeType) null);  // Spec example doesn't have format, so we skip it
-    blackWhite.setLabel("Black and White");
+    blackWhite.addLabel("Black and White");
     Choice choice = new Choice(color, blackWhite);
     anno.setResource(choice);
     assertSerializationEqualsSpec(anno, "annotationWithChoice.json");
@@ -338,7 +338,7 @@ public class SpecExamplesSerializationTest {
     // FIXME: "text/xml" does not seem to be supported by our Mime class, so we set it manually
 
     OtherContent pdfRendering = new OtherContent("http://example.org/iiif/book1.pdf");
-    pdfRendering.setLabel("Download as PDF");
+    pdfRendering.addLabel("Download as PDF");
     manifest.addRendering(pdfRendering);
 
     manifest.addSequence(new Sequence("http://example.org/iiif/book1/sequence/normal", "Current Page Order"));

@@ -34,7 +34,7 @@ public class Canvas extends Resource {
 
   public Canvas(String identifier, String label) {
     super(identifier);
-    setLabel(label);
+    this.addLabel(label);
   }
 
   @Override

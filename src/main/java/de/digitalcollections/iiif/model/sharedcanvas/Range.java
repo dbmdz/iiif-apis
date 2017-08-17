@@ -35,7 +35,7 @@ public class Range extends Resource {
 
   public Range(String identifier, String label) {
     this(identifier);
-    this.setLabel(label);
+    this.addLabel(label);
   }
 
   @Override
@@ -140,7 +140,7 @@ public class Range extends Resource {
     if (!(res instanceof Range) && !(res instanceof Canvas)) {
       throw new IllegalArgumentException("Member resources must be either of type Range or Canvas");
     }
-    if (res.getIdentifier() == null || res.getLabels() == null || res.getLabels().isEmpty()) {
+    if (res.getIdentifier() == null || res.getLabel() == null || res.getLabel().getValues().isEmpty()) {
       throw new IllegalArgumentException("Member resources must have identifier, type and label set.");
     }
   }

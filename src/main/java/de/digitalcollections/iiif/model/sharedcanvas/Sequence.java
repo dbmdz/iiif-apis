@@ -26,7 +26,7 @@ public class Sequence extends Resource {
 
   public Sequence(String identifier, String label) {
     this(identifier);
-    this.setLabel(label);
+    this.addLabel(label);
   }
 
   @Override

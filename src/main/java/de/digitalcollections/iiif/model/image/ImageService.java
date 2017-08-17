@@ -29,7 +29,7 @@ public class ImageService extends Service {
   private List<Service> services;
 
   @JsonProperty("attribution")
-  private List<PropertyValue> attributions;
+  private PropertyValue attribution;
 
   @JsonProperty("license")
   private List<URI> licenses;
@@ -108,29 +108,24 @@ public class ImageService extends Service {
     }
     this.services.addAll(Lists.asList(first, rest));
   }
-    public List<PropertyValue> getAttributions() {
-    return attributions;
+    public PropertyValue getAttribution() {
+    return attribution;
   }
 
   @JsonIgnore
   public String getAttributionString() {
-    return attributions.get(0).getFirstValue();
+    return attribution.getFirstValue();
   }
 
-  public void setAttributions(List<PropertyValue> attributions) {
-    this.attributions = attributions;
+  public void setAttribution(PropertyValue attribution) {
+    this.attribution = attribution;
   }
 
   public void addAttribution(String first, String... rest) {
-    this.addAttribution(new PropertyValue(first),
-                        Arrays.stream(rest).map(PropertyValue::new).toArray(PropertyValue[]::new));
-  }
-
-  public void addAttribution(PropertyValue first, PropertyValue... rest) {
-    if (this.attributions == null) {
-      this.attributions = new ArrayList<>();
+    if (this.attribution == null) {
+      this.attribution = new PropertyValue();
     }
-    this.attributions.addAll(Lists.asList(first, rest));
+    this.attribution.addValue(first, rest);
   }
 
   public List<URI> getLicenses() {

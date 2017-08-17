@@ -33,7 +33,7 @@ public class Manifest extends Resource {
 
   public Manifest(String identifier, String label) {
     this(identifier);
-    setLabel(label);
+    this.addLabel(label);
   }
 
   @Override

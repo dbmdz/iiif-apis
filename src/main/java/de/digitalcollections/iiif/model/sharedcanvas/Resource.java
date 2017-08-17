@@ -33,11 +33,9 @@ public abstract class Resource {
   @JsonProperty("@id")
   private URI identifier;
 
-  @JsonProperty("label")
-  private List<PropertyValue> labels;
+  private PropertyValue label;
 
-  @JsonProperty("description")
-  private List<PropertyValue> descriptions;
+  private PropertyValue description;
 
   @JsonProperty("service")
   private List<Service> services;
@@ -46,7 +44,7 @@ public abstract class Resource {
   private List<ImageContent> thumbnails;
 
   @JsonProperty("attribution")
-  private List<PropertyValue> attributions;
+  private PropertyValue attribution;
 
   @JsonProperty("license")
   private List<URI> licenses;
@@ -147,83 +145,64 @@ public abstract class Resource {
     this.addMetadata(new MetadataEntry(label, value));
   }
 
-  public List<PropertyValue> getLabels() {
-    return labels;
+  public PropertyValue getLabel() {
+    return label;
   }
 
   @JsonIgnore
   public String getLabelString() {
-    return labels.get(0).getFirstValue();
+    return label.getFirstValue();
   }
 
-  public void setLabel(String label) {
-    this.addLabel(new PropertyValue(label));
+  public void setLabel(PropertyValue label) {
+    this.label = label;
   }
 
-  public void setLabels(List<PropertyValue> labels) {
-    this.labels = labels;
-  }
-
-  public void addLabel(PropertyValue first, PropertyValue... rest) {
-    if (this.labels == null) {
-      this.labels = new ArrayList<>();
+  public void addLabel(String first, String... rest) {
+    if (this.label == null) {
+      this.label = new PropertyValue();
     }
-    this.labels.addAll(Lists.asList(first, rest));
+    this.label.addValue(first, rest);
   }
 
-    public List<PropertyValue> getDescriptions() {
-    return descriptions;
+    public PropertyValue getDescription() {
+    return description;
   }
 
   @JsonIgnore
   public String getDescriptionString() {
-    return descriptions.get(0).getFirstValue();
+    return description.getFirstValue();
   }
 
-  public void setDescription(String description) {
-    this.descriptions = Collections.singletonList(new PropertyValue(description));
-  }
-
-  public void setDescriptions(List<PropertyValue> descriptions) {
-    this.descriptions = descriptions;
+  public void setDescription(PropertyValue description) {
+    this.description = description;
   }
 
   public void addDescription(String first, String... rest) {
-    this.addDescription(
-        new PropertyValue(first),
-        Arrays.stream(rest).map(PropertyValue::new).toArray(PropertyValue[]::new));
-  }
-
-  public void addDescription(PropertyValue first, PropertyValue... rest) {
-    if (this.descriptions == null) {
-      this.descriptions = new ArrayList<>();
+    if (this.description == null) {
+      this.description = new PropertyValue();
     }
-    this.descriptions.addAll(Lists.asList(first, rest));
+    this.description.addValue(first, rest);
   }
 
-  public List<PropertyValue> getAttributions() {
-    return attributions;
+  public PropertyValue getAttribution() {
+    return attribution;
   }
 
   @JsonIgnore
   public String getAttributionString() {
-    return attributions.get(0).getFirstValue();
+    return attribution.getFirstValue();
   }
 
-  public void setAttributions(List<PropertyValue> attributions) {
-    this.attributions = attributions;
+  public void setAttribution(PropertyValue attribution) {
+    this.attribution = attribution;
   }
 
   public void addAttribution(String first, String... rest) {
-    this.addAttribution(new PropertyValue(first),
-                        Arrays.stream(rest).map(PropertyValue::new).toArray(PropertyValue[]::new));
-  }
-
-  public void addAttribution(PropertyValue first, PropertyValue... rest) {
-    if (this.attributions == null) {
-      this.attributions = new ArrayList<>();
+    if (this.attribution == null) {
+      this.attribution = new PropertyValue();
     }
-    this.attributions.addAll(Lists.asList(first, rest));
+    this.attribution.addValue(first, rest);
   }
 
   public List<URI> getLicenses() {

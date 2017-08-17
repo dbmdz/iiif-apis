@@ -31,7 +31,7 @@ public class Layer extends Resource implements PageContainer<AnnotationList> {
 
   public Layer(String identifier, String label) {
     super(identifier);
-    this.setLabel(label);
+    this.addLabel(label);
   }
 
   @Override

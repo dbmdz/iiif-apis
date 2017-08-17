@@ -53,7 +53,7 @@ public class SpecExamplesDeserializationTest {
     assertThat(manifest).isNotNull();
     assertThat(manifest.getIdentifier().toString())
         .isEqualTo("http://example.org/iiif/book1/manifest");
-    assertThat(manifest.getLabels())
+    assertThat(manifest.getLabel().getValues())
         .hasSize(1);
     assertThat(manifest.getLabelString())
         .isEqualTo("Book 1");

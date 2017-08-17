@@ -35,8 +35,8 @@ public class JsonMappingTest {
   @Test
   public void testCanvasRoundtrip() throws IOException {
     Canvas canvas = new Canvas("http://some.uri");
-    canvas.setLabel("A label");
-    canvas.setDescription("This is a slightly longer text about this canvas.");
+    canvas.addLabel("A label");
+    canvas.addDescription("This is a slightly longer text about this canvas.");
     canvas.setWidth(800);
     canvas.setHeight(600);
 
