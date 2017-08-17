@@ -18,11 +18,9 @@ import java.util.ArrayList;
  *  - Add the JSON-LD '@context' property with the IIIF context to the top-level object
  *  - Serialize empty Resources as null, Resources with only an @id as strings
  *  - Remove redundant `@type` from Annotation.on and certain image resources
+ *  - Add custom logic for when to unwrap single values
  */
 public class SerializerModifier extends BeanSerializerModifier {
-
-  ;
-
   @Override
   public JsonSerializer<?> modifyCollectionSerializer(SerializationConfig config, CollectionType valueType,
       BeanDescription beanDesc, JsonSerializer<?> serializer) {

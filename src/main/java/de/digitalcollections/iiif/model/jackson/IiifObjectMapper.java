@@ -16,8 +16,7 @@ public class IiifObjectMapper extends ObjectMapper {
     this.disable(SerializationFeature.FAIL_ON_UNWRAPPED_TYPE_IDENTIFIERS);
     this.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
-    // Unwrap single-value arrays when serializing
-    this.enable(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED);
+    // Some array fields are unwrapped during serialization if they have only one value
     this.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
 
     // Register the problem handler

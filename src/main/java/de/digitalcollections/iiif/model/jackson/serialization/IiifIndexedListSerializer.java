@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.ContainerSerializer;
@@ -17,18 +16,18 @@ import java.util.List;
 
 /**
  * This is a custom serializer for List<Object> that has some special cases required by
- * the IIIF specification, namely that "sequences", "images" and "otherContent" must
- * always be encoded as arrays, even if they only contain a single element.
+ * the IIIF specification, namely that some fields should not be encoded as arrays if
+ * they only contain a single element.
  *
  * Apart from this, the code is identical to {@link IndexedListSerializer} and delegates
  * to it where possible.
  */
-public final class IiifIndexedListSerializer
-    extends AsArraySerializerBase<List<?>> {
+public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<?>> {
+  private static final ImmutableSet<String> UNWRAP_FIELDS = ImmutableSet.of(
+      "service", "profile", "within", "logo", "description", "viewingHint",
+      "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
+
   private final IndexedListSerializer defaultSerializer;
-  private static final ImmutableSet<String> NEVER_UNWRAP = ImmutableSet.of(
-      "sequences", "structures","images", "otherContent", "tiles", "item",
-      "manifests", "collections", "canvases", "ranges");
 
   public IiifIndexedListSerializer(IndexedListSerializer defaultSerializer, TypeFactory tf) {
     super(List.class, tf.constructSimpleType(Object.class, new JavaType[]{}), false, null, null);
@@ -56,17 +55,15 @@ public final class IiifIndexedListSerializer
   {
     final int len = value.size();
     String currentName = gen.getOutputContext().getCurrentName();
-    // Special case: Never unwrap certain fields
-    if (!NEVER_UNWRAP.contains(currentName) && len == 1) {
-      if (((_unwrapSingle == null) &&
-          provider.isEnabled(SerializationFeature.WRITE_SINGLE_ELEM_ARRAYS_UNWRAPPED))
-          || (_unwrapSingle == Boolean.TRUE)) {
-        defaultSerializer.serializeContents(value, gen, provider);
-        return;
-      }
+    // Special case: Unwrap certain fields
+    if (UNWRAP_FIELDS.contains(currentName) && len == 1) {
+      defaultSerializer.serializeContents(value, gen, provider);
+      return;
     }
     gen.writeStartArray(len);
-    defaultSerializer.serializeContents(value, gen, provider);
+    if (!value.isEmpty()) {
+      defaultSerializer.serializeContents(value, gen, provider);
+    }
     gen.writeEndArray();
   }
 
