@@ -18,8 +18,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class ResourceSerializer extends JsonSerializer<Resource> {
-
-  private final static String IIIF_CONTEXT =  "http://iiif.io/api/presentation/2/context.json";
   private final JsonSerializer<Object> defaultSerializer;
 
   public ResourceSerializer(JsonSerializer<Object> defaultSerializer) {
@@ -30,7 +28,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
   public void serialize(Resource value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
     // Add @context to top-level object
     if (gen.getOutputContext().getParent() == null) {
-      value._context = IIIF_CONTEXT;
+      value._context = Resource.CONTEXT;
     }
 
     // Remove @type from ImageContent if neccessary
@@ -100,7 +98,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       TypeSerializer typeSer) throws IOException {
     JsonStreamContext ctx = gen.getOutputContext();
     if (ctx.getParent() == null) {
-      value._context = IIIF_CONTEXT;
+      value._context = Resource.CONTEXT;
     }
 
     // Remove @type from ImageContent if neccessary

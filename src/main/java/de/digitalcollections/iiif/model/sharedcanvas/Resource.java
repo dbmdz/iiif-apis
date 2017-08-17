@@ -25,6 +25,8 @@ import static com.google.common.collect.Lists.asList;
 
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
 public abstract class Resource {
+  public final static String CONTEXT =  "http://iiif.io/api/presentation/2/context.json";
+
   /** Only used during serialization,
    *  @see SerializerModifier **/
   @JsonProperty("@context")
