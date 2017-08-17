@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableMap;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.OtherContent;
-import de.digitalcollections.iiif.model.api.Motivation;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;

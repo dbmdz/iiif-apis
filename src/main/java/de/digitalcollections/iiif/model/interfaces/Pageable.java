@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.api;
+package de.digitalcollections.iiif.model.interfaces;
 
 public interface Pageable<T> {
   T getNext();

@@ -9,7 +9,7 @@ import com.google.common.collect.ImmutableSet;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.ModelUtilities;
 import de.digitalcollections.iiif.model.ModelUtilities.Completeness;
-import de.digitalcollections.iiif.model.api.Motivation;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;

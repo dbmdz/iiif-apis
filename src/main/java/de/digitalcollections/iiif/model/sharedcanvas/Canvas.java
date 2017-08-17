@@ -7,7 +7,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
-import de.digitalcollections.iiif.model.api.Motivation;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingHint.Type;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;

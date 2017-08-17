@@ -1,12 +1,10 @@
-package de.digitalcollections.iiif.model.service;
+package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.common.collect.Lists;
-import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.PropertyValue;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -3,7 +3,7 @@ package de.digitalcollections.iiif.model.sharedcanvas;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
-import de.digitalcollections.iiif.model.api.Pageable;
+import de.digitalcollections.iiif.model.interfaces.Pageable;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;

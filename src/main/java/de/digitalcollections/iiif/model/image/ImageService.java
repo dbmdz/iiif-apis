@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.PropertyValue;
-import de.digitalcollections.iiif.model.service.Service;
+import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;

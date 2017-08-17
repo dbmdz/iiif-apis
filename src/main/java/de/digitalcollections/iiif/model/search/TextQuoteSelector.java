@@ -2,7 +2,7 @@ package de.digitalcollections.iiif.model.search;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.digitalcollections.iiif.model.api.Selector;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 
 public class TextQuoteSelector implements Selector {
   public static final String TYPE = "oa:TextQuoteSelector";

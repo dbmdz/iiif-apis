@@ -6,7 +6,7 @@ import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.api.Motivation;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;

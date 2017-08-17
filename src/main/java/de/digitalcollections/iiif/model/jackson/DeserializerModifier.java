@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.api.Selector;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.jackson.serialization.EnumDeserializer;
@@ -14,7 +14,7 @@ import de.digitalcollections.iiif.model.jackson.serialization.ProfileDeserialize
 import de.digitalcollections.iiif.model.jackson.serialization.ResourceDeserializer;
 import de.digitalcollections.iiif.model.jackson.serialization.SelectorDeserializer;
 import de.digitalcollections.iiif.model.jackson.serialization.ServiceDeserializer;
-import de.digitalcollections.iiif.model.service.Service;
+import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.util.Arrays;
 

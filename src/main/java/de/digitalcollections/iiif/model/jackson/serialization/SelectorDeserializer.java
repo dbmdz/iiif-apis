@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.google.common.collect.ImmutableMap;
-import de.digitalcollections.iiif.model.api.Selector;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.image.ImageApiSelector;
 import de.digitalcollections.iiif.model.openannotation.SvgSelector;
 import java.io.IOException;

@@ -3,7 +3,7 @@ package de.digitalcollections.iiif.model.openannotation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import de.digitalcollections.iiif.model.api.Motivation;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 
 @JsonPropertyOrder({"@context", "@id", "@type", "motivation", "resource", "on"})

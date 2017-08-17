@@ -66,7 +66,7 @@ public class SpecExamplesDeserializationTest {
     assertThat(imageService.getProfiles().get(0)).isEqualTo(ImageApiProfile.LEVEL_TWO);
     ImageApiProfile complexProfile = (ImageApiProfile) imageService.getProfiles().get(1);
     assertThat(complexProfile.getFormats())
-        .containsExactly(Format.GIF, Format.PDF);
+        .containsExactlyInAnyOrder(Format.GIF, Format.PDF);
     assertThat(complexProfile.getQualities())
         .containsExactlyInAnyOrder(Quality.COLOR, Quality.GRAY);
     assertThat(complexProfile.getFeatures()).containsExactlyInAnyOrder(

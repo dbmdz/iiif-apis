@@ -2,7 +2,7 @@ package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import de.digitalcollections.iiif.model.api.Selector;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import java.net.URI;

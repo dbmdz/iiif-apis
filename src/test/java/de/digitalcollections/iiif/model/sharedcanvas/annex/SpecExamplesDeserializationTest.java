@@ -13,7 +13,7 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
-import de.digitalcollections.iiif.model.service.GenericService;
+import de.digitalcollections.iiif.model.GenericService;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;

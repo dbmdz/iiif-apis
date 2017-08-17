@@ -1,7 +1,7 @@
 package de.digitalcollections.iiif.model.annex;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import de.digitalcollections.iiif.model.service.Service;
+import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 
 public class GeoService extends Service {

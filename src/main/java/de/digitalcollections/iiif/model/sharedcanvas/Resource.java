@@ -12,7 +12,7 @@ import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.PropertyValue;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.jackson.SerializerModifier;
-import de.digitalcollections.iiif.model.service.Service;
+import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;

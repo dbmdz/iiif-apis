@@ -1,6 +1,6 @@
 package de.digitalcollections.iiif.model.openannotation;
 
-import de.digitalcollections.iiif.model.api.Selector;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 
 public class SpecificResource extends Resource {

@@ -14,8 +14,8 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.search.AutocompleteService;
 import de.digitalcollections.iiif.model.search.ContentSearchService;
-import de.digitalcollections.iiif.model.service.GenericService;
-import de.digitalcollections.iiif.model.service.Service;
+import de.digitalcollections.iiif.model.GenericService;
+import de.digitalcollections.iiif.model.Service;
 import java.io.IOException;
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.api;
+package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
