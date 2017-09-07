@@ -1,14 +1,18 @@
-package de.digitalcollections.iiif.model.sharedcanvas;
+package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests with real-world IIIF resources from the wild.
+ */
 public class ExternalTest {
   private ObjectMapper mapper;
 
@@ -35,5 +39,4 @@ public class ExternalTest {
     assertThat(manifest.getDefaultSequence().getCanvases())
         .allMatch(c -> c.getImages().size() == 2);
   }
-
 }

@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.sharedcanvas;
+package de.digitalcollections.iiif.model;
 
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
@@ -13,6 +13,11 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Tests for parsing IIIF JSON.
+ *
+ * Covers some things that are not well tested in the examples from the specifications.
+ */
 public class ParsingTest {
   private IiifObjectMapper mapper;
 

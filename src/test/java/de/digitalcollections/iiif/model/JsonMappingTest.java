@@ -1,18 +1,17 @@
-package de.digitalcollections.iiif.model.sharedcanvas;
+package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.revinate.assertj.json.JsonPathAssert;
-import de.digitalcollections.iiif.model.OtherContent;
-import de.digitalcollections.iiif.model.search.ContentSearchService;
-import de.digitalcollections.iiif.model.ImageContent;
-import de.digitalcollections.iiif.model.MetadataEntry;
-import de.digitalcollections.iiif.model.PropertyValue;
-import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
-import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
+import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.iiif.model.search.ContentSearchService;
+import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
+import de.digitalcollections.iiif.model.sharedcanvas.Collection;
+import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -24,6 +23,9 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+/**
+ * Tests for writing out IIIF JSON.
+ */
 public class JsonMappingTest {
   private ObjectMapper mapper;
 
