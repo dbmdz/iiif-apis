@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 
+/**
+ * A service that describes  the physical dimensions of the resource it is associated to (http://iiif
+ * .io/api/annex/services/#physical-dimensions).
+ */
 public class PhysicalDimensionsService extends Service {
   public enum Unit {
     MILIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");

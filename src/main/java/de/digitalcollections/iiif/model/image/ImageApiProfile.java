@@ -12,6 +12,15 @@ import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * An Image API profile.
+ *
+ * Can be either a simple pre-defined profile (e.g. {@link ImageApiProfile#LEVEL_ZERO}) or a complex profile
+ * describing the available features of a given IIIF image.
+ *
+ * See http://iiif.io/api/image/2.1/#profile-description for an overview of all available properties and features
+ * and http://iiif.io/api/image/2.1/compliance/ for an overview of the available compliance levels.
+ */
 public class ImageApiProfile extends Profile {
   public enum Format {
     JPG(MimeType.fromTypename("image/jpeg")),

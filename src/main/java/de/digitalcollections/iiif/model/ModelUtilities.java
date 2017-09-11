@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.reflections.ReflectionUtils;
 
+/**
+ * Some static utility methods used for (de-)serialization and sanity checks.
+ */
 public class ModelUtilities {
 
   public enum Completeness { EMPTY, ID_ONLY, ID_AND_TYPE, ID_AND_TYPE_AND_LABEL, COMPLEX }
@@ -18,14 +21,23 @@ public class ModelUtilities {
             Arrays.stream(toCheck).allMatch(vals::contains));
   }
 
-  public static Completeness getCompleteness(Object obj, Class<?> clz) {
+  /**
+   * Obtain the "completeness" (i.e. "empty", "id and type", "it, type and label", "id only" or "complex") of
+   * a IIIF resource. Can be useful for determining how to serialize the resource, e.g. often resources with only
+   * an id are serialized as a string.
+   *
+   * @param res   The IIIF resource to check the completeness of
+   * @param type   The type of the IIIF resource
+   * @return      The completeness
+   */
+  public static Completeness getCompleteness(Object res, Class<?> type) {
     Set<Method> getters = ReflectionUtils.getAllMethods(
-        clz,
+        type,
         ReflectionUtils.withModifier(Modifier.PUBLIC),
         ReflectionUtils.withPrefix("get"));
     Set<String> gettersWithValues = getters.stream()
         .filter(g -> g.getAnnotation(JsonIgnore.class) == null)  // Only JSON-serializable fields
-        .filter(g -> returnsValue(g, obj))
+        .filter(g -> returnsValue(g, res))
         .map(Method::getName)
         .collect(Collectors.toSet());
 

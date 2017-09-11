@@ -5,6 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+/**
+ * An entry in a IIIF resource's "metadata" list.
+ *
+ * Consists of a label and a value, both of which can be multi-valued and multi-lingual (see {@link PropertyValue}.
+ * The value should be either simple HTML, including links and text markup, or plain text, and the label should be plain text.
+ */
 @JsonPropertyOrder({"label", "value"})
 public class MetadataEntry {
   private PropertyValue label;

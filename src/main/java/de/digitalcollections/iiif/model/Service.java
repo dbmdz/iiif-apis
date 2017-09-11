@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Abstract base type for services.
+ */
 @JsonPropertyOrder({"@context", "@id", "@type"})
 public abstract class Service {
   @JsonProperty("@context")

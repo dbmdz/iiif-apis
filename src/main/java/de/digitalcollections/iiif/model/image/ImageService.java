@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A IIIF Image API service.
+ *
+ * See http://iiif.io/api/presentation/2.1/#image-resources
+ */
 public class ImageService extends Service {
   // FIXME: This should be static, but for some reason Jackson ignores it if it's not
   //        on the instance...

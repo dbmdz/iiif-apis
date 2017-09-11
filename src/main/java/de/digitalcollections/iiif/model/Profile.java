@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import java.net.URI;
 
+/**
+ * A profile for a {@link OtherContent} or {@link Service}.
+ *
+ * For image services, please use the more specific {@link ImageApiProfile} that has useful pre-defined constants
+ * for the available Image API profiles.
+ */
 public class Profile {
   @JsonProperty("@id")
   private final URI identifier;
@@ -25,7 +31,7 @@ public class Profile {
       return false;
     }
     if (o instanceof ImageApiProfile && this instanceof ImageApiProfile) {
-      return ((ImageApiProfile) this).equals((ImageApiProfile) o);
+      return this.equals(o);
     } else if (this.getClass() != o.getClass()) {
       return false;
     }

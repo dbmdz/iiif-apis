@@ -2,6 +2,9 @@ package de.digitalcollections.iiif.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+/**
+ * The direction that a sequence of canvases should be displayed to the user.
+ */
 public enum ViewingDirection {
   LEFT_TO_RIGHT("left-to-right"),
   RIGHT_TO_LEFT("right-to-left"),

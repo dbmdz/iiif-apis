@@ -8,7 +8,12 @@ import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.net.URI;
 
-//@JsonTypeName(ImageContent.TYPE)
+/**
+ * An image resource.
+ *
+ * This entity is what is contained in the "resource" field of annotations with motivation "sc:painting":
+ * http://iiif.io/api/presentation/2.1/#image-resources
+ */
 public class ImageContent extends Resource {
   public final static String TYPE = "dctypes:Image";
 

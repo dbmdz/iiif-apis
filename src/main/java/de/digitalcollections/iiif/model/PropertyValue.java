@@ -18,6 +18,13 @@ import java.util.Set;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * Type for strings that are intended to be displayed to the user.
+ *
+ * Is organized as a mapping of languages to one or more values.
+ * See http://iiif.io/api/presentation/2.1/#language-of-property-values and
+ * http://iiif.io/api/presentation/2.1/#html-markup-in-property-values for more information.
+ */
 @JsonSerialize(using = PropertyValueSerializer.class)
 @JsonDeserialize(using = PropertyValueDeserializer.class)
 public class PropertyValue  {

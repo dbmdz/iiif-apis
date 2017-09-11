@@ -8,6 +8,11 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.net.URI;
 
 
+/**
+ * Type for Content resources such as images or texts that are associated with a canvas.
+ *
+ * Used in the "related", "renderings" and "otherContent" fields of IIIF resources.
+ */
 @JsonPropertyOrder({"@id", "@type"})
 public class OtherContent extends Resource {
   private MimeType format;

@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 
+/**
+ * A GeoJSON service (http://iiif.io/api/annex/services/#geojson).
+ *
+ * Initialize it either with an URL to a GeoJSON resource that identifies the linked location, or pass a
+ * {@link org.geojson.Feature} object that defines the location.
+ */
 public class GeoService extends Service {
   public static final String CONTEXT = "http://geojson.org/geojson-ld/geojson-context.jsonld";
 

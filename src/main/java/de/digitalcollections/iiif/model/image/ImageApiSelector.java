@@ -8,6 +8,11 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import java.net.URI;
 import java.util.Objects;
 
+/**
+ * A selector that describes a region on an IIIF Image API resource.
+ *
+ * See http://iiif.io/api/annex/openannotation/#iiif-image-api-selector
+ */
 // TODO: This should perform validation of the Image API parameters
 @JsonTypeName(ImageApiSelector.TYPE)
 public class ImageApiSelector implements Selector {

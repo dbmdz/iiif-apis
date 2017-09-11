@@ -3,6 +3,9 @@ package de.digitalcollections.iiif.model.image;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * A (width, height) tuple that describes an image's size
+ */
 public class Size {
   private final int width;
   private final int height;

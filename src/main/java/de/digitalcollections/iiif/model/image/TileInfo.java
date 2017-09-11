@@ -6,6 +6,9 @@ import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Describes an Image API tile.
+ */
 public class TileInfo {
   private Integer width;
   private Integer height;
