@@ -9,6 +9,11 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * A list of result terms for an autocomplete query.
+ *
+ * See http://iiif.io/api/search/1.0/#response
+ */
 public class TermList {
   public static final String CONTEXT = SearchResult.CONTEXT;
   public static final String TYPE = "search:TermList";

@@ -6,6 +6,11 @@ import de.digitalcollections.iiif.model.sharedcanvas.Layer;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * The container for all pages of a paginated page response.
+ *
+ * http://iiif.io/api/search/1.0/#paging-results
+ */
 public class SearchLayer extends Layer {
   private Set<String> ignored;
 

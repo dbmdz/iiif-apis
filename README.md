@@ -1,5 +1,6 @@
 # iiif-apis
 
+[![Javadocs](http://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](http://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
 [![Build Status](https://travis-ci.org/dbmdz/iiif-apis.svg?branch=master)](https://travis-ci.org/dbmdz/iiif-apis)
 [![codecov](https://codecov.io/gh/dbmdz/iiif-apis/branch/master/graph/badge.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -17,6 +18,9 @@ documents that are compliant with the official specifications. If you find that 
 a IIIF entity that you believe to be correct, please [submit an issue]() including a link to
 the JSON-LD representation of the entity. Likewise, if you find that you cannot express
 a certain IIIF construct with the Java API, let us know.
+
+It is intended to replace both [iiif-presentation-api]() and [iiif-image-api]() once it is stable enough, with the
+non-model parts of these libraries being moved into [hymir]().
 
 ## Usage
 To use the module, first add it to your project's Maven or Gradle configuration:

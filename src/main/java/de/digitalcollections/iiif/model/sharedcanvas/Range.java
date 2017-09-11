@@ -17,6 +17,16 @@ import java.util.Set;
 
 import static java.util.Arrays.stream;
 
+/**
+ * An ordered list of canvases, and/or further ranges.
+ *
+ * Ranges allow canvases, or parts thereof, to be grouped together in some way. This could be for textual reasons, such
+ * as to distinguish books, chapters, verses, sections, non-content-bearing pages, the table of contents or similar.
+ * Equally, physical features might be important such as quires or gatherings, sections that have been added later and
+ * so forth.
+ *
+ * See http://iiif.io/api/presentation/2.1/#range
+ */
 public class Range extends Resource {
   public static final String TYPE = "sc:Range";
 

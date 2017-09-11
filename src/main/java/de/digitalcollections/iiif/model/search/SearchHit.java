@@ -6,6 +6,11 @@ import de.digitalcollections.iiif.model.openannotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Describes a search hit on a single annotation or across multiple annotations.
+ *
+ * See http://iiif.io/api/search/1.0/#search-api-specific-responses
+ */
 public class SearchHit {
   @JsonProperty("@type")
   public final String TYPE = "search:Hit";

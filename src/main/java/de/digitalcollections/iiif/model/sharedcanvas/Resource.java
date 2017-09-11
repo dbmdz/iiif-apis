@@ -22,6 +22,9 @@ import java.util.Set;
 import static com.google.common.collect.Lists.asList;
 
 
+/**
+ * Abstract IIIF resource, most other resources are based on this.
+ */
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
 public abstract class Resource {
   public final static String CONTEXT =  "http://iiif.io/api/presentation/2/context.json";

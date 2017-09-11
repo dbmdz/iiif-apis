@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A choice between two or more IIIF resources.
+ *
+ * See http://iiif.io/api/presentation/2.1/#choice-of-alternative-resources
+ */
 public class Choice extends Resource {
   public static final String TYPE = "oa:Choice";
 

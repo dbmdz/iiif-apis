@@ -9,6 +9,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * An ordered list of annotation lists.
+ *
+ * Layers allow higher level groupings of annotations to be recorded. For example, all of the English translation
+ * annotations of a medieval French document could be kept separate from the transcription or an edition in modern
+ * French.
+ *
+ * See http://iiif.io/api/presentation/2.1/#layer
+ */
 public class Layer extends Resource implements PageContainer<AnnotationList> {
   public static final String TYPE = "sc:Layer";
 

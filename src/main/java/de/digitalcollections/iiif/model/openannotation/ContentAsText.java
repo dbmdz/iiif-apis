@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * A resource that contains embedded textual content.
+ */
 public class ContentAsText extends Resource {
   public static final String TYPE = "cnt:ContentAsText";
   String chars;

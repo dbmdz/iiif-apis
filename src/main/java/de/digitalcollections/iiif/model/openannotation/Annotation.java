@@ -6,6 +6,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 
+/**
+ * An OpenAnnotation Annotation.
+ *
+ * Content resources and commentary are associated with a canvas via an annotation. This provides a single, coherent
+ * method for aligning information, and provides a standards based framework for distinguishing parts of resources and
+ * parts of canvases. As annotations can be added later, it promotes a distributed system in which publishers can align
+ * their content with the descriptions created by others.
+ */
 @JsonPropertyOrder({"@context", "@id", "@type", "motivation", "resource", "on"})
 public class Annotation extends Resource {
   public final static String TYPE = "oa:Annotation";

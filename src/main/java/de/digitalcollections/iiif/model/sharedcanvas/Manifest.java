@@ -13,6 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The overall description of the structure and properties of the digital representation of an object.
+ *
+ * It carries information needed for the viewer to present the digitized content to the user, such as a title and other
+ * descriptive information about the object or the intellectual work that it conveys. Each manifest describes how to
+ * present a single object such as a book, a photograph, or a statue.
+ *
+ * See http://iiif.io/api/presentation/2.1/#manifest
+ */
 @JsonPropertyOrder({"@context", "@type", "@id", "label", "metadata", "description", "navDate",
                     "license", "attribution", "service", "seeAlso", "rendering", "within",
                     "sequences", "structures"})

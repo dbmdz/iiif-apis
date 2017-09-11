@@ -15,6 +15,15 @@ import java.util.Set;
 
 import static java.util.Arrays.stream;
 
+/**
+ * An ordered list of manifests, and/or further collections.
+ *
+ * Collections allow easy advertising and browsing of the manifests in a hierarchical structure, potentially with its
+ * own descriptive information. They can also provide clients with a means to locate all of the manifests known to the
+ * publishing institution.
+ *
+ * See http://iiif.io/api/presentation/2.1/#collection
+ */
 public class Collection extends Resource implements Pageable<Collection>, PageContainer<Collection> {
   public final static String TYPE = "sc:Collection";
 

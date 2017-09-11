@@ -18,6 +18,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * A virtual container that represents a page or view and has content resources associated with it or with parts of it.
+ *
+ * The canvas provides a frame of reference for the layout of the content. The concept of a canvas is borrowed from
+ * standards like PDF and HTML, or applications like Photoshop and Powerpoint, where the display starts from a blank
+ * canvas and images, text and other resources are “painted” on to it.
+ *
+ * See http://iiif.io/api/presentation/2.1/#canvas
+ */
 public class Canvas extends Resource {
   public final static String TYPE = "sc:Canvas";
 

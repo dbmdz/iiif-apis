@@ -10,6 +10,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * An AnnotationList that contains hits for a given search query.
+ *
+ * See http://iiif.io/api/search/1.0/#simple-lists
+ */
 public class SearchResult extends AnnotationList {
   public static final String CONTEXT = "http://iiif.io/api/search/1/context.json";
 

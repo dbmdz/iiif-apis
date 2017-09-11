@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import de.digitalcollections.iiif.model.interfaces.Selector;
 
+/**
+ * A selector for highlighting parts of a text.
+ *
+ * See http://iiif.io/api/search/1.0/#search-term-highlighting
+ */
 public class TextQuoteSelector implements Selector {
   public static final String TYPE = "oa:TextQuoteSelector";
   private final String exact;
