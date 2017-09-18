@@ -129,6 +129,8 @@ canvas.addLogo(new ImageContent(new ImageService(
 String json = iiifMapper.writerWithDefaultPrettyPrinter().writeValueAsString(canvas);
 ```
 
-For more information on how to use the API, consult the [API documentation](TODO) and the [comprehensive
-test suite](TODO). Since the large majority of the tests are based on the examples from the specifications,
-they should be very easy to follow along.
+For more information on how to use the API, consult the
+[API documentation](http://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
+and the [comprehensive test suite](https://github.com/dbmdz/iiif-apis/tree/master/src/test/java/de/digitalcollections/iiif/model).
+Since the large majority of the tests are based on the examples from the  specifications, they should be very easy to
+follow along.
