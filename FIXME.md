@@ -1,2 +1,0 @@
-- Duplicate `@contexts` should be filtered out from the output tree.
-- For Image API responses, `protocol` should only be written out if the service is the top-level object (i.e. it's an `info.json` response)
