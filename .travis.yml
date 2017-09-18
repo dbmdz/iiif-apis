@@ -1,0 +1,16 @@
+language: java
+jdk:
+- oraclejdk8
+script:
+- mvn clean install
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: releases
+  api_key:
+    secure: v+qhi4GT3lePQTyemojdwD357bWZw964Gmj4hrbD5xwCdMmnXBcmvwMoFtjp9x3p+kL6zzks0KzNDNVHDiimom2CuaYj+1D1Y1SZ1Eo2nrHBpsp7c2DcSGfRzV7+PT6VluZZ2G31qW4lvg36Z9JQ7B83Lb9LoY04fGth3UTZQ1xT8X5p5Yp50+GFwdnvWRJDFgC2xjxzhExxlFVxDftGipbHjNQa8PTZTsMYpfrgPKDB32fQTGGDhzw1xpCRJKApkpuDudsP8KUHvL0ebLZ2UsgBHxWnjsO5djiU0D7di9iLZ0QG8NjnFTJRNWyOCkyxu2rWQtFFgF7fpYfDBr5A0GcWRvRidNzLLipx6jmj0PfZ32IRXrkkTIbFssh5/5cvByo7JxiVySovhMpFciL5rQLMRSD9sTezzPSNBSlZzlI9Ie9gjQwWt+tPKlZVov/Y36BXhDUCYKjqPAmVHuqsdCJnQN1jz3LESkd5ufmsoRjCLx/OOxANMH2lxoJQ0cOwJLvLJqqPTgrEKrA+CL07+1IkL1l7y6eNFSnJvTe/u89da66Dclz45DfG2hkYmD+/Pyerlqz5Y5seXoGWED1+HP/Tbhpo+tR4wv/JDNhk7qw9CrdYbcAN1ROPZwX+n6qLUsOSCceyfNffF+bbZ7w2+1jadNZusHvsgPXjGjzRyJY=
+  file_glob: true
+  file: "target/*.jar"
+  skip_cleanup: true
+  on:
+    tags: true
