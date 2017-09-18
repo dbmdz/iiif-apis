@@ -66,16 +66,17 @@ public class Layer extends Resource implements PageContainer<AnnotationList> {
     this.otherContent = otherContent;
   }
 
-  public void addOtherContent(String first, String... rest) {
-    this.addOtherContent(new AnnotationList(first),
-                         Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
+  public Layer addOtherContent(String first, String... rest) {
+    return this.addOtherContent(new AnnotationList(first),
+                                Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
   }
 
-  public void addOtherContent(AnnotationList first, AnnotationList... rest) {
+  public Layer addOtherContent(AnnotationList first, AnnotationList... rest) {
     if (this.otherContent == null) {
       this.otherContent = new ArrayList<>();
     }
     this.otherContent.addAll(Lists.asList(first, rest));
+    return this;
   }
 
 

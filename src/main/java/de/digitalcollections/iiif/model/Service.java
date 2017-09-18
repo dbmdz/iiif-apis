@@ -60,16 +60,17 @@ public abstract class Service {
     this.profiles = profile;
   }
 
-  public void addProfile(Profile first, Profile... rest) {
+  public Service addProfile(Profile first, Profile... rest) {
     if (this.profiles == null) {
       this.profiles = new ArrayList<>();
     }
     this.profiles.addAll(Lists.asList(first, rest));
+    return this;
   }
 
-  public void addProfile(String first, String... rest) {
-    this.addProfile(new Profile(URI.create(first)),
-                    Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
+  public Service addProfile(String first, String... rest) {
+    return this.addProfile(new Profile(URI.create(first)),
+                           Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
   }
 
   public PropertyValue getLabel() {

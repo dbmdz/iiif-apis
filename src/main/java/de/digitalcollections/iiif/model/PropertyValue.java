@@ -52,16 +52,17 @@ public class PropertyValue  {
     this.localizations.put(language, new ArrayList<>(Lists.asList(firstValue, rest)));
   }
 
-  public void addValue(String first, String... rest) {
-    addValue(Locale.ROOT, first, rest);
+  public PropertyValue addValue(String first, String... rest) {
+    return addValue(Locale.ROOT, first, rest);
   }
 
-  public void addValue(Locale language, String first, String... rest) {
+  public PropertyValue addValue(Locale language, String first, String... rest) {
     if (this.localizations.containsKey(language)) {
       this.localizations.get(language).addAll(Lists.asList(first, rest));
     } else {
       setValues(language, first, rest);
     }
+    return this;
   }
 
   public Set<Locale> getLocalizations() {

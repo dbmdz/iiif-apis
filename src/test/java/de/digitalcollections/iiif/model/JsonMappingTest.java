@@ -55,7 +55,7 @@ public class JsonMappingTest {
 
     // Search Service
     ContentSearchService searchService = new ContentSearchService("http://some.uri/search/foo");
-    searchService.addAutocompleteService("http://some.uri/autocomplete/foo");
+    searchService.setAutocompleteServiceFromId("http://some.uri/autocomplete/foo");
     canvas.addService(searchService);
 
     // Metadata

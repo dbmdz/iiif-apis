@@ -107,11 +107,12 @@ public abstract class Resource {
     this.services = services;
   }
 
-  public void addService(Service first, Service... rest) {
+  public Resource addService(Service first, Service... rest) {
     if (this.services == null) {
       this.services = new ArrayList<>();
     }
     this.services.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<ImageContent> getThumbnails() {
@@ -127,26 +128,28 @@ public abstract class Resource {
     this.thumbnails = thumbnails;
   }
 
-  public void addThumbnail(ImageContent... thumbnails) {
+  public Resource addThumbnail(ImageContent... thumbnails) {
     if (this.thumbnails == null) {
       this.thumbnails = new ArrayList<>();
     }
     this.thumbnails.addAll(Arrays.asList(thumbnails));
+    return this;
   }
 
   public List<MetadataEntry> getMetadata() {
     return metadata;
   }
 
-  public void addMetadata(MetadataEntry... meta) {
+  public Resource addMetadata(MetadataEntry... meta) {
     if (this.metadata == null) {
       this.metadata = new ArrayList<>();
     }
     this.metadata.addAll(Arrays.asList(meta));
+    return this;
   }
 
-  public void addMetadata(String label, String value) {
-    this.addMetadata(new MetadataEntry(label, value));
+  public Resource addMetadata(String label, String value) {
+    return this.addMetadata(new MetadataEntry(label, value));
   }
 
   public PropertyValue getLabel() {
@@ -162,11 +165,12 @@ public abstract class Resource {
     this.label = label;
   }
 
-  public void addLabel(String first, String... rest) {
+  public Resource addLabel(String first, String... rest) {
     if (this.label == null) {
       this.label = new PropertyValue();
     }
     this.label.addValue(first, rest);
+    return this;
   }
 
     public PropertyValue getDescription() {
@@ -182,11 +186,12 @@ public abstract class Resource {
     this.description = description;
   }
 
-  public void addDescription(String first, String... rest) {
+  public Resource addDescription(String first, String... rest) {
     if (this.description == null) {
       this.description = new PropertyValue();
     }
     this.description.addValue(first, rest);
+    return this;
   }
 
   public PropertyValue getAttribution() {
@@ -202,11 +207,12 @@ public abstract class Resource {
     this.attribution = attribution;
   }
 
-  public void addAttribution(String first, String... rest) {
+  public Resource addAttribution(String first, String... rest) {
     if (this.attribution == null) {
       this.attribution = new PropertyValue();
     }
     this.attribution.addValue(first, rest);
+    return this;
   }
 
   public List<URI> getLicenses() {
@@ -222,12 +228,13 @@ public abstract class Resource {
     this.licenses = licenses;
   }
 
-  public void addLicense(String first, String... rest) {
+  public Resource addLicense(String first, String... rest) {
     if (this.licenses == null) {
       this.licenses = new ArrayList<>();
     }
     this.licenses.add(URI.create(first));
     Arrays.stream(rest).map(URI::create).forEach(licenses::add);
+    return this;
   }
 
   public List<ImageContent> getLogos() {
@@ -243,19 +250,21 @@ public abstract class Resource {
     this.logos = logos;
   }
 
-  public void addLogo(String first, String... rest) {
+  public Resource addLogo(String first, String... rest) {
     if (this.logos == null) {
       this.logos = new ArrayList<>();
     }
     this.logos.add(new ImageContent(first));
     Arrays.stream(rest).map(ImageContent::new).forEach(logos::add);
+    return this;
   }
 
-  public void addLogo(ImageContent first, ImageContent... rest) {
+  public Resource addLogo(ImageContent first, ImageContent... rest) {
     if (this.logos == null) {
       this.logos = new ArrayList<>();
     }
     this.logos.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   @JsonIgnore
@@ -280,14 +289,14 @@ public abstract class Resource {
     this.viewingHints = viewingHints;
   }
 
-  public void addViewingHint(ViewingHint first, ViewingHint... rest) {
+  public Resource addViewingHint(ViewingHint first, ViewingHint... rest) {
     List<ViewingHint> hints = this.viewingHints;
     if (hints == null) {
       hints = new ArrayList<>();
     }
-    hints.add(first);
-    hints.addAll(Arrays.asList(rest));
+    hints.addAll(Lists.asList(first, rest));
     this.setViewingHints(hints);
+    return this;
   }
 
   public List<OtherContent> getRelated() {
@@ -298,11 +307,12 @@ public abstract class Resource {
     this.related = related;
   }
 
-  public void addRelated(OtherContent first, OtherContent... rest) {
+  public Resource addRelated(OtherContent first, OtherContent... rest) {
     if (related == null) {
       this.related = new ArrayList<>();
     }
     this.related.addAll(asList(first, rest));
+    return this;
   }
 
   public List<OtherContent> getRenderings() {
@@ -313,11 +323,12 @@ public abstract class Resource {
     this.renderings = renderings;
   }
 
-  public void addRendering(OtherContent first, OtherContent... rest) {
+  public Resource addRendering(OtherContent first, OtherContent... rest) {
     if (renderings == null) {
       this.renderings = new ArrayList<>();
     }
     this.renderings.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public void verifyRendering(OtherContent content) {
@@ -334,11 +345,12 @@ public abstract class Resource {
     this.seeAlsoContents = seeAlso;
   }
 
-  public void addSeeAlso(OtherContent first, OtherContent... rest) {
+  public Resource addSeeAlso(OtherContent first, OtherContent... rest) {
     if (seeAlsoContents == null) {
       this.seeAlsoContents = new ArrayList<>();
     }
     this.seeAlsoContents.addAll(asList(first, rest));
+    return this;
   }
 
   public List<Resource> getWithin() {
@@ -349,11 +361,12 @@ public abstract class Resource {
     this.within = within;
   }
 
-  public void addWithin(Resource first, Resource... rest) {
+  public Resource addWithin(Resource first, Resource... rest) {
     if (within == null) {
       this.within = new ArrayList<>();
     }
     this.within.addAll(asList(first, rest));
+    return this;
   }
 
   @Override

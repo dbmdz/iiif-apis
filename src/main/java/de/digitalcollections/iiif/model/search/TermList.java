@@ -51,11 +51,12 @@ public class TermList {
     this.ignored = ignored;
   }
 
-  public void addIgnored(String first, String... rest) {
+  public TermList addIgnored(String first, String... rest) {
     if (this.ignored == null) {
       this.ignored = new LinkedHashSet<>();
     }
     this.ignored.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<Term> getTerms() {
@@ -66,10 +67,11 @@ public class TermList {
     this.terms = terms;
   }
 
-  public void addTerm(Term first, Term... rest) {
+  public TermList addTerm(Term first, Term... rest) {
     if (this.terms == null) {
       this.terms = new ArrayList<>();
     }
     this.terms.addAll(Lists.asList(first, rest));
+    return this;
   }
 }

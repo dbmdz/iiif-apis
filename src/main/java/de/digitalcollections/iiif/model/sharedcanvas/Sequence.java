@@ -64,11 +64,12 @@ public class Sequence extends Resource {
     this.canvases = canvases;
   }
 
-  public void addCanvas(Canvas first, Canvas... rest) {
+  public Sequence addCanvas(Canvas first, Canvas... rest) {
     if (this.canvases == null) {
       this.canvases = new ArrayList<>();
     }
     this.canvases.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public URI getStartCanvas() {

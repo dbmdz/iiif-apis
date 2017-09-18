@@ -157,11 +157,12 @@ public class ImageApiProfile extends Profile {
     this.formats = formats;
   }
 
-  public void addFormat(Format first, Format... rest) {
+  public ImageApiProfile addFormat(Format first, Format... rest) {
     if (this.formats == null) {
       this.formats = new LinkedHashSet<>();
     }
     this.formats.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public Set<Quality> getQualities() {
@@ -172,11 +173,12 @@ public class ImageApiProfile extends Profile {
     this.qualities = qualities;
   }
 
-  public void addQuality(Quality first, Quality... rest) {
+  public ImageApiProfile addQuality(Quality first, Quality... rest) {
     if (this.qualities == null) {
       this.qualities = new LinkedHashSet<>();
     }
     this.qualities.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public Set<Feature> getFeatures() {
@@ -187,11 +189,12 @@ public class ImageApiProfile extends Profile {
     this.features = features;
   }
 
-  public void addFeature(Feature first, Feature... rest) {
+  public ImageApiProfile addFeature(Feature first, Feature... rest) {
     if (this.features == null) {
       this.features = new LinkedHashSet<>();
     }
     this.features.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   @Override

@@ -105,18 +105,19 @@ public class Range extends Resource {
     this.canvases = canvases;
   }
 
-  public void addCanvas(Canvas first, Canvas... rest) {
+  public Range addCanvas(Canvas first, Canvas... rest) {
     if (this.canvases == null) {
       this.canvases = new ArrayList<>();
     }
     checkIdOnly(first);
     stream(rest).forEach(this::checkIdOnly);
     this.canvases.addAll(Lists.asList(first, rest));
+    return this;
   }
 
-  public void addCanvas(String idOfFirst, String... idsOfRest) {
-    this.addCanvas(new Canvas(idOfFirst),
-                   Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
+  public Range addCanvas(String idOfFirst, String... idsOfRest) {
+    return this.addCanvas(new Canvas(idOfFirst),
+                          Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
   }
 
   public List<Range> getRanges() {
@@ -128,18 +129,19 @@ public class Range extends Resource {
     this.ranges = ranges;
   }
 
-  public void addRange(Range first, Range... rest) {
+  public Range addRange(Range first, Range... rest) {
     if (this.ranges == null) {
       this.ranges = new ArrayList<>();
     }
     checkIdOnly(first);
     stream(rest).forEach(this::checkIdOnly);
     this.ranges.addAll(Lists.asList(first, rest));
+    return this;
   }
 
-  public void addRange(String first, String... rest) {
-    this.addRange(new Range(first),
-                  Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
+  public Range addRange(String first, String... rest) {
+    return this.addRange(new Range(first),
+                         Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
   }
 
   public List<Resource> getMembers() {
@@ -160,10 +162,11 @@ public class Range extends Resource {
     this.members = members;
   }
 
-  public void addMember(Resource first, Resource... rest) {
+  public Range addMember(Resource first, Resource... rest) {
     if (this.members == null) {
       this.members = new ArrayList<>();
     }
     this.members.addAll(Lists.asList(first, rest));
+    return this;
   }
 }

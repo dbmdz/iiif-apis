@@ -87,11 +87,12 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
     this.collections = collections;
   }
 
-  public void addCollection(Collection first, Collection... rest) {
+  public Collection addCollection(Collection first, Collection... rest) {
     if (this.collections == null) {
       this.collections = new ArrayList<>();
     }
     this.collections.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<Manifest> getManifests() {
@@ -102,11 +103,12 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
     this.manifests = manifests;
   }
 
-  public void addManifest(Manifest first, Manifest... rest) {
+  public Collection addManifest(Manifest first, Manifest... rest) {
     if (this.manifests == null) {
       this.manifests = new ArrayList<>();
     }
     this.manifests.addAll(Lists.asList(first, rest));
+    return this;
   }
 
 
@@ -131,13 +133,14 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
   }
 
 
-  public void addMember(Resource first, Resource... rest) {
+  public Collection addMember(Resource first, Resource... rest) {
     if (this.members == null) {
       this.members = new ArrayList<>();
       checkMember(first);
       stream(rest).forEach(this::checkMember);
     }
     this.members.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public OffsetDateTime getNavDate() {

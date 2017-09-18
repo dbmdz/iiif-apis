@@ -29,11 +29,12 @@ public class SearchHit {
     this.annotations = annotations;
   }
 
-  public void addAnnotation(Annotation first, Annotation... rest) {
+  public SearchHit addAnnotation(Annotation first, Annotation... rest) {
     if (this.annotations == null) {
       this.annotations = new ArrayList<>();
     }
     this.annotations.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<TextQuoteSelector> getSelectors() {
@@ -44,11 +45,12 @@ public class SearchHit {
     this.selectors = selectors;
   }
 
-  public void addSelector(TextQuoteSelector first, TextQuoteSelector... rest) {
+  public SearchHit addSelector(TextQuoteSelector first, TextQuoteSelector... rest) {
     if (this.selectors == null) {
       this.selectors = new ArrayList<>();
     }
     this.selectors.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public String getMatch() {

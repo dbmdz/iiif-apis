@@ -42,11 +42,12 @@ public class SearchResult extends AnnotationList {
     this.hits = hits;
   }
 
-  public void addHit(SearchHit first, SearchHit... rest) {
+  public SearchResult addHit(SearchHit first, SearchHit... rest) {
     if (this.hits == null) {
       this.hits = new ArrayList<>();
     }
     this.hits.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   @JsonDeserialize(contentAs = SearchLayer.class)
@@ -59,11 +60,11 @@ public class SearchResult extends AnnotationList {
   }
 
   @Override
-  public void addWithin(Resource first, Resource... rest) {
+  public Resource addWithin(Resource first, Resource... rest) {
     if (!(first instanceof SearchLayer) || Arrays.stream(rest).anyMatch(r -> !(r instanceof SearchLayer))) {
       throw new IllegalArgumentException("SearchResult can only be within a SearchLayer.");
     }
-    super.addWithin(first, rest);
+    return super.addWithin(first, rest);
   }
 
   @Override

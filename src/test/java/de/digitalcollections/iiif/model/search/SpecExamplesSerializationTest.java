@@ -46,7 +46,7 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testAutocomplete() throws Exception {
     ContentSearchService service = new ContentSearchService("http://example.org/services/identifier/search");
-    service.addAutocompleteService("http://example.org/services/identifier/autocomplete");
+    service.setAutocompleteServiceFromId("http://example.org/services/identifier/autocomplete");
     assertSerializationEqualsSpec(service, "autocomplete.json");
   }
 

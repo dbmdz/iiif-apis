@@ -66,7 +66,7 @@ public class Canvas extends Resource {
     }
   }
 
-  public void addIIIFImage(String serviceUrl, ImageApiProfile profile) {
+  public Canvas addIIIFImage(String serviceUrl, ImageApiProfile profile) {
     if (this.images == null) {
       this.images = new ArrayList<>();
     }
@@ -80,6 +80,7 @@ public class Canvas extends Resource {
     imgRes.addService(new ImageService(serviceUrl, profile));
     imgAnno.setResource(imgRes);
     this.images.add(imgAnno);
+    return this;
   }
 
   private Annotation wrapImageInAnnotation(ImageContent img) {
@@ -90,7 +91,7 @@ public class Canvas extends Resource {
     return imgAnno;
   }
 
-  public void addImage(ImageContent first, ImageContent... rest) {
+  public Canvas addImage(ImageContent first, ImageContent... rest) {
     if (this.images == null) {
       this.images = new ArrayList<>();
     }
@@ -102,6 +103,7 @@ public class Canvas extends Resource {
     if (this.images.size() == 1 && this.getWidth() == null && this.getHeight() == null) {
       this.setWidthFromImage(this.images.get(0));
     }
+    return this;
   }
 
   public void setWidthFromImage(Annotation imageAnno) {
@@ -134,11 +136,12 @@ public class Canvas extends Resource {
     this.otherContent = otherContent;
   }
 
-  public void addOtherContent(AnnotationList first, AnnotationList... rest) {
+  public Canvas addOtherContent(AnnotationList first, AnnotationList... rest) {
     if (this.otherContent == null) {
       this.otherContent = new ArrayList<>();
     }
     this.otherContent.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   @JsonIgnore

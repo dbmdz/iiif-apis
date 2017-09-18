@@ -27,7 +27,11 @@ public class ContentSearchService extends Service {
     return autocompleteService;
   }
 
-  public void addAutocompleteService(String identifier) {
-    this.autocompleteService = new AutocompleteService(URI.create(identifier));
+  public void setAutocompleteService(AutocompleteService service) {
+    this.autocompleteService = service;
+  }
+
+  public void setAutocompleteServiceFromId(String identifier) {
+    this.setAutocompleteService(new AutocompleteService(URI.create(identifier)));
   }
 }

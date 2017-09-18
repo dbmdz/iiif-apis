@@ -35,10 +35,11 @@ public class TileInfo {
     return scaleFactors;
   }
 
-  public void addScaleFactor(Integer first, Integer... rest) {
+  public TileInfo addScaleFactor(Integer first, Integer... rest) {
     if (this.scaleFactors == null) {
       this.scaleFactors = new ArrayList<Integer>();
     }
     this.scaleFactors.addAll(Lists.asList(first, rest));
+    return this;
   }
 }

@@ -77,11 +77,12 @@ public class ImageService extends Service {
     this.tiles = tiles;
   }
 
-  public void addTile(TileInfo first, TileInfo... rest) {
+  public ImageService addTile(TileInfo first, TileInfo... rest) {
     if (this.tiles == null) {
       this.tiles = new ArrayList<>();
     }
     this.tiles.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<Size> getSizes() {
@@ -92,11 +93,12 @@ public class ImageService extends Service {
     this.sizes = sizes;
   }
 
-  public void addSize(Size first, Size... rest) {
+  public ImageService addSize(Size first, Size... rest) {
     if (this.sizes == null) {
       this.sizes = new ArrayList<>();
     }
     this.sizes.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<Service> getServices() {
@@ -107,11 +109,12 @@ public class ImageService extends Service {
     this.services = services;
   }
 
-  public void addService(Service first, Service... rest) {
+  public ImageService addService(Service first, Service... rest) {
     if (this.services == null) {
       this.services = new ArrayList<>();
     }
     this.services.addAll(Lists.asList(first, rest));
+    return this;
   }
     public PropertyValue getAttribution() {
     return attribution;
@@ -126,11 +129,12 @@ public class ImageService extends Service {
     this.attribution = attribution;
   }
 
-  public void addAttribution(String first, String... rest) {
+  public ImageService addAttribution(String first, String... rest) {
     if (this.attribution == null) {
       this.attribution = new PropertyValue();
     }
     this.attribution.addValue(first, rest);
+    return this;
   }
 
   public List<URI> getLicenses() {
@@ -146,12 +150,13 @@ public class ImageService extends Service {
     this.licenses = licenses;
   }
 
-  public void addLicense(String first, String... rest) {
+  public ImageService addLicense(String first, String... rest) {
     if (this.licenses == null) {
       this.licenses = new ArrayList<>();
     }
     this.licenses.add(URI.create(first));
     Arrays.stream(rest).map(URI::create).forEach(licenses::add);
+    return this;
   }
 
   public List<ImageContent> getLogos() {
@@ -167,18 +172,20 @@ public class ImageService extends Service {
     this.logos = logos;
   }
 
-  public void addLogo(String first, String... rest) {
+  public ImageService addLogo(String first, String... rest) {
     if (this.logos == null) {
       this.logos = new ArrayList<>();
     }
     this.logos.add(new ImageContent(first));
     Arrays.stream(rest).map(ImageContent::new).forEach(logos::add);
+    return this;
   }
 
-  public void addLogo(ImageContent first, ImageContent... rest) {
+  public ImageService addLogo(ImageContent first, ImageContent... rest) {
     if (this.logos == null) {
       this.logos = new ArrayList<>();
     }
     this.logos.addAll(Lists.asList(first, rest));
+    return this;
   }
 }

@@ -89,11 +89,12 @@ public class Manifest extends Resource {
     }
   }
 
-  public void addSequence(Sequence first, Sequence... rest) {
+  public Manifest addSequence(Sequence first, Sequence... rest) {
     if (this.sequences == null) {
       this.sequences = new ArrayList<>();
     }
     this.sequences.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   public List<Range> getRanges() {
@@ -104,10 +105,11 @@ public class Manifest extends Resource {
     this.ranges = ranges;
   }
 
-  public void addRange(Range first, Range... rest) {
+  public Manifest addRange(Range first, Range... rest) {
     if (this.ranges == null) {
       this.ranges = new ArrayList<>();
     }
     this.ranges.addAll(Lists.asList(first, rest));
+    return this;
   }
 }

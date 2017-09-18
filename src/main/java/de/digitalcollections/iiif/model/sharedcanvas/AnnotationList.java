@@ -50,11 +50,12 @@ public class AnnotationList extends Resource implements Pageable<AnnotationList>
     this.resources = resources;
   }
 
-  public void addResource(Annotation first, Annotation... rest) {
+  public AnnotationList addResource(Annotation first, Annotation... rest) {
     if (this.resources == null) {
       this.resources = new ArrayList<>();
     }
     this.resources.addAll(Lists.asList(first, rest));
+    return this;
   }
 
   @Override

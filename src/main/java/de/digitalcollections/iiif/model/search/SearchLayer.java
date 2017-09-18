@@ -27,10 +27,11 @@ public class SearchLayer extends Layer {
     this.ignored = ignored;
   }
 
-  public void addIgnored(String first, String... rest) {
+  public SearchLayer addIgnored(String first, String... rest) {
     if (this.ignored == null) {
       this.ignored = new LinkedHashSet<>();
     }
     this.ignored.addAll(Lists.asList(first, rest));
+    return this;
   }
 }
