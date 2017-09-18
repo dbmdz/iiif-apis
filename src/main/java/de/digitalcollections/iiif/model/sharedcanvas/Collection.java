@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
+import de.digitalcollections.iiif.model.PropertyValue;
+import de.digitalcollections.iiif.model.enums.ViewingHint.Type;
 import de.digitalcollections.iiif.model.interfaces.PageContainer;
 import de.digitalcollections.iiif.model.interfaces.Pageable;
-import de.digitalcollections.iiif.model.enums.ViewingHint.Type;
+import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,11 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
   public Collection(String identifier, String label) {
     super(identifier);
     this.addLabel(label);
+  }
+
+  public Collection(URI identifier, PropertyValue label) {
+    this.setIdentifier(identifier);
+    this.setLabel(label);
   }
 
   @Override
