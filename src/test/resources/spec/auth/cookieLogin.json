@@ -1,0 +1,17 @@
+{
+  "@context": "http://iiif.io/api/auth/1/context.json",
+  "@id": "https://authentication.example.org/login",
+  "profile": "http://iiif.io/api/auth/1/login",
+  "label": "Login to Example Institution",
+  "header": "Please Log In",
+  "description": "Example Institution requires that you log in with your example account to view this content.",
+  "confirmLabel": "Login",
+  "failureHeader": "Authentication Failed",
+  "failureDescription": "<a href=\"http://example.org/policy\">Access Policy</a>",
+  "service": [
+    {
+    "@id": "https://authentication.example.org/token",
+    "profile": "http://iiif.io/api/auth/1/token"
+    }
+  ]
+}

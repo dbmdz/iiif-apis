@@ -86,4 +86,8 @@ public abstract class Service {
     this.label = label;
   }
 
+  public void setLabel(String label) {
+    setLabel(new PropertyValue(label));
+  }
+
 }

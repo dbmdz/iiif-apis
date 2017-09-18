@@ -1,0 +1,38 @@
+{
+  "@context" : "http://iiif.io/api/image/2/context.json",
+  "@id" : "https://www.example.org/images/image1",
+  "protocol" : "http://iiif.io/api/image",
+  "width" : 600,
+  "height" : 400,
+  "sizes" : [
+    {"width" : 150, "height" : 100},
+    {"width" : 600, "height" : 400}
+  ],
+  "profile" : [
+    "http://iiif.io/api/image/2/level2.json",
+    {
+      "formats" : [ "gif", "pdf" ],
+      "qualities" : [ "color", "gray" ],
+      "supports" : [
+        "canonicalLinkHeader", "rotationArbitrary"
+      ]
+    }
+  ],
+  "service" : {
+    "@context": "http://iiif.io/api/auth/1/context.json",
+    "@id": "https://authentication.example.org/login",
+    "profile": "http://iiif.io/api/auth/1/login",
+    "label": "Login to Example Institution",
+    "service" : [
+      {
+        "@id": "https://authentication.example.org/token",
+        "profile": "http://iiif.io/api/auth/1/token"
+      },
+      {
+        "@id": "https://authentication.example.org/logout",
+        "profile": "http://iiif.io/api/auth/1/logout",
+        "label": "Logout from Example Institution"
+      }
+    ]
+  }
+}

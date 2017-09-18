@@ -8,9 +8,11 @@
 [![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections/iiif/iiif-apis.svg?maxAge=2592000)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22iiif-apis%22)
 
 This module contains model classes for all currently available IIIF API entities, namely for the
-[Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/) and [Content Search](http://iiif.io/api/search/1.0/) APIs, as well as the additional services defined in
-the [Service Annex](http://iiif.io/api/annex/services/). It also includes all the neccessary components to parse and create valid JSON-LD
-representations of these entities, using [Jackson](https://github.com/FasterXML/jackson).
+[Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
+[Content Search](http://iiif.io/api/search/1.0/) and [Authentication](http://iiif.io/api/auth/1.0/) APIs, as well as
+the additional services defined in the [Service Annex](http://iiif.io/api/annex/services/). It also includes all the
+neccessary components to parse and create valid JSON-LD representations of these entities, using
+[Jackson](https://github.com/FasterXML/jackson).
 
 The library contains a comprehensive test suite for all entities, based on all of the examples
 provided in the IIIF specifications. Therefore, it should be able to parse and create any IIIF

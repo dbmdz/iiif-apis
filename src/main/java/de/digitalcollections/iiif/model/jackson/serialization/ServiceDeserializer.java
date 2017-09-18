@@ -8,14 +8,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.ImmutableSet;
+import de.digitalcollections.iiif.model.GenericService;
+import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.annex.GeoService;
 import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
+import de.digitalcollections.iiif.model.auth.AccessCookieService;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.search.AutocompleteService;
 import de.digitalcollections.iiif.model.search.ContentSearchService;
-import de.digitalcollections.iiif.model.GenericService;
-import de.digitalcollections.iiif.model.Service;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -46,6 +47,8 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       } else {
         return mapper.treeToValue(obj, ContentSearchService.class);
       }
+    } else if (Objects.equals(context, AccessCookieService.CONTEXT)) {
+      return mapper.treeToValue(obj, AccessCookieService.class);
     } else if (Objects.equals(context, GeoService.CONTEXT)) {
       return mapper.treeToValue(obj, GeoService.class);
     } else if (Objects.equals(context, PhysicalDimensionsService.CONTEXT)) {

@@ -1,0 +1,12 @@
+{
+    "@context": "http://iiif.io/api/auth/1/context.json",
+    "@id": "https://authentication.example.org/clickthrough",
+    "profile": "http://iiif.io/api/auth/1/clickthrough",
+    "label": "Terms of Use for Example Institution",
+    "header": "Restricted Material with Terms of Use",
+    "description": "<span>... terms of use ... </span>",
+    "confirmLabel": "I Agree",
+    "failureHeader": "Terms of Use Not Accepted",
+    "failureDescription": "You must accept the terms of use to see the content.",
+    "service": []
+}

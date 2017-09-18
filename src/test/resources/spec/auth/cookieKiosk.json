@@ -1,0 +1,9 @@
+{
+  "@context": "http://iiif.io/api/auth/1/context.json",
+  "@id": "https://authentication.example.org/cookiebaker",
+  "profile": "http://iiif.io/api/auth/1/kiosk",
+  "label": "Internal cookie granting service",
+  "failureHeader": "Ooops!",
+  "failureDescription": "Call Bob at ext. 1234 to reboot the cookie server",
+  "service": []
+}

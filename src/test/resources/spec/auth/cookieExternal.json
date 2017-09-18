@@ -1,0 +1,8 @@
+{
+  "@context": "http://iiif.io/api/auth/1/context.json",
+  "profile": "http://iiif.io/api/auth/1/external",
+  "label": "External Authentication Required",
+  "failureHeader": "Restricted Material",
+  "failureDescription": "This material is not viewable without prior agreement",
+  "service": []
+}
