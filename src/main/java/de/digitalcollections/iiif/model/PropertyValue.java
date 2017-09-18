@@ -87,6 +87,10 @@ public class PropertyValue  {
     return getValues().get(0);
   }
 
+  public String getFirstValue(Locale locale) {
+    return getValues(locale).get(0);
+  }
+
   @Override
   public String toString() {
     StringBuilder out = new StringBuilder();
