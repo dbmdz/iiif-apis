@@ -17,12 +17,13 @@ neccessary components to parse and create valid JSON-LD representations of these
 The library contains a comprehensive test suite for all entities, based on all of the examples
 provided in the IIIF specifications. Therefore, it should be able to parse and create any IIIF
 documents that are compliant with the official specifications. If you find that you cannot parse
-a IIIF entity that you believe to be correct, please [submit an issue]() including a link to
+a IIIF entity that you believe to be correct, please [submit an issue](https://github.com/dbmdz/iiif-apis/issues) including a link to
 the JSON-LD representation of the entity. Likewise, if you find that you cannot express
 a certain IIIF construct with the Java API, let us know.
 
-It is intended to replace both [iiif-presentation-api]() and [iiif-image-api]() once it is stable enough, with the
-non-model parts of these libraries being moved into [hymir]().
+It is intended to replace both [iiif-presentation-api](https://github.com/dbmdz/iiif-presentation-api)
+and [iiif-image-api](https://github.com/dbmdz/iiif-image-api) once it is stable enough, with the non-model
+parts of these libraries being moved into [hymir](https://github.com/dbmdz/iiif-server-hymir).
 
 ## Usage
 To use the module, first add it to your project's Maven or Gradle configuration:
