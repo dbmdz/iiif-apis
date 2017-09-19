@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/dbmdz/iiif-apis/branch/master/graph/badge.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg?maxAge=2592000)](https://github.com/dbmdz/iiif-apis/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections/iiif/iiif-apis.svg?maxAge=2592000)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22iiif-apis%22)
+[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg?maxAge=2592000)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22iiif-apis%22)
 
 This module contains model classes for all currently available IIIF API entities, namely for the
 [Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
