@@ -38,7 +38,7 @@ To use the module, first add it to your project's Maven or Gradle configuration:
 
 ```scala
 dependencies {
-    compile 'de.digitalcollections.iiif.iiif-apis:0.1.0-SNAPSHOT'
+    compile 'de.digitalcollections.iiif.iiif-apis:0.1.0'
 }
 ```
 
