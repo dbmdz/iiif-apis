@@ -32,7 +32,7 @@ To use the module, first add it to your project's Maven or Gradle configuration:
 <dependency>
   <groupId>de.digitalcollections.iiif</groupId>
   <artifactId>iiif-apis</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
 </dependency>
 ```
 
