@@ -5,6 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Duration;
 
+/**
+ * The access token returned by a {@link AccessTokenService}.
+ *
+ * See http://iiif.io/api/auth/1.0/#the-json-access-token-response
+ */
 public class AccessToken {
   @JsonProperty("accessToken")
   private String token;

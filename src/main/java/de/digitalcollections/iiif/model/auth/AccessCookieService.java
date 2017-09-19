@@ -11,6 +11,16 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The client uses this service to obtain a cookie that will be used when interacting with content such as images,
+ * and with the access token service.
+ *
+ * There are several different interaction patterns in which the client will use this service, based on the user
+ * interface that must be rendered for the user, indicated by a profile URI. The client obtains the link to the access
+ * cookie service from a service block in a description of the protected resource.
+ *
+ * See http://iiif.io/api/auth/1.0/#access-cookie-service
+ */
 @JsonPropertyOrder({"@context", "@id", "profile", "label", "header", "description", "confirmLabel",
                     "failureHeader", "failureDescription", "service"})
 public class AccessCookieService extends Service {

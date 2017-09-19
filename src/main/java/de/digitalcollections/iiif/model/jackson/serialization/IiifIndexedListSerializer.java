@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This is a custom serializer for List<Object> that has some special cases required by
+ * This is a custom serializer for `List<Object>` that has some special cases required by
  * the IIIF specification, namely that some fields should not be encoded as arrays if
  * they only contain a single element.
  *
