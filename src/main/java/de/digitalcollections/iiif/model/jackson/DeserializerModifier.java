@@ -6,15 +6,13 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.interfaces.Selector;
+import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.jackson.serialization.EnumDeserializer;
 import de.digitalcollections.iiif.model.jackson.serialization.ProfileDeserializer;
 import de.digitalcollections.iiif.model.jackson.serialization.ResourceDeserializer;
-import de.digitalcollections.iiif.model.jackson.serialization.SelectorDeserializer;
 import de.digitalcollections.iiif.model.jackson.serialization.ServiceDeserializer;
-import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.util.Arrays;
 
@@ -25,7 +23,6 @@ public class DeserializerModifier extends BeanDeserializerModifier {
       BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
     if (Arrays.asList(Quality.class, Format.class).contains(type.getRawClass())) {
       return new EnumDeserializer((Class<? extends Enum>) type.getRawClass());
-
     }
     return super.modifyEnumDeserializer(config, type, beanDesc, deserializer);
   }
@@ -39,10 +36,6 @@ public class DeserializerModifier extends BeanDeserializerModifier {
       return new ServiceDeserializer();
     } else if (Resource.class == beanDesc.getBeanClass()) {
       return new ResourceDeserializer();
-    } else if (Selector.class == beanDesc.getBeanClass()) {
-      // Selectors and CssStyles can be ContentAsText, if they're not we just delegate
-      // to the default deserializer.
-      return new SelectorDeserializer((JsonDeserializer<Object>) deserializer);
     } else if (Profile.class == beanDesc.getBeanClass()) {
       return new ProfileDeserializer((JsonDeserializer<Object>) deserializer);
     }

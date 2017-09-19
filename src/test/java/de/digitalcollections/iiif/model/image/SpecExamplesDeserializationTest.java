@@ -1,16 +1,13 @@
-package de.digitalcollections.iiif.model.sharedcanvas.image;
+package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.annex.GeoService;
 import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
 import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService.Unit;
-import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Feature;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
-import de.digitalcollections.iiif.model.image.ImageService;
-import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import java.io.IOException;
 import java.net.URI;

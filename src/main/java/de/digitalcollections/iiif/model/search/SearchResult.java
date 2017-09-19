@@ -27,7 +27,7 @@ public class SearchResult extends AnnotationList {
 
   @JsonProperty("@context")
   public List<String> getContext() {
-    return Arrays.asList(Resource.CONTEXT, this.CONTEXT);
+    return Arrays.asList(Resource.CONTEXT, CONTEXT);
   }
 
   private void setContext(List<String> contexts) {
@@ -77,12 +77,11 @@ public class SearchResult extends AnnotationList {
   }
 
   @Override
-  public AnnotationList getPrevious() {
-    return super.getPrevious();
+  public SearchResult getPrevious() {
+    return (SearchResult) super.getPrevious();
   }
 
-  @Override
-  public void setPrevious(AnnotationList previous) {
+  public void setPrevious(SearchResult previous) {
     super.setPrevious(previous);
   }
 }

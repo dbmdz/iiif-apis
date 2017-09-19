@@ -10,10 +10,10 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import java.io.IOException;
 
 public class ProfileSerializer extends JsonSerializer<Profile> {
-  private final JsonSerializer<Object> defaultSerialier;
+  private final JsonSerializer<Object> defaultSerializer;
 
-  public ProfileSerializer(JsonSerializer<Object> defaultSerialier) {
-    this.defaultSerialier = defaultSerialier;
+  public ProfileSerializer(JsonSerializer<Object> defaultSerializer) {
+    this.defaultSerializer = defaultSerializer;
   }
 
   @Override
@@ -22,7 +22,7 @@ public class ProfileSerializer extends JsonSerializer<Profile> {
     if (completeness == Completeness.ID_ONLY || (value instanceof ImageApiProfile && completeness == Completeness.ID_AND_TYPE)) {
       gen.writeString(value.getIdentifier().toString());
     } else {
-      defaultSerialier.serialize(value, gen, serializers);
+      defaultSerializer.serialize(value, gen, serializers);
     }
   }
 }

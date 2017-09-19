@@ -12,7 +12,7 @@ import java.net.URI;
  */
 public class PhysicalDimensionsService extends Service {
   public enum Unit {
-    MILIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");
+    MILLIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");
 
     private final String unit;
 

@@ -1,4 +1,4 @@
-package de.digitalcollections.iiif.model.sharedcanvas.presentation;
+package de.digitalcollections.iiif.model.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;

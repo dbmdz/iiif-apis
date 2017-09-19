@@ -31,7 +31,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       value._context = Resource.CONTEXT;
     }
 
-    // Remove @type from ImageContent if neccessary
+    // Remove @type from ImageContent if necessary
     String containingField = getContainingField(gen);
     String typeBackup = null;
     if (ImmutableSet.of("thumbnail", "logo").contains(containingField)) {
@@ -104,7 +104,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       value._context = Resource.CONTEXT;
     }
 
-    // Remove @type from ImageContent if neccessary
+    // Remove @type from ImageContent if necessary
     if (ImmutableSet.of("thumbnail", "logo").contains(getContainingField(gen))) {
       ImageContent imgContent = (ImageContent) value;
       imgContent._type = null;

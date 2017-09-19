@@ -37,7 +37,7 @@ public class TileInfo {
 
   public TileInfo addScaleFactor(Integer first, Integer... rest) {
     if (this.scaleFactors == null) {
-      this.scaleFactors = new ArrayList<Integer>();
+      this.scaleFactors = new ArrayList<>();
     }
     this.scaleFactors.addAll(Lists.asList(first, rest));
     return this;

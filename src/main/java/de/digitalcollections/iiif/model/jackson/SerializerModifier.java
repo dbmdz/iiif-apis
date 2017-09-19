@@ -14,7 +14,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.util.ArrayList;
 
 /**
- * Modifies the serializer to support the following functionalities:
+ * Modifies the serializer to support the following functions:
  *  - Add the JSON-LD '@context' property with the IIIF context to the top-level object
  *  - Serialize empty Resources as null, Resources with only an @id as strings
  *  - Remove redundant `@type` from Annotation.on and certain image resources

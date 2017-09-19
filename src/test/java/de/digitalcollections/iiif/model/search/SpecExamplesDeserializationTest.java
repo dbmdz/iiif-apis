@@ -1,17 +1,10 @@
-package de.digitalcollections.iiif.model.sharedcanvas.search;
+package de.digitalcollections.iiif.model.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
-import de.digitalcollections.iiif.model.search.AutocompleteService;
-import de.digitalcollections.iiif.model.search.ContentSearchService;
-import de.digitalcollections.iiif.model.search.SearchHit;
-import de.digitalcollections.iiif.model.search.SearchLayer;
-import de.digitalcollections.iiif.model.search.SearchResult;
-import de.digitalcollections.iiif.model.search.Term;
-import de.digitalcollections.iiif.model.search.TermList;
 import de.digitalcollections.iiif.model.sharedcanvas.AnnotationList;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;

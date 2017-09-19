@@ -18,7 +18,7 @@ public class GeoService extends Service {
 
   public GeoService() {
     super(URI.create(CONTEXT));
-  };
+  }
 
   public GeoService(String identifier) {
     this();

@@ -1,6 +1,5 @@
 package de.digitalcollections.iiif.model.jackson.serialization;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -35,7 +34,7 @@ public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
   }
 
   @Override
-  public void serialize(PropertyValue value, JsonGenerator jgen, SerializerProvider provider) throws IOException, JsonGenerationException {
+  public void serialize(PropertyValue value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
     if (value.getLocalizations().size() == 1 && value.getLocalizations().contains(Locale.ROOT)) {
       // Simple property value
       if (value.getValues().size() == 1) {

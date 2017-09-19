@@ -1,7 +1,6 @@
 package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -18,7 +17,7 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
   }
 
   @Override
-  public Profile deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+  public Profile deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
       if (p.getValueAsString().startsWith("http://iiif.io/api/image")) {
         return new ImageApiProfile(p.getValueAsString());

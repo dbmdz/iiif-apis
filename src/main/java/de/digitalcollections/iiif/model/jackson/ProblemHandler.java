@@ -73,7 +73,7 @@ public class ProblemHandler extends DeserializationProblemHandler {
       String typeName = StreamSupport.stream(((ArrayNode) mapper.readTree(p)).spliterator(), false)
           .map(JsonNode::textValue)
           .filter(v -> !v.equals(ContentAsText.TYPE))
-          .findFirst().get();
+          .findFirst().orElse(null);
       if (typeName != null) {
         return typeName;
       }

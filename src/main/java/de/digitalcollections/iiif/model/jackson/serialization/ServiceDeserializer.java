@@ -1,7 +1,6 @@
 package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -22,13 +21,13 @@ import java.util.Objects;
 
 /** Custom deserializer for services.
  *
- * Neccessary since the type dispatching is not uniform for services,
+ * Necessary since the type dispatching is not uniform for services,
  * sometimes we can decide by looking at @context, but other times we need to look
  * at the profile or both.
  */
 public class ServiceDeserializer extends JsonDeserializer<Service> {
   @Override
-  public Service deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+  public Service deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
     ObjectNode obj = mapper.readTree(p);
     if (isImageService(obj)) {

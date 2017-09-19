@@ -1,6 +1,8 @@
 package de.digitalcollections.iiif.model.openannotation;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import de.digitalcollections.iiif.model.interfaces.Selector;
+import de.digitalcollections.iiif.model.jackson.serialization.SelectorDeserializer;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 
 /**
@@ -16,6 +18,8 @@ public class SpecificResource extends Resource {
 
   private Resource full;
   private String style;
+
+  @JsonDeserialize(using = SelectorDeserializer.class)
   private Selector selector;
 
   public SpecificResource() {

@@ -11,7 +11,7 @@ This module contains model classes for all currently available IIIF API entities
 [Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
 [Content Search](http://iiif.io/api/search/1.0/) and [Authentication](http://iiif.io/api/auth/1.0/) APIs, as well as
 the additional services defined in the [Service Annex](http://iiif.io/api/annex/services/). It also includes all the
-neccessary components to parse and create valid JSON-LD representations of these entities, using
+necessary components to parse and create valid JSON-LD representations of these entities, using
 [Jackson](https://github.com/FasterXML/jackson).
 
 The library contains a comprehensive test suite for all entities, based on all of the examples
