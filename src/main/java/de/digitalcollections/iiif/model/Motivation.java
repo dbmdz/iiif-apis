@@ -16,7 +16,7 @@ public class Motivation {
   private final String motivation;
 
   @JsonCreator
-  Motivation(String motivation) {
+  public Motivation(String motivation) {
     this.motivation = motivation;
   }
 
