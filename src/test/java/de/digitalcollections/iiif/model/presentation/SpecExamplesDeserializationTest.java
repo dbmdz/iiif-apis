@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
 import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
@@ -35,6 +35,7 @@ import org.junit.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpecExamplesDeserializationTest {
+
   private ObjectMapper mapper;
 
   @Before
@@ -44,7 +45,7 @@ public class SpecExamplesDeserializationTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-        Resources.getResource("spec/presentation/" + filename), clz);
+            Resources.getResource("spec/presentation/" + filename), clz);
   }
 
   @Test
@@ -52,60 +53,60 @@ public class SpecExamplesDeserializationTest {
     Manifest manifest = readFromResources("full_response.json", Manifest.class);
     assertThat(manifest).isNotNull();
     assertThat(manifest.getIdentifier().toString())
-        .isEqualTo("http://example.org/iiif/book1/manifest");
+            .isEqualTo("http://example.org/iiif/book1/manifest");
     assertThat(manifest.getLabel().getValues())
-        .hasSize(1);
+            .hasSize(1);
     assertThat(manifest.getLabelString())
-        .isEqualTo("Book 1");
+            .isEqualTo("Book 1");
     assertThat(manifest.getMetadata())
-        .hasSize(2);
+            .hasSize(2);
     assertThat(manifest.getMetadata().get(1).getValue().getLocalizations())
-        .containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
+            .containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
     assertThat(manifest.getNavDate()).isEqualTo("1856-01-01T00:00:00Z");
 
     assertThat(manifest.getServices().get(0).getContext().toString())
-        .isEqualTo("http://example.org/ns/jsonld/context.json");
+            .isEqualTo("http://example.org/ns/jsonld/context.json");
     assertThat(manifest.getServices().get(0))
-        .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/service/example"));
+            .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/service/example"));
     assertThat(manifest.getServices().get(0).getProfiles())
-        .containsExactly(new Profile(URI.create("http://example.org/docs/example-service.html")));
+            .containsExactly(new Profile(URI.create("http://example.org/docs/example-service.html")));
 
     assertThat(manifest.getSeeAlso().get(0).getFormat())
-        .isEqualTo(MimeType.fromTypename("application/marc"));
+            .isEqualTo(MimeType.fromTypename("application/marc"));
     assertThat(manifest.getRenderings().get(0).getFormat())
-        .isEqualTo(MimeType.fromTypename("application/pdf"));
+            .isEqualTo(MimeType.fromTypename("application/pdf"));
     assertThat(manifest.getWithin().get(0))
-        .isInstanceOf(Collection.class)
-        .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/collections/books/"));
+            .isInstanceOf(Collection.class)
+            .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/collections/books/"));
 
     assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(3);
     Canvas firstCanvas = manifest.getDefaultSequence().getCanvases().get(0);
     assertThat(firstCanvas.getHeight()).isEqualTo(1000);
     assertThat(firstCanvas.getImages().get(0).getOn())
-        .isInstanceOf(Canvas.class);
+            .isInstanceOf(Canvas.class);
     assertThat(firstCanvas.getImages().get(0).getResource())
-        .isInstanceOf(ImageContent.class)
-        .hasFieldOrPropertyWithValue("format", MimeType.MIME_IMAGE_JPEG)
-        .hasFieldOrPropertyWithValue("height", 2000);
+            .isInstanceOf(ImageContent.class)
+            .hasFieldOrPropertyWithValue("format", MimeType.MIME_IMAGE_JPEG)
+            .hasFieldOrPropertyWithValue("height", 2000);
     Assertions.assertThat(firstCanvas.getImages().get(0).getResource().getServices().get(0))
-        .isInstanceOf(ImageService.class);
+            .isInstanceOf(ImageService.class);
 
     assertThat(firstCanvas.getOtherContent().get(0).getWithin().get(0))
-        .isInstanceOf(Layer.class)
-        .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/iiif/book1/layer/l1"));
+            .isInstanceOf(Layer.class)
+            .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/iiif/book1/layer/l1"));
 
     assertThat(manifest.getDefaultSequence().getCanvases().get(1)
-          .getOtherContent().get(0)
-          .getWithin().get(0))
-       .isInstanceOf(Layer.class)
-       .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/iiif/book1/layer/l1"));
+            .getOtherContent().get(0)
+            .getWithin().get(0))
+            .isInstanceOf(Layer.class)
+            .hasFieldOrPropertyWithValue("identifier", URI.create("http://example.org/iiif/book1/layer/l1"));
 
     assertThat(manifest.getRanges()).hasSize(1);
     assertThat(manifest.getRanges().get(0).getLabelString())
-        .isEqualTo("Introduction");
+            .isEqualTo("Introduction");
     assertThat(manifest.getRanges().get(0).getCanvases()).hasSize(3);
     assertThat(manifest.getRanges().get(0).getCanvases())
-        .allMatch(c -> c.getIdentifier().toString().startsWith("http://example.org/iiif/book1/canvas/p"));
+            .allMatch(c -> c.getIdentifier().toString().startsWith("http://example.org/iiif/book1/canvas/p"));
   }
 
   @Test
@@ -113,14 +114,14 @@ public class SpecExamplesDeserializationTest {
     AnnotationList annoList = readFromResources("annotationList.json", AnnotationList.class);
     assertThat(annoList).isNotNull();
     assertThat(annoList.getIdentifier().toString())
-        .isEqualTo("http://example.org/iiif/book1/list/p1");
+            .isEqualTo("http://example.org/iiif/book1/list/p1");
     assertThat(annoList.getResources()).hasSize(2);
     assertThat(annoList.getResources().get(0).getOn())
-        .isInstanceOf(Canvas.class);
+            .isInstanceOf(Canvas.class);
     assertThat(annoList.getResources().get(0).getResource())
-        .isInstanceOf(OtherContent.class)
-        .hasFieldOrPropertyWithValue("type", "dctypes:Sound")
-        .hasFieldOrPropertyWithValue("format", MimeType.fromTypename("audio/mpeg"));
+            .isInstanceOf(OtherContent.class)
+            .hasFieldOrPropertyWithValue("type", "dctypes:Sound")
+            .hasFieldOrPropertyWithValue("format", MimeType.fromTypename("audio/mpeg"));
   }
 
   @Test
@@ -129,11 +130,11 @@ public class SpecExamplesDeserializationTest {
     assertThat(annoList).isNotNull();
     assertThat(annoList.getWithin()).hasSize(1);
     assertThat(annoList.getWithin().get(0))
-        .isInstanceOf(Layer.class);
+            .isInstanceOf(Layer.class);
     assertThat(annoList.getWithin().get(0).getIdentifier().toString())
-        .isEqualTo("http://example.org/iiif/book1/layer/transcription");
+            .isEqualTo("http://example.org/iiif/book1/layer/transcription");
     assertThat(annoList.getWithin().get(0).getLabelString())
-        .isEqualTo("Diplomatic Transcription");
+            .isEqualTo("Diplomatic Transcription");
   }
 
   @Test
@@ -152,7 +153,7 @@ public class SpecExamplesDeserializationTest {
     Choice choice = (Choice) anno.getResource();
     assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
     assertThat(choice.getAlternatives())
-        .allMatch(ImageContent.class::isInstance);
+            .allMatch(ImageContent.class::isInstance);
     assertThat(anno.getOn()).isInstanceOf(Canvas.class);
   }
 
@@ -200,9 +201,9 @@ public class SpecExamplesDeserializationTest {
     assertThat(anno.getResource()).isInstanceOf(ImageContent.class);
     ImageContent img = (ImageContent) anno.getResource();
     assertThat(img)
-        .hasFieldOrPropertyWithValue("format", MimeType.MIME_IMAGE_JPEG)
-        .hasFieldOrPropertyWithValue("width", 1500)
-        .hasFieldOrPropertyWithValue("height", 2000);
+            .hasFieldOrPropertyWithValue("format", MimeType.MIME_IMAGE_JPEG)
+            .hasFieldOrPropertyWithValue("width", 1500)
+            .hasFieldOrPropertyWithValue("height", 2000);
     assertThat(img.getServices().get(0)).isInstanceOf(ImageService.class);
     ImageService imgService = (ImageService) img.getServices().get(0);
     assertThat(imgService.getProfiles()).containsExactly(ImageApiProfile.LEVEL_TWO);
@@ -214,7 +215,7 @@ public class SpecExamplesDeserializationTest {
     assertThat(selector).isNotNull();
     assertThat(selector.getRegion()).isEqualTo("50,50,1250,1850");
     assertThat(selector.asImageApiUri(URI.create("http://example.com/iiif/foobar")).toString())
-        .isEqualTo("http://example.com/iiif/foobar/50,50,1250,1850/full/0/default.jpg");
+            .isEqualTo("http://example.com/iiif/foobar/50,50,1250,1850/full/0/default.jpg");
   }
 
   @Test
@@ -232,25 +233,33 @@ public class SpecExamplesDeserializationTest {
     // NOTE: Only testing stuff not yet tested in testFullResponse
     ImageContent thumb = manifest.getThumbnail();
     assertThat(thumb.getIdentifier().toString())
-        .isEqualTo("http://example.org/images/book1-page1/full/80,100/0/default.jpg");
+            .isEqualTo("http://example.org/images/book1-page1/full/80,100/0/default.jpg");
     assertThat(thumb.getServices().get(0)).isInstanceOf(ImageService.class);
     assertThat(thumb.getServices().get(0).getProfiles())
-        .containsExactly(ImageApiProfile.LEVEL_ONE);
+            .containsExactly(ImageApiProfile.LEVEL_ONE);
     assertThat(manifest.getViewingDirection()).isEqualTo(ViewingDirection.RIGHT_TO_LEFT);
     assertThat(manifest.getViewingHints()).containsExactly(ViewingHint.PAGED);
     assertThat(manifest.getLogos()).hasSize(1);
     assertThat(manifest.getRelated().get(0).getFormat())
-        .isEqualTo(MimeType.fromTypename("video/mpeg"));
+            .isEqualTo(MimeType.fromTypename("video/mpeg"));
     assertThat(manifest.getSeeAlso().get(0))
-        .hasFieldOrPropertyWithValue("format", MimeType.fromTypename("text/xml"));
+            .hasFieldOrPropertyWithValue("format", MimeType.fromTypename("text/xml"));
     assertThat(manifest.getSeeAlso().get(0).getProfile().getIdentifier())
-        .isEqualTo(URI.create("http://example.org/profiles/bibliographic"));
+            .isEqualTo(URI.create("http://example.org/profiles/bibliographic"));
     assertThat(manifest.getRenderings().get(0).getFormat())
-        .isEqualTo(MimeType.fromTypename("application/pdf"));
+            .isEqualTo(MimeType.fromTypename("application/pdf"));
     assertThat(manifest.getRenderings().get(0).getLabelString())
-        .isEqualTo("Download as PDF");
+            .isEqualTo("Download as PDF");
     assertThat(manifest.getWithin().get(0)).isInstanceOf(Collection.class);
     assertThat(manifest.getDefaultSequence().getLabelString()).isEqualTo("Current Page Order");
+  }
+
+  @Test
+  public void testManifestWithSimpleLogo() throws Exception {
+    Manifest manifest = readFromResources("manifestWithSimpleLogo.json", Manifest.class);
+    assertThat(manifest).isNotNull();
+    // NOTE: Only testing stuff not yet tested in testManifest
+    assertThat(manifest.getLogos()).hasSize(1);
   }
 
   @Test
@@ -296,7 +305,7 @@ public class SpecExamplesDeserializationTest {
     assertThat(anno.getResource()).isInstanceOf(SpecificResource.class);
     SpecificResource res = (SpecificResource) anno.getResource();
     assertThat(res.getFull())
-        .isInstanceOf(ImageContent.class);
+            .isInstanceOf(ImageContent.class);
     assertThat(res.getSelector()).isInstanceOf(ImageApiSelector.class);
   }
 
@@ -317,15 +326,15 @@ public class SpecExamplesDeserializationTest {
     SpecificResource res = (SpecificResource) anno.getResource();
     assertThat(res.getSelector()).isInstanceOf(SvgSelector.class);
     assertThat(((SvgSelector) res.getSelector()).getChars())
-        .isEqualTo("<svg xmlns=\"...\"><path d=\"...\"/></svg>");
+            .isEqualTo("<svg xmlns=\"...\"><path d=\"...\"/></svg>");
   }
 
   @Test
   public void testStylesheet() throws Exception {
     Annotation anno = readFromResources("stylesheet.json", Annotation.class);
     assertThat(anno.getStylesheet().getChars())
-        .isEqualTo(".red {color: red;}");
+            .isEqualTo(".red {color: red;}");
     assertThat(((SpecificResource) anno.getResource()).getStyle())
-        .isEqualTo("red");
+            .isEqualTo("red");
   }
 }
