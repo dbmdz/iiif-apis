@@ -7,6 +7,7 @@ import de.digitalcollections.iiif.model.image.ImageApiSelector;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
+import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,4 +50,9 @@ public class ParsingTest {
     assertThat(choice.getAlternatives().get(0)).isNull();
   }
 
+  @Test
+  public void testManifestWithStringLogo() throws Exception {
+    Manifest manifest = readFromResources("stringImage.json", Manifest.class);
+    assertThat(manifest.getLogoUri().toString()).isEqualTo("http://example.com/logo.png");
+  }
 }

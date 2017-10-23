@@ -1,0 +1,38 @@
+{
+  "attribution" : "Some Institution",
+  "license" : "http://www.europeana.eu/rights/out-of-copyright-non-commercial/",
+  "logo" : "http://example.com/logo.png",
+  "label" : "A Label",
+  "sequences" : [ {
+    "canvases" : [ {
+      "height" : 1000,
+      "images" : [ {
+        "motivation" : "sc:painting",
+        "on" : "http://example.com/iiif/presentation/v2/foo/canvas/p1",
+        "resource" : {
+          "format" : "image/jpeg",
+          "height" :10001792,
+          "width" : 1000,
+          "service" : {
+            "profile" : "http://iiif.io/api/image/2/level1.json",
+            "@context" : "http://iiif.io/api/image/2/context.json",
+            "@id" : "http://example.com/iiif/image/v2/foo_00523"
+          },
+          "@id" : "http://example.com/iiif/image/foo_00523/full/full/0/default.jpg",
+          "@type" : "dctypes:Image"
+        },
+        "@id" : "http://example.com/iiif/image/foo_00523/full/full/0/default.jpg",
+        "@type" : "oa:Annotation"
+      } ],
+      "label" : "Seite 1",
+      "width" : 1500,
+      "@type" : "sc:Canvas",
+      "@id" : "http://example.com/iiif/presentation/v2/foo/canvas/p1"
+    }],
+    "@type" : "sc:Sequence"
+  } ],
+  "viewingHint" : "paged",
+  "@type" : "sc:Manifest",
+  "@id" : "http://example.com/iiif/presentation/v2/foo/manifest",
+  "@context" : "http://iiif.io/api/presentation/2/context.json"
+}
