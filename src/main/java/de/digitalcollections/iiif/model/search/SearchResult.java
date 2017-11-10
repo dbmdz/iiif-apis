@@ -50,17 +50,27 @@ public class SearchResult extends AnnotationList {
     return this;
   }
 
+  /**
+   * Set the list of containing resources. Must all be instances of {@link SearchLayer}
+   *
+   * @throws IllegalArgumentException if at least one of the resources is not a {@link SearchLayer}
+   */
   @JsonDeserialize(contentAs = SearchLayer.class)
   @Override
-  public void setWithin(List<Resource> within) {
+  public void setWithin(List<Resource> within) throws IllegalArgumentException {
     if (within.stream().anyMatch(r -> !(r instanceof SearchLayer))) {
       throw new IllegalArgumentException("SearchResult can only be within a SearchLayer.");
     }
     super.setWithin(within);
   }
 
+  /**
+   * Add a new containing resource. Must be an instance of {@link SearchLayer}
+   *
+   * @throws IllegalArgumentException if the resource is not a {@link SearchLayer}
+   */
   @Override
-  public Resource addWithin(Resource first, Resource... rest) {
+  public Resource addWithin(Resource first, Resource... rest) throws IllegalArgumentException {
     if (!(first instanceof SearchLayer) || Arrays.stream(rest).anyMatch(r -> !(r instanceof SearchLayer))) {
       throw new IllegalArgumentException("SearchResult can only be within a SearchLayer.");
     }

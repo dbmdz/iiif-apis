@@ -47,7 +47,12 @@ public class AccessCookieService extends Service {
     this(identifier == null ? null : URI.create(identifier), pattern);
   }
 
-  public AccessCookieService(URI identifier, AuthPattern pattern) {
+  /**
+   * Create a new access cookie service from an (optional) identifier and an authentication pattern.
+   *
+   * @throws IllegalArgumentException If the auth pattern is not "external" and no identifier is provided.
+   */
+  public AccessCookieService(URI identifier, AuthPattern pattern) throws IllegalArgumentException {
     super(URI.create(CONTEXT));
     if (identifier == null && pattern != AuthPattern.EXTERNAL) {
       throw new IllegalArgumentException("Identifier must be present!");

@@ -157,16 +157,32 @@ public class Range extends Resource {
     }
   }
 
+  /**
+   * Sets the member resources. Must be either instances of {@link Range} or {@link Canvas}.
+   * All members must have an identifier and a label.
+   *
+   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
+   *         an identifier and a label;
+   */
   public void setMembers(List<Resource> members) {
     members.forEach(this::checkMember);
     this.members = members;
   }
 
-  public Range addMember(Resource first, Resource... rest) {
+  /**
+   * Adds one or more member resources. Must be either instances of {@link Range} or {@link Canvas}.
+   * All members must have an identifier and a label.
+   *
+   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
+   *         an identifier and a label;
+   */
+  public Range addMember(Resource first, Resource... rest) throws IllegalArgumentException{
     if (this.members == null) {
       this.members = new ArrayList<>();
     }
-    this.members.addAll(Lists.asList(first, rest));
+    List<Resource> members = Lists.asList(first, rest);
+    members.forEach(this::checkMember);
+    this.members.addAll(members);
     return this;
   }
 }

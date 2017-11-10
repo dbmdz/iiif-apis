@@ -127,12 +127,27 @@ public class Collection extends Resource implements Pageable<Collection>, PageCo
     }
   }
 
+
+  /**
+   * Set the list of member resources. Must be either instances of {@link Manifest} or {@link Collection}.
+   * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
+   *
+   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
+   *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
+   */
   public void setMembers(List<Resource> members) {
     members.forEach(this::checkMember);
     this.members = members;
   }
 
 
+  /**
+   * Adds one or more member resources. Must be either instances of {@link Manifest} or {@link Collection}.
+   * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
+   *
+   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
+   *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
+   */
   public Collection addMember(Resource first, Resource... rest) {
     if (this.members == null) {
       this.members = new ArrayList<>();

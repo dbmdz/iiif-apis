@@ -54,16 +54,17 @@ public class Canvas extends Resource {
     return images;
   }
 
-  public void setImages(List<Annotation> images) {
-    validateImages(images);
-    this.images = images;
-  }
-
-  private void validateImages(List<Annotation> images) {
+  /**
+   * Sets the image annotations on this canvas. Must all be instances of {@link ImageContent}
+   *
+   * @throws IllegalArgumentException if at least one of the image annotations is not an {@link ImageContent}
+   */
+  public void setImages(List<Annotation> images) throws IllegalArgumentException {
     if (!images.stream().allMatch(a -> a.getResource() instanceof ImageContent)) {
       throw new IllegalArgumentException("All annotations must **only** have ImageContent resources. Use otherContent" +
                                          " for other types of content.");
     }
+    this.images = images;
   }
 
   public Canvas addIIIFImage(String serviceUrl, ImageApiProfile profile) {

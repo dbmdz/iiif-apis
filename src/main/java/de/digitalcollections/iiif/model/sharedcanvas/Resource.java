@@ -276,7 +276,12 @@ public abstract class Resource {
     return viewingHints;
   }
 
-  public void setViewingHints(List<ViewingHint> viewingHints) {
+  /**
+   * Set the viewing hints for this resource.
+   *
+   * @throws IllegalArgumentException if the resources not not support one of the viewing hints.
+   */
+  public void setViewingHints(List<ViewingHint> viewingHints) throws IllegalArgumentException {
     for (ViewingHint hint : viewingHints) {
       boolean supportsHint = (hint.getType() == ViewingHint.Type.OTHER ||
                               this.getSupportedViewingHintTypes().contains(hint.getType()));
@@ -289,7 +294,12 @@ public abstract class Resource {
     this.viewingHints = viewingHints;
   }
 
-  public Resource addViewingHint(ViewingHint first, ViewingHint... rest) {
+  /**
+   * Add one or more viewing hints for this resource.
+   *
+   * @throws IllegalArgumentException if the resources not not support one of the viewing hints.
+   */
+  public Resource addViewingHint(ViewingHint first, ViewingHint... rest) throws IllegalArgumentException {
     List<ViewingHint> hints = this.viewingHints;
     if (hints == null) {
       hints = new ArrayList<>();
@@ -319,21 +329,34 @@ public abstract class Resource {
     return renderings;
   }
 
-  public void setRenderings(List<OtherContent> renderings) {
+  /**
+   * Sets the renderings. All renderings must have both a profile and a format.
+   *
+   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
+   */
+  public void setRenderings(List<OtherContent> renderings) throws IllegalArgumentException {
+    renderings.forEach(this::verifyRendering);
     this.renderings = renderings;
   }
 
+  /**
+   * Add one or more renderings. All renderings must have both a profile and a format.
+   *
+   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
+   */
   public Resource addRendering(OtherContent first, OtherContent... rest) {
     if (renderings == null) {
       this.renderings = new ArrayList<>();
     }
-    this.renderings.addAll(Lists.asList(first, rest));
+    List<OtherContent> renderings = Lists.asList(first, rest);
+    renderings.forEach(this::verifyRendering);
+    this.renderings.addAll(renderings);
     return this;
   }
 
   public void verifyRendering(OtherContent content) {
-    if (content.getProfile() == null || content.getFormat() == null) {
-      throw new IllegalArgumentException("Rendering resources must have a profile and format set.");
+    if (content.getLabel() == null || content.getFormat() == null) {
+      throw new IllegalArgumentException("Rendering resources must have a label and format set.");
     }
   }
 
