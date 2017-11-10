@@ -141,6 +141,10 @@ public class ImageApiProfile extends Profile {
   @JsonProperty("supports")
   Set<Feature> features;
 
+  Integer maxArea;
+  Integer maxHeight;
+  Integer maxWidth;
+
   public ImageApiProfile() {
     super(null);
   }
@@ -195,6 +199,30 @@ public class ImageApiProfile extends Profile {
     }
     this.features.addAll(Lists.asList(first, rest));
     return this;
+  }
+
+  public Integer getMaxArea() {
+    return maxArea;
+  }
+
+  public void setMaxArea(Integer maxArea) {
+    this.maxArea = maxArea;
+  }
+
+  public Integer getMaxHeight() {
+    return maxHeight;
+  }
+
+  public void setMaxHeight(Integer maxHeight) {
+    this.maxHeight = maxHeight;
+  }
+
+  public Integer getMaxWidth() {
+    return maxWidth;
+  }
+
+  public void setMaxWidth(Integer maxWidth) {
+    this.maxWidth = maxWidth;
   }
 
   @Override

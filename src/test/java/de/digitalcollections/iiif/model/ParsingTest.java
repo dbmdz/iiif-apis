@@ -35,9 +35,9 @@ public class ParsingTest {
   @Test
   public void testFullImageApiSelector() throws Exception {
     ImageApiSelector sel = readFromResources("fullImageSelector.json", ImageApiSelector.class);
-    assertThat(sel.getRegion()).isEqualTo("50,50,1250,1850");
-    assertThat(sel.getSize()).isEqualTo("800,600");
-    assertThat(sel.getRotation()).isEqualTo("!90");
+    assertThat(sel.getRegion().toString()).isEqualTo("50,50,1250,1850");
+    assertThat(sel.getSize().toString()).isEqualTo("800,600");
+    assertThat(sel.getRotation().toString()).isEqualTo("!90");
     assertThat(sel.getQuality()).isEqualTo(Quality.DEFAULT);
     assertThat(sel.getFormat()).isEqualTo(Format.PNG);
   }

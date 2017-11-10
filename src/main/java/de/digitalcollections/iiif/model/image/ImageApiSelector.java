@@ -2,26 +2,30 @@ package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
+import de.digitalcollections.iiif.model.interfaces.Selector;
 import java.net.URI;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A selector that describes a region on an IIIF Image API resource.
  *
  * See http://iiif.io/api/annex/openannotation/#iiif-image-api-selector
  */
-// TODO: This should perform validation of the Image API parameters
 @JsonTypeName(ImageApiSelector.TYPE)
 public class ImageApiSelector implements Selector {
   public static String CONTEXT = "http://iiif.io/api/annex/openannotation/context.json";
   public static final String TYPE = "iiif:ImageApiSelector";
 
-  private String region;
-  private String size;
-  private String rotation;
+  private static final Pattern REQUEST_PAT = Pattern.compile(
+      "/(?<region>[^/]+)/(?<size>[^/]+)/(?<rotation>[^/]+)/(?<quality>[^/]+?)\\.(?<format>[^/]+?)$");
+
+  private RegionRequest region;
+  private SizeRequest size;
+  private RotationRequest rotation;
   private Quality quality;
   private Format format;
 
@@ -35,43 +39,77 @@ public class ImageApiSelector implements Selector {
     return TYPE;
   }
 
+  public static ImageApiSelector fromImageApiUri(URI imageApiUri) {
+    return fromString(imageApiUri.getPath());
+  }
+
+  public static ImageApiSelector fromString(String str) {
+    Matcher matcher = REQUEST_PAT.matcher(str);
+    if (!matcher.find()) {
+      throw new IllegalArgumentException("Malformed IIIF Image API request: " + str);
+    }
+    ImageApiSelector selector = new ImageApiSelector();
+    selector.setRegion(matcher.group("region"));
+    selector.setSize(matcher.group("size"));
+    selector.setRotation(matcher.group("rotation"));
+    selector.setQuality(Quality.valueOf(matcher.group("quality").toUpperCase()));
+    selector.setFormat(Format.valueOf(matcher.group("format").toUpperCase()));
+    return selector;
+  }
+
   public URI asImageApiUri(URI baseUri) {
     String baseUriString = baseUri.toString();
-    if (!baseUriString.endsWith("/")) {
-      baseUriString += "/";
+    if (baseUriString.endsWith("/")) {
+      baseUriString = baseUriString.substring(0, baseUriString.length() -1);
     }
-    return baseUri.resolve(String.format(
-        "%s%s/%s/%s/%s.%s",
-        baseUriString,
+    return URI.create(baseUriString + this.toString());
+  }
+
+  @Override
+  public String toString() {
+    return String.format(
+        "/%s/%s/%s/%s.%s",
         Objects.toString(region, "full"),
         Objects.toString(size, "full"),
         Objects.toString(rotation, "0"),
         Objects.toString(quality, "default"),
-        Objects.toString(format, "jpg")));
+        Objects.toString(format, "jpg"));
   }
 
-  public String getRegion() {
+  public RegionRequest getRegion() {
     return region;
   }
 
-  public void setRegion(String region) {
+  public void setRegion(RegionRequest region) {
     this.region = region;
   }
 
-  public String getSize() {
+  public void setRegion(String region) {
+    this.region = RegionRequest.fromString(region);
+  }
+
+  public SizeRequest getSize() {
     return size;
   }
 
-  public void setSize(String size) {
+  public void setSize(SizeRequest size) {
     this.size = size;
   }
 
-  public String getRotation() {
+  public void setSize(String size) {
+    this.size = SizeRequest.fromString(size);
+  }
+
+  public RotationRequest getRotation() {
     return rotation;
   }
 
-  public void setRotation(String rotation) {
+  public void setRotation(RotationRequest rotation) {
     this.rotation = rotation;
+  }
+
+  public void setRotation(String rotation) {
+    this.rotation = RotationRequest.fromString(rotation);
   }
 
   public Quality getQuality() {

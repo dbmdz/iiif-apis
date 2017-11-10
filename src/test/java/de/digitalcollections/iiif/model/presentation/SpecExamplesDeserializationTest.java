@@ -213,7 +213,7 @@ public class SpecExamplesDeserializationTest {
   public void testImageSelector() throws IOException {
     ImageApiSelector selector = readFromResources("imageSelector.json", ImageApiSelector.class);
     assertThat(selector).isNotNull();
-    assertThat(selector.getRegion()).isEqualTo("50,50,1250,1850");
+    assertThat(selector.getRegion().toString()).isEqualTo("50,50,1250,1850");
     assertThat(selector.asImageApiUri(URI.create("http://example.com/iiif/foobar")).toString())
             .isEqualTo("http://example.com/iiif/foobar/50,50,1250,1850/full/0/default.jpg");
   }
