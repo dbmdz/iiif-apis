@@ -66,26 +66,65 @@ public class ImageApiProfile extends Profile {
       SIZE_BY_DISTORTED_WH, OTHER
     }
 
+    /** The base URI of the service will redirect to the image information document. **/
     public static final Feature BASE_URI_REDIRECT = new Feature(ImageApiFeature.BASE_URI_REDIRECT);
+
+    /** The canonical image URI HTTP link header is provided on image responses. **/
     public static final Feature CANONICAL_LINK_HEADER = new Feature(ImageApiFeature.CANONICAL_LINK_HEADER);
+
+    /** The CORS HTTP header is provided on all responses. **/
     public static final Feature CORS = new Feature(ImageApiFeature.CORS);
+
+    /** The JSON-LD media type is provided when JSON-LD is requested. **/
     public static final Feature JSONLD_MEDIA_TYPE = new Feature(ImageApiFeature.JSONLD_MEDIA_TYPE);
+
+    /** The image may be rotated around the vertical axis, resulting in a left-to-right mirroring of the content. **/
     public static final Feature MIRRORING = new Feature(ImageApiFeature.MIRRORING);
+
+    /** The profile HTTP link header is provided on image responses. **/
     public static final Feature PROFILE_LINK_HEADER = new Feature(ImageApiFeature.PROFILE_LINK_HEADER);
+
+    /** Regions of images may be requested by percentage. **/
     public static final Feature REGION_BY_PCT = new Feature(ImageApiFeature.REGION_BY_PCT);
+
+    /** Regions of images may be requested by pixel dimensions. **/
     public static final Feature REGION_BY_PX = new Feature(ImageApiFeature.REGION_BY_PX);
+
+    /** A square region where the width and height are equal to the shorter dimension of the complete image content. **/
     public static final Feature REGION_SQUARE = new Feature(ImageApiFeature.REGION_SQUARE);
+
+    /** Rotation of images may be requested by degrees other than multiples of 90. **/
     public static final Feature ROTATION_ARBITRARY = new Feature(ImageApiFeature.ROTATION_ARBITRARY);
+
+    /** Rotation of images may be requested by degrees in multiples of 90. **/
     public static final Feature ROTATION_BY_90S = new Feature(ImageApiFeature.ROTATION_BY_90S);
+
+    /** Size of images may be requested larger than the “full” size. See warning. **/
     public static final Feature SIZE_ABOVE_FULL = new Feature(ImageApiFeature.SIZE_ABOVE_FULL);
-    public static final Feature SIZE_BY_WH_LISTED = new Feature(ImageApiFeature.SIZE_BY_WH_LISTED);
-    public static final Feature SIZE_BY_FORCED_WH = new Feature(ImageApiFeature.SIZE_BY_FORCED_WH);
-    public static final Feature SIZE_BY_H = new Feature(ImageApiFeature.SIZE_BY_H);
-    public static final Feature SIZE_BY_PCT = new Feature(ImageApiFeature.SIZE_BY_PCT);
-    public static final Feature SIZE_BY_W = new Feature(ImageApiFeature.SIZE_BY_W);
-    public static final Feature SIZE_BY_WH = new Feature(ImageApiFeature.SIZE_BY_WH);
+
+    /** Size of images may be requested in the form “!w,h”. **/
     public static final Feature SIZE_BY_CONFINED_WH = new Feature(ImageApiFeature.SIZE_BY_CONFINED_WH);
+
+    /** Size of images may be requested in the form “w,h”, including sizes that would distort the image. **/
     public static final Feature SIZE_BY_DISTORTED_WH = new Feature(ImageApiFeature.SIZE_BY_DISTORTED_WH);
+
+    /** Size of images may be requested in the form “,h”. **/
+    public static final Feature SIZE_BY_H = new Feature(ImageApiFeature.SIZE_BY_H);
+
+    /** Size of images may be requested in the form “pct:n”.**/
+    public static final Feature SIZE_BY_PCT = new Feature(ImageApiFeature.SIZE_BY_PCT);
+
+    /** Size of images may be requested in the form “w,”. **/
+    public static final Feature SIZE_BY_W = new Feature(ImageApiFeature.SIZE_BY_W);
+
+    /** Size of images may be requested in the form “w,h” where the supplied w and h preserve the aspect ratio. **/
+    public static final Feature SIZE_BY_WH = new Feature(ImageApiFeature.SIZE_BY_WH);
+
+    @Deprecated
+    public static final Feature SIZE_BY_WH_LISTED = new Feature(ImageApiFeature.SIZE_BY_WH_LISTED);
+
+    @Deprecated
+    public static final Feature SIZE_BY_FORCED_WH = new Feature(ImageApiFeature.SIZE_BY_FORCED_WH);
 
     private final ImageApiFeature imageApiFeature;
     private final URI customFeature;
