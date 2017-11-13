@@ -61,8 +61,9 @@ public class ImageApiProfile extends Profile {
   public static class Feature {
     private enum ImageApiFeature {
       BASE_URI_REDIRECT,  CANONICAL_LINK_HEADER,  CORS,  JSONLD_MEDIA_TYPE,  MIRRORING,  PROFILE_LINK_HEADER,
-      REGION_BY_PCT,  REGION_BY_PX,  ROTATION_ARBITRARY,  ROTATION_BY_90S,  SIZE_ABOVE_FULL,  SIZE_BY_WH_LISTED,
-      SIZE_BY_FORCED_WH,  SIZE_BY_H,  SIZE_BY_PCT, SIZE_BY_W,  SIZE_BY_WH, OTHER
+      REGION_BY_PCT,  REGION_BY_PX,  REGION_SQUARE, ROTATION_ARBITRARY,  ROTATION_BY_90S,  SIZE_ABOVE_FULL,
+      SIZE_BY_WH_LISTED, SIZE_BY_FORCED_WH,  SIZE_BY_H,  SIZE_BY_PCT, SIZE_BY_W,  SIZE_BY_WH, SIZE_BY_CONFINED_WH,
+      SIZE_BY_DISTORTED_WH, OTHER
     }
 
     public static final Feature BASE_URI_REDIRECT = new Feature(ImageApiFeature.BASE_URI_REDIRECT);
@@ -73,6 +74,7 @@ public class ImageApiProfile extends Profile {
     public static final Feature PROFILE_LINK_HEADER = new Feature(ImageApiFeature.PROFILE_LINK_HEADER);
     public static final Feature REGION_BY_PCT = new Feature(ImageApiFeature.REGION_BY_PCT);
     public static final Feature REGION_BY_PX = new Feature(ImageApiFeature.REGION_BY_PX);
+    public static final Feature REGION_SQUARE = new Feature(ImageApiFeature.REGION_SQUARE);
     public static final Feature ROTATION_ARBITRARY = new Feature(ImageApiFeature.ROTATION_ARBITRARY);
     public static final Feature ROTATION_BY_90S = new Feature(ImageApiFeature.ROTATION_BY_90S);
     public static final Feature SIZE_ABOVE_FULL = new Feature(ImageApiFeature.SIZE_ABOVE_FULL);
@@ -82,6 +84,8 @@ public class ImageApiProfile extends Profile {
     public static final Feature SIZE_BY_PCT = new Feature(ImageApiFeature.SIZE_BY_PCT);
     public static final Feature SIZE_BY_W = new Feature(ImageApiFeature.SIZE_BY_W);
     public static final Feature SIZE_BY_WH = new Feature(ImageApiFeature.SIZE_BY_WH);
+    public static final Feature SIZE_BY_CONFINED_WH = new Feature(ImageApiFeature.SIZE_BY_CONFINED_WH);
+    public static final Feature SIZE_BY_DISTORTED_WH = new Feature(ImageApiFeature.SIZE_BY_DISTORTED_WH);
 
     private final ImageApiFeature imageApiFeature;
     private final URI customFeature;
