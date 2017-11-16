@@ -9,6 +9,7 @@ import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -54,5 +55,19 @@ public class ParsingTest {
   public void testManifestWithStringLogo() throws Exception {
     Manifest manifest = readFromResources("stringImage.json", Manifest.class);
     assertThat(manifest.getLogoUri().toString()).isEqualTo("http://example.com/logo.png");
+  }
+
+  @Test
+  public void testV10Manifest() throws Exception {
+    Manifest manifest = readFromResources("presiV10Manifest.json", Manifest.class);
+    assertThat(manifest.getLabelString()).isEqualTo("Book 1");
+    assertThat(manifest.getMetadata().stream()
+        .filter(e -> e.getLabel().getFirstValue().equals("Published"))
+        .findFirst()
+        .map(e -> e.getValue().getLocalizations())
+        .get()).containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
+    assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(3);
+    assertThat(manifest.getRanges()).hasSize(1);
+    assertThat(manifest.getRanges().get(0).getCanvases()).hasSize(3);
   }
 }

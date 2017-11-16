@@ -1,6 +1,7 @@
 package de.digitalcollections.iiif.model.jackson.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -29,12 +30,18 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
   @Override
   public Service deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
+    if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
+      return new GenericService(null, p.getValueAsString());
+    }
     ObjectNode obj = mapper.readTree(p);
     if (isImageService(obj)) {
       return mapper.treeToValue(obj, ImageService.class);
     }
 
-    String context = obj.get("@context").asText();
+    String context = null;
+    if (obj.has("@context")) {
+      context = obj.get("@context").asText();
+    }
     JsonNode profileNode = obj.get("profile");
     String profile = null;
     if (profileNode != null) {
