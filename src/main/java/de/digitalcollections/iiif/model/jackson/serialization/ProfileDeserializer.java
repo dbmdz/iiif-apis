@@ -8,6 +8,8 @@ import de.digitalcollections.iiif.model.Profile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import java.io.IOException;
 import java.net.URI;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ProfileDeserializer extends JsonDeserializer<Profile> {
   private final JsonDeserializer<Object> defaultDeserializer;
@@ -16,10 +18,22 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
     this.defaultDeserializer = defaultDeserializer;
   }
 
+  private boolean isImageApiProfile(final String profile) {
+    return profile.contains("1.1/compliance.html") || Stream.of(
+          ImageApiProfile.LEVEL_ZERO,
+          ImageApiProfile.LEVEL_ONE,
+          ImageApiProfile.LEVEL_TWO,
+          ImageApiProfile.V1_LEVEL_ZERO,
+          ImageApiProfile.V1_LEVEL_ONE,
+          ImageApiProfile.V1_LEVEL_TWO)
+        .map(p -> p.getIdentifier().toString())
+        .anyMatch(profile::equals);
+  }
+
   @Override
   public Profile deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
-      if (p.getValueAsString().startsWith("http://iiif.io/api/image")) {
+      if (isImageApiProfile(p.getValueAsString())) {
         return new ImageApiProfile(p.getValueAsString());
       } else {
         return new Profile(URI.create(p.getValueAsString()));

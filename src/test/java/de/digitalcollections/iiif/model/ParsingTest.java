@@ -1,12 +1,16 @@
 package de.digitalcollections.iiif.model;
 
 import com.google.common.io.Resources;
+import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.image.ImageApiSelector;
+import de.digitalcollections.iiif.model.image.ImageService;
+import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
+import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import java.util.Locale;
@@ -69,5 +73,47 @@ public class ParsingTest {
     assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(3);
     assertThat(manifest.getRanges()).hasSize(1);
     assertThat(manifest.getRanges().get(0).getCanvases()).hasSize(3);
+    Canvas canvas = manifest.getDefaultSequence().getCanvases().get(0);
+    assertThat(canvas.getImages().get(0).getResource()).isInstanceOf(ImageContent.class);
+    ImageContent imgRes = (ImageContent) canvas.getImages().get(0).getResource();
+    assertThat(imgRes.getServices().get(0)).isInstanceOf(ImageService.class);
+    ImageService service = (ImageService) manifest.getDefaultSequence().getCanvases().get(1).getImages()
+        .get(0).getResource().getServices().get(0);
+    assertThat(service.getWidth()).isEqualTo(6000);
+    assertThat(service.getHeight()).isEqualTo(8000);
+    assertThat(service.getSizes()).containsExactly(
+        new Size(6000, 8000),
+        new Size(3000, 4000),
+        new Size(1500, 2000));
+    assertThat(service.getTiles()).hasSize(1);
+    assertThat(service.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
+    assertThat(service.getTiles().get(0).getWidth()).isEqualTo(1024);
+    assertThat(service.getTiles().get(0).getHeight()).isEqualTo(1024);
+  }
+
+  @Test
+  public void testV10ImageInfo() throws Exception {
+    // FIXME: It's kind of ugly that we have to deserialize into the generic typefirst
+    //        and then cast it, but if we use @JsonDeserialize on ImageService, we run into
+    //        an infinite recursion...
+    Service service = readFromResources("v1Info.json", Service.class);
+    assertThat(service).isInstanceOf(ImageService.class);
+    ImageService info = (ImageService) service;
+    assertThat(info.getWidth()).isEqualTo(6000);
+    assertThat(info.getHeight()).isEqualTo(4000);
+    assertThat(info.getProfiles().get(0)).isEqualTo(ImageApiProfile.V1_LEVEL_ZERO);
+    assertThat(info.getSizes()).containsExactly(
+        new Size(6000, 4000),
+        new Size(3000, 2000),
+        new Size(1500, 1000));
+    assertThat(info.getTiles()).hasSize(1);
+    assertThat(info.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
+    assertThat(info.getTiles().get(0))
+        .hasFieldOrPropertyWithValue("width", 1024)
+        .hasFieldOrPropertyWithValue("height", 1024);
+    assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
+    ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
+    assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG, Format.PNG);
+    assertThat(profile.getQualities()).containsExactlyInAnyOrder(Quality.GRAY, Quality.DEFAULT);
   }
 }

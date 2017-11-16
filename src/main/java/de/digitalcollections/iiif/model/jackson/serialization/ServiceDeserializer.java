@@ -15,10 +15,16 @@ import de.digitalcollections.iiif.model.annex.PhysicalDimensionsService;
 import de.digitalcollections.iiif.model.auth.AccessCookieService;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
+import de.digitalcollections.iiif.model.image.Size;
+import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.search.AutocompleteService;
 import de.digitalcollections.iiif.model.search.ContentSearchService;
 import java.io.IOException;
+import java.net.URI;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /** Custom deserializer for services.
  *
@@ -34,7 +40,9 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       return new GenericService(null, p.getValueAsString());
     }
     ObjectNode obj = mapper.readTree(p);
-    if (isImageService(obj)) {
+    if (isV1ImageService(obj)) {
+      return parseV1Service(obj);
+    } else if (isImageService(obj)) {
       return mapper.treeToValue(obj, ImageService.class);
     }
 
@@ -64,6 +72,71 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     }
   }
 
+  private ImageService parseV1Service(ObjectNode obj) {
+    ImageService service = new ImageService(obj.get("@id").asText());
+    if (obj.has("@context")) {
+      service.setContext(URI.create(obj.get("@context").asText()));
+    }
+    if (obj.has("profile")) {
+      service.addProfile(new ImageApiProfile(obj.get("profile").asText()));
+    }
+    if (obj.has("width")) {
+      service.setWidth(obj.get("width").asInt());
+    }
+    if (obj.has("height")) {
+      service.setHeight(obj.get("height").asInt());
+    }
+    if (obj.has("scale_factors") && (service.getWidth() != null && service.getHeight() != null)) {
+      obj.withArray("scale_factors").forEach(
+          fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
+                                            service.getHeight() / fnode.asInt()))
+      );
+    }
+    if (obj.has("tile_width") && obj.has("scale_factors")) {
+      TileInfo tinfo = new TileInfo(obj.get("tile_width").asInt());
+      obj.withArray("scale_factors").forEach(
+          fnode -> tinfo.addScaleFactor(fnode.asInt()));
+      if (obj.has("tile_height")) {
+        tinfo.setHeight(obj.get("tile_height").intValue());
+      }
+      service.addTile(tinfo);
+    }
+    if (obj.has("formats") || obj.has("qualities")) {
+      ImageApiProfile profile = new ImageApiProfile();
+      if (obj.has("formats")) {
+        obj.withArray("formats").forEach(
+            f -> profile.addFormat(ImageApiProfile.Format.valueOf(f.asText().toUpperCase())));
+      }
+      if (obj.has("qualities")) {
+        List<String> qualities = StreamSupport.stream(
+            obj.withArray("qualities").spliterator(), false)
+            .map(q -> q.asText().equals("native") ? "default" : q.asText())
+            .map(q -> q.equals("grey") ? "gray" : q)
+            .collect(Collectors.toList());
+        qualities.forEach(q -> profile.addQuality(ImageApiProfile.Quality.valueOf(q.toUpperCase())));
+      }
+      service.addProfile(profile);
+    }
+    return service;
+  }
+
+  private boolean isV1ImageService(ObjectNode node) {
+    JsonNode ctxNode = node.get("@context");
+    if (ctxNode != null && "http://library.stanford.edu/iiif/image-api/1.1/context.json".equals(ctxNode.textValue())) {
+      return true;
+    }
+    JsonNode profileNode = node.get("profile");
+    if (profileNode != null) {
+      return ImmutableSet.of(
+            ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
+            ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
+            ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString())
+          .contains(profileNode.asText());
+    } else {
+      return false;
+    }
+  }
+
   public boolean isImageService(ObjectNode node) {
     JsonNode ctxNode = node.get("@context");
     JsonNode profileNode = node.get("profile");
@@ -73,7 +146,7 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       return ImmutableSet.of(ImageApiProfile.LEVEL_ONE.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_TWO.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_ZERO.getIdentifier().toString())
-            .contains(profileNode.asText());
+            .contains(profileNode.asText()) || profileNode.asText().contains("1.1/compliance.html#");
     } else {
       return false;
     }
