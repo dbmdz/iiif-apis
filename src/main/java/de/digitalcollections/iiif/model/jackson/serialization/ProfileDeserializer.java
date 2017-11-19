@@ -25,6 +25,7 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
           ImageApiProfile.LEVEL_TWO,
           ImageApiProfile.V1_LEVEL_ZERO,
           ImageApiProfile.V1_LEVEL_ONE,
+          ImageApiProfile.V1_1_LEVEL_ONE,
           ImageApiProfile.V1_LEVEL_TWO)
         .map(p -> p.getIdentifier().toString())
         .anyMatch(profile::equals);

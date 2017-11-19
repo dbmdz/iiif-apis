@@ -176,6 +176,8 @@ public class ImageApiProfile extends Profile {
       "http://library.stanford.edu/iiif/image-api/compliance.html#level0");
   @Deprecated public static final ImageApiProfile V1_LEVEL_ONE = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level1");
+  @Deprecated public static final ImageApiProfile V1_1_LEVEL_ONE = new ImageApiProfile(
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
   @Deprecated public static final ImageApiProfile V1_LEVEL_TWO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level2");
 
