@@ -82,7 +82,7 @@ public class Manifest extends Resource {
 
   @JsonIgnore
   public Sequence getDefaultSequence() {
-    if (sequences.isEmpty()) {
+    if (sequences == null || sequences.isEmpty()) {
       return null;
     } else {
       return sequences.get(0);
