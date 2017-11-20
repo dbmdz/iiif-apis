@@ -33,6 +33,7 @@ import java.util.stream.StreamSupport;
  * at the profile or both.
  */
 public class ServiceDeserializer extends JsonDeserializer<Service> {
+
   @Override
   public Service deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
@@ -88,14 +89,14 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     }
     if (obj.has("scale_factors") && (service.getWidth() != null && service.getHeight() != null)) {
       obj.withArray("scale_factors").forEach(
-          fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
-                                            service.getHeight() / fnode.asInt()))
+              fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
+                                                service.getHeight() / fnode.asInt()))
       );
     }
     if (obj.has("tile_width") && obj.has("scale_factors")) {
       TileInfo tinfo = new TileInfo(obj.get("tile_width").asInt());
       obj.withArray("scale_factors").forEach(
-          fnode -> tinfo.addScaleFactor(fnode.asInt()));
+              fnode -> tinfo.addScaleFactor(fnode.asInt()));
       if (obj.has("tile_height")) {
         tinfo.setHeight(obj.get("tile_height").intValue());
       }
@@ -105,14 +106,14 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       ImageApiProfile profile = new ImageApiProfile();
       if (obj.has("formats")) {
         obj.withArray("formats").forEach(
-            f -> profile.addFormat(ImageApiProfile.Format.valueOf(f.asText().toUpperCase())));
+                f -> profile.addFormat(ImageApiProfile.Format.valueOf(f.asText().toUpperCase())));
       }
       if (obj.has("qualities")) {
         List<String> qualities = StreamSupport.stream(
-            obj.withArray("qualities").spliterator(), false)
-            .map(q -> q.asText().equals("native") ? "default" : q.asText())
-            .map(q -> q.equals("grey") ? "gray" : q)
-            .collect(Collectors.toList());
+                obj.withArray("qualities").spliterator(), false)
+                .map(q -> q.asText().equals("native") ? "default" : q.asText())
+                .map(q -> q.equals("grey") ? "gray" : q)
+                .collect(Collectors.toList());
         qualities.forEach(q -> profile.addQuality(ImageApiProfile.Quality.valueOf(q.toUpperCase())));
       }
       service.addProfile(profile);
@@ -128,10 +129,11 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     JsonNode profileNode = node.get("profile");
     if (profileNode != null) {
       return ImmutableSet.of(
-            ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
-            ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
-            ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString())
-          .contains(profileNode.asText());
+              ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
+              ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
+              ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
+              ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString())
+              .contains(profileNode.asText());
     } else {
       return false;
     }
@@ -146,7 +148,7 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       return ImmutableSet.of(ImageApiProfile.LEVEL_ONE.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_TWO.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_ZERO.getIdentifier().toString())
-            .contains(profileNode.asText()) || profileNode.asText().contains("1.1/compliance.html#");
+              .contains(profileNode.asText()) || profileNode.asText().contains("1.1/compliance.html#");
     } else {
       return false;
     }
