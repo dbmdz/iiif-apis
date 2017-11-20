@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
@@ -14,14 +13,13 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import de.digitalcollections.iiif.model.GenericService;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.Service;
-import de.digitalcollections.iiif.model.image.ImageService;
-import de.digitalcollections.iiif.model.image.Size;
-import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.interfaces.Selector;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 import org.geojson.Feature;
 
@@ -92,5 +90,26 @@ public class ProblemHandler extends DeserializationProblemHandler {
       return idResolver.typeFromId(ctxt, "Feature");
     }
     return super.handleMissingTypeId(ctxt, baseType, idResolver, failureMsg);
+  }
+
+  @Override
+  public Object handleWeirdStringValue(DeserializationContext ctxt, Class<?> targetType, String valueToConvert, String failureMsg) throws IOException {
+    if (targetType.isEnum()) {
+      String lowerCased = valueToConvert.toLowerCase();
+      Optional<?> match = Arrays.stream(targetType.getEnumConstants())
+          .filter(v -> v.toString().equals(lowerCased))
+          .findFirst();
+      if (match.isPresent()) {
+        return match.get();
+      }
+      String upperCased = valueToConvert.toUpperCase();
+      match = Arrays.stream(targetType.getEnumConstants())
+          .filter(v -> v.toString().equals(upperCased))
+          .findFirst();
+      if (match.isPresent()) {
+        return match.get();
+      }
+    }
+    return super.handleWeirdStringValue(ctxt, targetType, valueToConvert, failureMsg);
   }
 }

@@ -92,6 +92,23 @@ public class ParsingTest {
   }
 
   @Test
+  public void testYaleV10Manifest() throws Exception {
+    Manifest manifest = readFromResources("yaleV1Manifest.json", Manifest.class);
+    assertThat(manifest.getLabelString()).isEqualTo("A Lady and Her Two Children (B1981.25.278)");
+    assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(7);
+    Canvas canvas = manifest.getDefaultSequence().getCanvases().get(0);
+    assertThat(canvas.getImages().get(0).getResource().getServices().get(0)).isInstanceOf(ImageService.class);
+    canvas = manifest.getDefaultSequence().getCanvases().get(6);
+    assertThat(canvas.getImages().get(0).getResource()).isInstanceOf(Choice.class);
+    Choice choice = (Choice) canvas.getImages().get(0).getResource();
+    assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
+    assertThat(choice.getDefault().getServices().get(0)).isInstanceOf(ImageService.class);
+    assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(ImageApiProfile.V1_1_LEVEL_ONE);
+    assertThat(choice.getAlternatives()).hasSize(2);
+    assertThat(choice.getAlternatives()).allMatch(r -> r instanceof ImageContent);
+  }
+
+  @Test
   public void testV10ImageInfo() throws Exception {
     // FIXME: It's kind of ugly that we have to deserialize into the generic typefirst
     //        and then cast it, but if we use @JsonDeserialize on ImageService, we run into

@@ -80,6 +80,8 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     }
     if (obj.has("profile")) {
       service.addProfile(new ImageApiProfile(obj.get("profile").asText()));
+    } else if (obj.has("dcterms:conformsTo")) {
+      service.addProfile(new ImageApiProfile(obj.get("dcterms:conformsTo").asText()));
     }
     if (obj.has("width")) {
       service.setWidth(obj.get("width").asInt());
@@ -122,17 +124,18 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
   }
 
   private boolean isV1ImageService(ObjectNode node) {
-    JsonNode ctxNode = node.get("@context");
-    if (ctxNode != null && "http://library.stanford.edu/iiif/image-api/1.1/context.json".equals(ctxNode.textValue())) {
-      return true;
-    }
     JsonNode profileNode = node.get("profile");
+    if (profileNode == null) {
+      profileNode = node.get("dcterms:conformsTo");
+    }
     if (profileNode != null) {
       return ImmutableSet.of(
-              ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
               ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
+              ImageApiProfile.V1_1_LEVEL_ZERO.getIdentifier().toString(),
               ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
-              ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString())
+              ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
+              ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString(),
+              ImageApiProfile.V1_1_LEVEL_TWO.getIdentifier().toString())
               .contains(profileNode.asText());
     } else {
       return false;
