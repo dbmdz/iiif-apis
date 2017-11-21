@@ -87,7 +87,15 @@ public class SelectorTest {
     req = SizeRequest.fromString("!225,100");
     assertThat(req.toString()).isEqualTo("!225,100");
     assertThat(req.isBestFit()).isTrue();
-    assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(225, 100));
+    assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(150, 100));
+    assertThat(req.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(100, 66));
+
+    imageDim = new Dimension(200, 400);
+    req = SizeRequest.fromString("!100,500");
+    assertThat(req.toString()).isEqualTo("!100,500");
+    assertThat(req.isBestFit()).isTrue();
+    assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(100, 200));
+    assertThat(req.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(50, 100));
   }
 
   @Test

@@ -172,8 +172,13 @@ public class SizeRequest {
       }
       return dim;
     }
-    if (percentage != null) {
-      double ratio = percentage.doubleValue() / 100.0;
+    if (percentage != null || bestFit) {
+      double ratio;
+      if (percentage != null) {
+        ratio = percentage.doubleValue() / 100.0;
+      } else {
+        ratio = Math.min(width / nativeSize.getWidth(), height / nativeSize.getHeight());
+      }
       return new Dimension((int) (ratio * nativeSize.width), (int) (ratio * nativeSize.height));
     }
     if (width == null && height == null) {
@@ -181,27 +186,17 @@ public class SizeRequest {
       return nativeSize;
     }
     Dimension out = new Dimension();
-    if (bestFit) {
-      if (aspect > 1) {
-        out.width = Math.min(width, nativeSize.width);
-        out.height = (int) ((double) out.width / aspect);
-      } else {
-        out.height = Math.min(height, nativeSize.height);
-        out.width = (int) (aspect * out.height);
-      }
-    } else {
-      if (width != null) {
-        out.width = width;
-      }
-      if (height != null) {
-        out.height = height;
-      }
-      if (width == null) {
-        out.width = (int) (out.height * aspect);
-      }
-      if (height == null) {
-        out.height = (int) (out.width / aspect);
-      }
+    if (width != null) {
+      out.width = width;
+    }
+    if (height != null) {
+      out.height = height;
+    }
+    if (width == null) {
+      out.width = (int) (out.height * aspect);
+    }
+    if (height == null) {
+      out.height = (int) (out.width / aspect);
     }
     return out;
   }
