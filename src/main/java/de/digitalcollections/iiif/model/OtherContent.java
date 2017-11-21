@@ -26,8 +26,6 @@ public class OtherContent extends Resource {
   @JsonCreator
   public OtherContent(@JsonProperty("@id") String identifier) {
     super(identifier);
-    // Try to guess the format from the identifier
-    this.setFormat(MimeType.fromURI(this.getIdentifier()));
   }
 
   public OtherContent(String identifier, String format) {
@@ -51,7 +49,12 @@ public class OtherContent extends Resource {
   }
 
   public MimeType getFormat() {
-    return format;
+    if (format != null) {
+      return format;
+    } else {
+      // Try to guess the format from the identifier
+      return MimeType.fromURI(this.getIdentifier());
+    }
   }
 
   public void setFormat(MimeType format) {
