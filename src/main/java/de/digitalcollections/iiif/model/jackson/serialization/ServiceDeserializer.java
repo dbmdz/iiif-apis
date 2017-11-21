@@ -124,22 +124,23 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
   }
 
   private boolean isV1ImageService(ObjectNode node) {
-    JsonNode profileNode = node.get("profile");
-    if (profileNode == null) {
-      profileNode = node.get("dcterms:conformsTo");
-    }
-    if (profileNode != null) {
-      return ImmutableSet.of(
-              ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
-              ImageApiProfile.V1_1_LEVEL_ZERO.getIdentifier().toString(),
-              ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
-              ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
-              ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString(),
-              ImageApiProfile.V1_1_LEVEL_TWO.getIdentifier().toString())
-              .contains(profileNode.asText());
+    String profile;
+    if (node.has("profile")) {
+      profile = node.get("profile").asText();
+    } else if (node.has("dcterms:conformsTo")) {
+      profile = node.get("dcterms:conformsTo").asText();
+      profile = profile.replace("conformance", "compliance");
     } else {
       return false;
     }
+    return ImmutableSet.of(
+            ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_ZERO.getIdentifier().toString(),
+            ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
+            ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_TWO.getIdentifier().toString())
+            .contains(profile);
   }
 
   public boolean isImageService(ObjectNode node) {

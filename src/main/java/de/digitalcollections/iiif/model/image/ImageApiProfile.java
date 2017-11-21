@@ -175,15 +175,15 @@ public class ImageApiProfile extends Profile {
   @Deprecated public static final ImageApiProfile V1_LEVEL_ZERO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level0");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_ZERO = new ImageApiProfile(
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0");
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
   @Deprecated public static final ImageApiProfile V1_LEVEL_ONE = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level1");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_ONE = new ImageApiProfile(
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
   @Deprecated public static final ImageApiProfile V1_LEVEL_TWO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level2");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_TWO = new ImageApiProfile(
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
 
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
