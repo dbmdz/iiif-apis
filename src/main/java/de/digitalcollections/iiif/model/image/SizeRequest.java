@@ -181,17 +181,27 @@ public class SizeRequest {
       return nativeSize;
     }
     Dimension out = new Dimension();
-    if (width != null) {
-      out.width = width;
-    }
-    if (height != null) {
-      out.height = height;
-    }
-    if (width == null) {
-      out.width = (int) (out.height * aspect);
-    }
-    if (height == null) {
-      out.height = (int) (out.width / aspect);
+    if (bestFit) {
+      if (aspect > 1) {
+        out.width = Math.min(width, nativeSize.width);
+        out.height = (int) ((double) out.width / aspect);
+      } else {
+        out.height = Math.min(height, nativeSize.height);
+        out.width = (int) (aspect * out.height);
+      }
+    } else {
+      if (width != null) {
+        out.width = width;
+      }
+      if (height != null) {
+        out.height = height;
+      }
+      if (width == null) {
+        out.width = (int) (out.height * aspect);
+      }
+      if (height == null) {
+        out.height = (int) (out.width / aspect);
+      }
     }
     return out;
   }
