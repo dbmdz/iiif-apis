@@ -1,5 +1,11 @@
 # iiif-apis
 
+![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-2.1.1-blue.svg)
+![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-2.1.1-blue.svg)
+![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-2.1.1-blue.svg)
+![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)
+![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)
+
 [![Javadocs](http://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](http://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
 [![Build Status](https://travis-ci.org/dbmdz/iiif-apis.svg?branch=master)](https://travis-ci.org/dbmdz/iiif-apis)
 [![codecov](https://codecov.io/gh/dbmdz/iiif-apis/branch/master/graph/badge.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
