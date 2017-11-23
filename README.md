@@ -1,7 +1,7 @@
 # iiif-apis
 
-![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-2.1.1-blue.svg)
-![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-2.1.1-blue.svg)
+![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-≤2.1.1-blue.svg)
+![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-≤2.1.1-blue.svg)
 ![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)
 ![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)
 
