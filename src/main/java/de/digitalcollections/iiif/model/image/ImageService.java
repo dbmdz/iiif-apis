@@ -3,12 +3,10 @@ package de.digitalcollections.iiif.model.image;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.google.common.collect.Lists;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.PropertyValue;
 import de.digitalcollections.iiif.model.Service;
-import de.digitalcollections.iiif.model.jackson.serialization.ServiceDeserializer;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +18,7 @@ import java.util.List;
  * See http://iiif.io/api/presentation/2.1/#image-resources
  */
 public class ImageService extends Service {
+
   // FIXME: This should be static, but for some reason Jackson ignores it if it's not
   //        on the instance...
   @JsonProperty("protocol")
@@ -118,7 +117,8 @@ public class ImageService extends Service {
     this.services.addAll(Lists.asList(first, rest));
     return this;
   }
-    public PropertyValue getAttribution() {
+
+  public PropertyValue getAttribution() {
     return attribution;
   }
 
@@ -145,6 +145,9 @@ public class ImageService extends Service {
 
   @JsonIgnore
   public URI getFirstLicense() {
+    if (licenses == null || licenses.isEmpty()) {
+      return null;
+    }
     return licenses.get(0);
   }
 
@@ -167,6 +170,9 @@ public class ImageService extends Service {
 
   @JsonIgnore
   public URI getLogoUri() {
+    if (logos == null || logos.isEmpty()) {
+      return null;
+    }
     return logos.get(0).getIdentifier();
   }
 
@@ -175,10 +181,10 @@ public class ImageService extends Service {
   }
 
   public ImageService addLogo(String first, String... rest) {
-    if (this.logos == null) {
-      this.logos = new ArrayList<>();
+    if (logos == null) {
+      logos = new ArrayList<>();
     }
-    this.logos.add(new ImageContent(first));
+    logos.add(new ImageContent(first));
     Arrays.stream(rest).map(ImageContent::new).forEach(logos::add);
     return this;
   }

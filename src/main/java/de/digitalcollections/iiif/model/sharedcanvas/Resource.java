@@ -10,9 +10,9 @@ import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.MetadataEntry;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.PropertyValue;
+import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.jackson.SerializerModifier;
-import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +21,13 @@ import java.util.Set;
 
 import static com.google.common.collect.Lists.asList;
 
-
 /**
  * Abstract IIIF resource, most other resources are based on this.
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
 public abstract class Resource {
-  public final static String CONTEXT =  "http://iiif.io/api/presentation/2/context.json";
+
+  public final static String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
 
   /** Only used during serialization,
    *  @see SerializerModifier **/
@@ -121,6 +121,9 @@ public abstract class Resource {
 
   @JsonIgnore
   public ImageContent getThumbnail() {
+    if (thumbnails == null || thumbnails.isEmpty()) {
+      return null;
+    }
     return thumbnails.get(0);
   }
 
@@ -173,7 +176,7 @@ public abstract class Resource {
     return this;
   }
 
-    public PropertyValue getDescription() {
+  public PropertyValue getDescription() {
     return description;
   }
 
@@ -221,6 +224,9 @@ public abstract class Resource {
 
   @JsonIgnore
   public URI getFirstLicense() {
+    if (licenses == null || licenses.isEmpty()) {
+      return null;
+    }
     return licenses.get(0);
   }
 
@@ -243,6 +249,9 @@ public abstract class Resource {
 
   @JsonIgnore
   public URI getLogoUri() {
+    if (logos == null || logos.isEmpty()) {
+      return null;
+    }
     return logos.get(0).getIdentifier();
   }
 
@@ -279,16 +288,17 @@ public abstract class Resource {
   /**
    * Set the viewing hints for this resource.
    *
+   * @param viewingHints list of viewing hints
    * @throws IllegalArgumentException if the resources not not support one of the viewing hints.
    */
   public void setViewingHints(List<ViewingHint> viewingHints) throws IllegalArgumentException {
     for (ViewingHint hint : viewingHints) {
-      boolean supportsHint = (hint.getType() == ViewingHint.Type.OTHER ||
-                              this.getSupportedViewingHintTypes().contains(hint.getType()));
+      boolean supportsHint = (hint.getType() == ViewingHint.Type.OTHER
+              || this.getSupportedViewingHintTypes().contains(hint.getType()));
       if (!supportsHint) {
         throw new IllegalArgumentException(String.format(
-            "Resources of type '%s' do not support the '%s' viewing hint.",
-            this.getType(), hint.toString()));
+                "Resources of type '%s' do not support the '%s' viewing hint.",
+                this.getType(), hint.toString()));
       }
     }
     this.viewingHints = viewingHints;
@@ -297,6 +307,9 @@ public abstract class Resource {
   /**
    * Add one or more viewing hints for this resource.
    *
+   * @param first first viewing hint to add
+   * @param rest list of second and more viewing hints
+   * @return this resource with added viewing hints
    * @throws IllegalArgumentException if the resources not not support one of the viewing hints.
    */
   public Resource addViewingHint(ViewingHint first, ViewingHint... rest) throws IllegalArgumentException {
