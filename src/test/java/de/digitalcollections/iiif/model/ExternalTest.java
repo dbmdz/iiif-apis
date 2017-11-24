@@ -56,17 +56,9 @@ public class ExternalTest {
             .map(ImageService.class::cast)
             .findFirst().orElse(null);
     ImageContent thumb;
-    Set<ImageApiProfile> v1Profiles = ImmutableSet.of(
-        ImageApiProfile.V1_LEVEL_ZERO,
-        ImageApiProfile.V1_LEVEL_ONE,
-        ImageApiProfile.V1_LEVEL_TWO,
-        ImageApiProfile.V1_1_LEVEL_ZERO,
-        ImageApiProfile.V1_1_LEVEL_ONE,
-        ImageApiProfile.V1_1_LEVEL_TWO,
-        ImageApiProfile.V1_1_LEVEL_ZERO_ALT,
-        ImageApiProfile.V1_1_LEVEL_ONE_ALT,
-        ImageApiProfile.V1_1_LEVEL_TWO_ALT);
-    boolean isV1 = service.getProfiles().stream().anyMatch(v1Profiles::contains);
+    boolean isV1 = service.getProfiles().stream()
+        .map(p -> p.getIdentifier().toString())
+        .anyMatch(ImageApiProfile.V1_PROFILES::contains);
     if (isV1) {
       thumb = new ImageContent(String.format("%s/full/280,/0/native.jpg", service.getIdentifier()));
     } else {

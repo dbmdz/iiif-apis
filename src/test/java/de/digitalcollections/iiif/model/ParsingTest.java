@@ -103,7 +103,8 @@ public class ParsingTest {
     Choice choice = (Choice) canvas.getImages().get(0).getResource();
     assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
     assertThat(choice.getDefault().getServices().get(0)).isInstanceOf(ImageService.class);
-    assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(ImageApiProfile.V1_1_LEVEL_ONE_ALT);
+    assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(
+        new ImageApiProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
     assertThat(choice.getAlternatives()).hasSize(2);
     assertThat(choice.getAlternatives()).allMatch(r -> r instanceof ImageContent);
   }
@@ -118,7 +119,8 @@ public class ParsingTest {
     ImageService info = (ImageService) service;
     assertThat(info.getWidth()).isEqualTo(6000);
     assertThat(info.getHeight()).isEqualTo(4000);
-    assertThat(info.getProfiles().get(0)).isEqualTo(ImageApiProfile.V1_1_LEVEL_ZERO);
+    assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
+        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
     assertThat(info.getSizes()).containsExactly(
         new Size(6000, 4000),
         new Size(3000, 2000),

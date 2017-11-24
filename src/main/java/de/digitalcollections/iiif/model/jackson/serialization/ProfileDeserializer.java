@@ -19,17 +19,9 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
   }
 
   private boolean isImageApiProfile(final String profile) {
-    return profile.contains("1.1/compliance.html")
-        || profile.contains("1.1/conformance.html")
-        || Stream.of(
-            ImageApiProfile.LEVEL_ZERO,
-            ImageApiProfile.LEVEL_ONE,
-            ImageApiProfile.LEVEL_TWO,
-            ImageApiProfile.V1_LEVEL_ZERO,
-            ImageApiProfile.V1_LEVEL_ONE,
-            ImageApiProfile.V1_LEVEL_TWO)
-            .map(p -> p.getIdentifier().toString())
-            .anyMatch(profile::equals);
+    return Stream.of(ImageApiProfile.LEVEL_ZERO, ImageApiProfile.LEVEL_ONE, ImageApiProfile.LEVEL_TWO)
+        .map(p -> p.getIdentifier().toString())
+        .anyMatch(profile::equals) || ImageApiProfile.V1_PROFILES.contains(profile);
   }
 
   @Override
