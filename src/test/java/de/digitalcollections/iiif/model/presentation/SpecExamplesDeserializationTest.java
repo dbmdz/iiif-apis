@@ -340,26 +340,4 @@ public class SpecExamplesDeserializationTest {
             .isEqualTo("red");
   }
 
-  @Test
-  @Ignore
-  public void testThumbnailForV1Manifest() throws Exception {
-    Manifest manifest = readFromResources("v1/yale_DecretumMagistriGratiani.json", Manifest.class);
-    assertThat(manifest).isNotNull();
-    // only Service works (not ImageService), as it returns a GenericService...
-    Service service = manifest.getDefaultSequence().getCanvases().stream()
-            .map(c -> c.getImages().get(0).getResource())
-            .map(ImageContent.class::cast)
-            .map(i -> (Service) i.getServices().get(0))
-            .findFirst().orElse(null);
-    ImageContent thumb;
-    // How to check if it is API 1? Call of ServiceDeserializer.isV1ImageService... would be cool...
-    String profile = service.getProfiles().get(0).getIdentifier().toString();
-    if (profile.equals(ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString())) {
-      thumb = new ImageContent(String.format("%s/full/280,/0/native.jpg", service.getIdentifier()));
-    } else {
-      thumb = new ImageContent(String.format("%s/full/280,/0/default.jpg", service.getIdentifier()));
-    }
-    assertThat(thumb).isNotNull();
-    assertThat(thumb.getIdentifier().toString()).contains("native.jpg");
-  }
 }

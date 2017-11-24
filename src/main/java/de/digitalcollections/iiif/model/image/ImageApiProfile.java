@@ -167,8 +167,6 @@ public class ImageApiProfile extends Profile {
     }
   }
 
-
-
   public static final ImageApiProfile LEVEL_ZERO = new ImageApiProfile("http://iiif.io/api/image/2/level0.json");
   public static final ImageApiProfile LEVEL_ONE = new ImageApiProfile("http://iiif.io/api/image/2/level1.json");
   public static final ImageApiProfile LEVEL_TWO = new ImageApiProfile("http://iiif.io/api/image/2/level2.json");
@@ -176,14 +174,20 @@ public class ImageApiProfile extends Profile {
       "http://library.stanford.edu/iiif/image-api/compliance.html#level0");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_ZERO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
+  @Deprecated public static final ImageApiProfile V1_1_LEVEL_ZERO_ALT = new ImageApiProfile(
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0");
   @Deprecated public static final ImageApiProfile V1_LEVEL_ONE = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level1");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_ONE = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1");
+  @Deprecated public static final ImageApiProfile V1_1_LEVEL_ONE_ALT = new ImageApiProfile(
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1");
   @Deprecated public static final ImageApiProfile V1_LEVEL_TWO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level2");
   @Deprecated public static final ImageApiProfile V1_1_LEVEL_TWO = new ImageApiProfile(
       "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2");
+  @Deprecated public static final ImageApiProfile V1_1_LEVEL_TWO_ALT = new ImageApiProfile(
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
 
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
@@ -282,15 +286,11 @@ public class ImageApiProfile extends Profile {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
+    if (!super.equals(o)) {
       return false;
     }
 
     ImageApiProfile that = (ImageApiProfile) o;
-
     if (formats != null ? !formats.equals(that.formats) : that.formats != null) {
       return false;
     }

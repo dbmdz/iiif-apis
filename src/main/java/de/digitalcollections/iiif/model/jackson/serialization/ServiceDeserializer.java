@@ -136,10 +136,13 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     return ImmutableSet.of(
             ImageApiProfile.V1_LEVEL_ZERO.getIdentifier().toString(),
             ImageApiProfile.V1_1_LEVEL_ZERO.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_ZERO_ALT.getIdentifier().toString(),
             ImageApiProfile.V1_LEVEL_ONE.getIdentifier().toString(),
             ImageApiProfile.V1_1_LEVEL_ONE.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_ONE_ALT.getIdentifier().toString(),
             ImageApiProfile.V1_LEVEL_TWO.getIdentifier().toString(),
-            ImageApiProfile.V1_1_LEVEL_TWO.getIdentifier().toString())
+            ImageApiProfile.V1_1_LEVEL_TWO.getIdentifier().toString(),
+            ImageApiProfile.V1_1_LEVEL_TWO_ALT.getIdentifier().toString())
             .contains(profile);
   }
 
@@ -152,7 +155,9 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       return ImmutableSet.of(ImageApiProfile.LEVEL_ONE.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_TWO.getIdentifier().toString(),
                              ImageApiProfile.LEVEL_ZERO.getIdentifier().toString())
-              .contains(profileNode.asText()) || profileNode.asText().contains("1.1/compliance.html#");
+              .contains(profileNode.asText())
+          || profileNode.asText().contains("1.1/compliance.html#")
+          || profileNode.asText().contains("1.1/conformance.html#");
     } else {
       return false;
     }

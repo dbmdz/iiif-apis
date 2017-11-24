@@ -30,9 +30,7 @@ public class Profile {
     if (o == null) {
       return false;
     }
-    if (o instanceof ImageApiProfile && this instanceof ImageApiProfile) {
-      return this.equals(o);
-    } else if (this.getClass() != o.getClass()) {
+    if (this.getClass() != o.getClass()) {
       return false;
     }
     Profile profile = (Profile) o;

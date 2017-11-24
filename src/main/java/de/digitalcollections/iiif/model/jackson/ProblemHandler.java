@@ -18,6 +18,7 @@ import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
