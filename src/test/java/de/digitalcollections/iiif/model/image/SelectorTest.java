@@ -107,13 +107,18 @@ public class SelectorTest {
   public void testRotation() {
     RotationRequest req = RotationRequest.fromString("180");
     assertThat(req.toString()).isEqualTo("180");
-    assertThat(req).hasFieldOrPropertyWithValue("rotation", 180);
+    assertThat(req).hasFieldOrPropertyWithValue("rotation", 180.0);
     assertThat(req.isMirror()).isFalse();
 
     req = RotationRequest.fromString("!0");
     assertThat(req.toString()).isEqualTo("!0");
-    assertThat(req).hasFieldOrPropertyWithValue("rotation", 0);
+    assertThat(req).hasFieldOrPropertyWithValue("rotation", 0.0);
     assertThat(req.isMirror()).isTrue();
+
+    req = RotationRequest.fromString("22.5");
+    assertThat(req.toString()).isEqualTo("22.5");
+    assertThat(req).hasFieldOrPropertyWithValue("rotation", 22.5);
+    assertThat(req.isMirror()).isFalse();
   }
 
   @Test

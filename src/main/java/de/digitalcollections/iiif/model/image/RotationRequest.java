@@ -2,12 +2,15 @@ package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.common.base.Objects;
+import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RotationRequest {
-  private static final Pattern PATTERN = Pattern.compile("^(!)?([0-9]+)$");
-  int rotation;
+  // Matches floating point values
+  private static final Pattern PATTERN = Pattern.compile("^(!)?([0-9]*\\.?[0-9]+)$");
+  BigDecimal rotation;
   boolean mirror = false;
 
   /**
@@ -22,12 +25,12 @@ public class RotationRequest {
       throw new IllegalArgumentException("Bad format: " + str);
     }
     return new RotationRequest(
-        Integer.parseInt(matcher.group(2)),
+        new BigDecimal(matcher.group(2)),
         !(matcher.group(1) == null));
   }
 
   public RotationRequest(int rotation) {
-    this(rotation, false);
+    this(BigDecimal.valueOf(rotation), false);
   }
 
   /**
@@ -37,16 +40,16 @@ public class RotationRequest {
    * @param mirror Mirror the image when rotating
    * @throws IllegalArgumentException if the rotation degrees are not between 0 and 360
    */
-  public RotationRequest(int rotation, boolean mirror) throws IllegalArgumentException {
-    if (rotation < 0 || rotation > 360) {
+  public RotationRequest(BigDecimal rotation, boolean mirror) throws IllegalArgumentException {
+    if (rotation.floatValue() < 0 || rotation.floatValue() > 360) {
       throw new IllegalArgumentException("Rotation must be between 0 and 360");
     }
     this.rotation = rotation;
     this.mirror = mirror;
   }
 
-  public int getRotation() {
-    return rotation;
+  public double getRotation() {
+    return rotation.doubleValue();
   }
 
   public boolean isMirror() {
@@ -59,7 +62,7 @@ public class RotationRequest {
   @JsonValue
   @Override
   public String toString() {
-    String out = Integer.toString(this.rotation);
+    String out = this.rotation.toString();
     if (mirror) {
       out = "!" + out;
     }
