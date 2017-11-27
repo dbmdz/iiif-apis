@@ -2,6 +2,7 @@ package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.common.base.Objects;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
@@ -23,6 +24,22 @@ public class RegionRequest {
       this.y = y;
       this.w = w;
       this.h = h;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) return true;
+      if (o == null || getClass() != o.getClass()) return false;
+      RelativeBox that = (RelativeBox) o;
+      return Objects.equal(x, that.x) &&
+          Objects.equal(y, that.y) &&
+          Objects.equal(w, that.w) &&
+          Objects.equal(h, that.h);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(x, y, w, h);
     }
   }
 
@@ -185,5 +202,20 @@ public class RegionRequest {
       rect.height = imageDims.height - rect.y;
     }
     return rect;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    RegionRequest that = (RegionRequest) o;
+    return square == that.square &&
+        Objects.equal(absoluteBox, that.absoluteBox) &&
+        Objects.equal(relativeBox, that.relativeBox);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(absoluteBox, relativeBox, square);
   }
 }

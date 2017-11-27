@@ -300,4 +300,13 @@ public class ImageApiProfile extends Profile {
     result = 31 * result + (features != null ? features.hashCode() : 0);
     return result;
   }
+
+  @Override
+  public String toString() {
+    if (this.getIdentifier() != null) {
+      return this.getIdentifier().toString();
+    } else {
+      return super.toString();
+    }
+  }
 }

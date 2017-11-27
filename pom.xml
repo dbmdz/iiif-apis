@@ -59,6 +59,7 @@
     <version.maven-surefire-plugin>2.20.1</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
     <version.reflections>0.9.10</version.reflections>
+    <version.uri-toolkit>0.8</version.uri-toolkit>
   </properties>
 
   <dependencies>
@@ -114,6 +115,11 @@
       <artifactId>assertj-core</artifactId>
       <version>${version.assertj}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.dmfs</groupId>
+      <artifactId>rfc3986-uri</artifactId>
+      <version>${version.uri-toolkit}</version>
     </dependency>
     <dependency>
       <groupId>org.reflections</groupId>

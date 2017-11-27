@@ -2,6 +2,7 @@ package de.digitalcollections.iiif.model.image;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.google.common.base.Objects;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.math.BigDecimal;
@@ -233,5 +234,22 @@ public class SizeRequest {
       rv.append(String.valueOf(height));
     }
     return bestFit ? "!" + rv.toString() : rv.toString();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    SizeRequest that = (SizeRequest) o;
+    return max == that.max &&
+        bestFit == that.bestFit &&
+        Objects.equal(width, that.width) &&
+        Objects.equal(height, that.height) &&
+        Objects.equal(percentage, that.percentage);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(max, bestFit, width, height, percentage);
   }
 }
