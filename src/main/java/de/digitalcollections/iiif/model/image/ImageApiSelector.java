@@ -102,6 +102,25 @@ public class ImageApiSelector implements Selector {
     return encoded;
   }
 
+  /** Create the canonical of the Image API request.
+   *
+   * See http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   * @param nativeSize      Native size of the image the selector is applied to
+   * @param profile         Image API profile used
+   * @param defaultQuality  The native/default quality of the image the selector is applied to
+   * @return The canonical form of the Image API request
+   */
+  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality) {
+    return String.format(
+        "%s%s/%s/%s/%s.%s",
+        identifier != null ? urlEncode(identifier) + "/" : "",
+        region.getCanonicalForm(nativeSize),
+        size.getCanonicalForm(nativeSize, profile),
+        rotation.toString(),
+        quality.equals(defaultQuality) ? "default" : quality.toString(),
+        format.toString());
+  }
+
   public String getIdentifier() {
     return identifier;
   }

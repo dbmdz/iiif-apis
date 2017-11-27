@@ -143,6 +143,24 @@ public class SizeRequest {
   }
 
   /**
+   * Get the canonical form of this request.
+   *
+   * @See http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   */
+  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) {
+    Dimension resolved = this.resolve(nativeSize, profile);
+    double nativeRatio = nativeSize.getWidth() / nativeSize.getHeight();
+    double resolvedRatio = resolved.getWidth() / resolved.getHeight();
+    if (resolved.equals(nativeSize)) {
+      return "full";
+    } else if (nativeRatio == resolvedRatio) {
+      return String.format("%d,", resolved.width);
+    } else {
+      return String.format("%d,%d", resolved.width, resolved.height);
+    }
+  }
+
+  /**
    * Resolve the request to dimensions that can be used for scaling, based on the native size of the image region
    * and the available profile.
    */

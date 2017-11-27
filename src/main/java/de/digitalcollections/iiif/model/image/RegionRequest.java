@@ -165,6 +165,19 @@ public class RegionRequest {
     }
   }
 
+  public String getCanonicalForm(Dimension imageDims) {
+    Rectangle resolved = this.resolve(imageDims);
+    boolean isFull = resolved.x == 0
+        && resolved.y == 0
+        && resolved.width == imageDims.width
+        && resolved.height == imageDims.height;
+    if (isFull) {
+      return "full";
+    } else {
+      return String.format("%d,%d,%d,%d", resolved.x, resolved.y, resolved.width, resolved.height);
+    }
+  }
+
   /**
    * Resolve the region request into an actual region that can be used for cropping the image
    */

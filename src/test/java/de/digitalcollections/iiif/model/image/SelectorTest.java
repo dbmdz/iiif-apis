@@ -122,6 +122,34 @@ public class SelectorTest {
   }
 
   @Test
+  public void testCanonicalForm() throws Exception {
+    Dimension nativeDims = new Dimension(800, 600);
+    ImageApiProfile.Quality nativeQuality = ImageApiProfile.Quality.COLOR;
+    ImageApiProfile profile = ImageApiProfile.LEVEL_TWO;
+
+    assertThat(
+        ImageApiSelector.fromString("id/0,0,800,600/800,600/0/color.jpg")
+            .getCanonicalForm(nativeDims, profile, nativeQuality))
+        .isEqualTo("id/full/full/0/default.jpg");
+    assertThat(
+        ImageApiSelector.fromString("id/pct:0,0,50.0,50.0/pct:50/0/gray.jpg")
+            .getCanonicalForm(nativeDims, profile, nativeQuality))
+        .isEqualTo("id/0,0,400,300/400,/0/gray.jpg");
+    assertThat(
+        ImageApiSelector.fromString("id/full/800,/0/gray.jpg")
+            .getCanonicalForm(nativeDims, profile, nativeQuality))
+        .isEqualTo("id/full/full/0/gray.jpg");
+    assertThat(
+        ImageApiSelector.fromString("id/full/400,300/0/default.png")
+            .getCanonicalForm(nativeDims, profile, nativeQuality))
+        .isEqualTo("id/full/400,/0/default.png");
+    assertThat(
+        ImageApiSelector.fromString("id/full/800,300/0/gray.jpg")
+            .getCanonicalForm(nativeDims, profile, nativeQuality))
+        .isEqualTo("id/full/800,300/0/gray.jpg");
+  }
+
+  @Test
   public void testUrlDecode() throws Exception {
     assertThat(ImageApiSelector.fromString("id1/full/full/0/default.png"))
         .hasFieldOrPropertyWithValue("identifier", "id1")
