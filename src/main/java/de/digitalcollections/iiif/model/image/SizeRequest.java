@@ -149,10 +149,13 @@ public class SizeRequest {
    */
   public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) {
     Dimension resolved = this.resolve(nativeSize, profile);
+    // "w," requests are already canonical
     double nativeRatio = nativeSize.getWidth() / nativeSize.getHeight();
     double resolvedRatio = resolved.getWidth() / resolved.getHeight();
     if (resolved.equals(nativeSize)) {
       return "full";
+    } else if (this.width != null && this.height == null) {
+      return this.toString();
     } else if (Math.round(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
       return String.format("%d,", resolved.width);
     } else {
