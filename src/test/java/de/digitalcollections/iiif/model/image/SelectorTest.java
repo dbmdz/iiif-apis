@@ -147,6 +147,10 @@ public class SelectorTest {
         ImageApiSelector.fromString("id/full/800,300/0/gray.jpg")
             .getCanonicalForm(nativeDims, profile, nativeQuality))
         .isEqualTo("id/full/800,300/0/gray.jpg");
+    assertThat(
+        ImageApiSelector.fromString("id/full/1500,2240/0/gray.jpg")
+            .getCanonicalForm(new Dimension(2000, 2986), profile, nativeQuality))
+        .isEqualTo("id/full/1500,/0/gray.jpg");
   }
 
   @Test

@@ -153,7 +153,7 @@ public class SizeRequest {
     double resolvedRatio = resolved.getWidth() / resolved.getHeight();
     if (resolved.equals(nativeSize)) {
       return "full";
-    } else if (nativeRatio == resolvedRatio) {
+    } else if (Math.round(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
       return String.format("%d,", resolved.width);
     } else {
       return String.format("%d,%d", resolved.width, resolved.height);
