@@ -11,9 +11,14 @@ import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
+import de.digitalcollections.iiif.model.sharedcanvas.Collection;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -134,5 +139,57 @@ public class ParsingTest {
     ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG, Format.PNG);
     assertThat(profile.getQualities()).containsExactlyInAnyOrder(Quality.GRAY, Quality.DEFAULT);
+  }
+
+  private void parseCollection(URL collUrl) throws Exception {
+    System.out.println("Parsing collection " + collUrl.toString());
+    Collection coll = mapper.readValue(collUrl, Collection.class);
+    if (coll.getManifests() != null) {
+      for (Manifest manifRef : coll.getManifests()) {
+        System.out.println("Parsing manifest " + manifRef.getIdentifier());
+        try {
+          Manifest manifest = mapper.readValue(manifRef.getIdentifier().toURL(), Manifest.class);
+          if (manifest.getSequences() != null) {
+            boolean hasOnlyImages = manifest.getDefaultSequence().getCanvases().stream()
+                .flatMap(c -> c.getImages().stream())
+                .map(i -> i.getResource())
+                .allMatch(i -> i instanceof ImageContent || i instanceof Choice);
+            if (!hasOnlyImages) {
+              System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains canvases with non-image resources.");
+              continue;
+            }
+
+            List<Service> services = manifest.getDefaultSequence().getCanvases().stream()
+                .flatMap(c -> c.getImages().stream())
+                .filter(i -> i.getResource() instanceof ImageContent)
+                .map(i -> i.getResource().getServices())
+                .flatMap(s -> s != null ? s.stream() : Stream.of(null))
+                .collect(Collectors.toList());
+            if (!services.stream().allMatch(ImageService.class::isInstance)) {
+              System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains images with no Image API service.");
+              continue;
+            }
+          }
+        } catch (Exception e) {
+          System.out.println("Error parsing " + manifRef.getIdentifier().toString());
+          e.printStackTrace();
+        }
+      }
+    }
+    if (coll.getCollections() != null) {
+      for (Collection subcoll : coll.getCollections()) {
+        parseCollection(subcoll.getIdentifier().toURL());
+      }
+    }
+  }
+
+  public void testUniverse() throws Exception {
+    //parseCollection(new URL("https://github.com/ryanfb/iiif-universe/raw/gh-pages/iiif-universe.json"));
+    parseCollection(new URL("http://www.e-codices.unifr.ch/metadata/iiif/collection.json"));
+  }
+
+  public void testParseHugeCollection() throws Exception {
+    Collection coll = mapper.readValue(new URL("http://manifests.britishart.yale.edu/collection/top"), Collection.class);
+    assertThat(coll.getManifests()).hasSize(1337);
   }
 }
