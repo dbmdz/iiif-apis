@@ -37,13 +37,13 @@ To use the module, first add it to your project's Maven or Gradle configuration:
 <dependency>
   <groupId>de.digitalcollections.iiif</groupId>
   <artifactId>iiif-apis</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.5</version>
 </dependency>
 ```
 
 ```scala
 dependencies {
-    compile 'de.digitalcollections.iiif.iiif-apis:0.1.0'
+    compile 'de.digitalcollections.iiif.iiif-apis:0.2.5'
 }
 ```
 
