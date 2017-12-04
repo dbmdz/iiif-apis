@@ -1,7 +1,6 @@
 package de.digitalcollections.iiif.model.jackson;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -9,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 
 public class IiifObjectMapper extends ObjectMapper {
+
   private void checkJacksonVersion() {
     int neededMajor = 2;
     int neededMinor = 9;
@@ -16,9 +16,10 @@ public class IiifObjectMapper extends ObjectMapper {
     int currentMinor = this.version().getMinorVersion();
     if (currentMajor < neededMajor || (currentMajor == neededMajor && currentMinor < neededMinor)) {
       throw new RuntimeException(
-          String.format("iiif-apis requires Jackson >= 2.9.0. The version on your claspath is %s", this.version().toString()));
+              String.format("iiif-apis requires Jackson >= 2.9.0. The version on your claspath is %s", this.version().toString()));
     }
   }
+
   public IiifObjectMapper() {
     this.checkJacksonVersion();
 
