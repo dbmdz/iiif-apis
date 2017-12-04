@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Covers some things that are not well tested in the examples from the specifications.
  */
 public class ParsingTest {
+
   private IiifObjectMapper mapper;
 
   @Before
@@ -39,7 +40,7 @@ public class ParsingTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-        Resources.getResource(filename), clz);
+            Resources.getResource(filename), clz);
   }
 
   @Test
@@ -71,10 +72,10 @@ public class ParsingTest {
     Manifest manifest = readFromResources("presiV10Manifest.json", Manifest.class);
     assertThat(manifest.getLabelString()).isEqualTo("Book 1");
     assertThat(manifest.getMetadata().stream()
-        .filter(e -> e.getLabel().getFirstValue().equals("Published"))
-        .findFirst()
-        .map(e -> e.getValue().getLocalizations())
-        .get()).containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
+            .filter(e -> e.getLabel().getFirstValue().equals("Published"))
+            .findFirst()
+            .map(e -> e.getValue().getLocalizations())
+            .get()).containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
     assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(3);
     assertThat(manifest.getRanges()).hasSize(1);
     assertThat(manifest.getRanges().get(0).getCanvases()).hasSize(3);
@@ -83,13 +84,13 @@ public class ParsingTest {
     ImageContent imgRes = (ImageContent) canvas.getImages().get(0).getResource();
     assertThat(imgRes.getServices().get(0)).isInstanceOf(ImageService.class);
     ImageService service = (ImageService) manifest.getDefaultSequence().getCanvases().get(1).getImages()
-        .get(0).getResource().getServices().get(0);
+            .get(0).getResource().getServices().get(0);
     assertThat(service.getWidth()).isEqualTo(6000);
     assertThat(service.getHeight()).isEqualTo(8000);
     assertThat(service.getSizes()).containsExactly(
-        new Size(6000, 8000),
-        new Size(3000, 4000),
-        new Size(1500, 2000));
+            new Size(6000, 8000),
+            new Size(3000, 4000),
+            new Size(1500, 2000));
     assertThat(service.getTiles()).hasSize(1);
     assertThat(service.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
     assertThat(service.getTiles().get(0).getWidth()).isEqualTo(1024);
@@ -109,7 +110,7 @@ public class ParsingTest {
     assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
     assertThat(choice.getDefault().getServices().get(0)).isInstanceOf(ImageService.class);
     assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(
-        new ImageApiProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
+            new ImageApiProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
     assertThat(choice.getAlternatives()).hasSize(2);
     assertThat(choice.getAlternatives()).allMatch(r -> r instanceof ImageContent);
   }
@@ -125,16 +126,16 @@ public class ParsingTest {
     assertThat(info.getWidth()).isEqualTo(6000);
     assertThat(info.getHeight()).isEqualTo(4000);
     assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
-        "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
+            "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
     assertThat(info.getSizes()).containsExactly(
-        new Size(6000, 4000),
-        new Size(3000, 2000),
-        new Size(1500, 1000));
+            new Size(6000, 4000),
+            new Size(3000, 2000),
+            new Size(1500, 1000));
     assertThat(info.getTiles()).hasSize(1);
     assertThat(info.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
     assertThat(info.getTiles().get(0))
-        .hasFieldOrPropertyWithValue("width", 1024)
-        .hasFieldOrPropertyWithValue("height", 1024);
+            .hasFieldOrPropertyWithValue("width", 1024)
+            .hasFieldOrPropertyWithValue("height", 1024);
     assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
     ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG, Format.PNG);
@@ -151,20 +152,20 @@ public class ParsingTest {
           Manifest manifest = mapper.readValue(manifRef.getIdentifier().toURL(), Manifest.class);
           if (manifest.getSequences() != null) {
             boolean hasOnlyImages = manifest.getDefaultSequence().getCanvases().stream()
-                .flatMap(c -> c.getImages().stream())
-                .map(i -> i.getResource())
-                .allMatch(i -> i instanceof ImageContent || i instanceof Choice);
+                    .flatMap(c -> c.getImages().stream())
+                    .map(i -> i.getResource())
+                    .allMatch(i -> i instanceof ImageContent || i instanceof Choice);
             if (!hasOnlyImages) {
               System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains canvases with non-image resources.");
               continue;
             }
 
             List<Service> services = manifest.getDefaultSequence().getCanvases().stream()
-                .flatMap(c -> c.getImages().stream())
-                .filter(i -> i.getResource() instanceof ImageContent)
-                .map(i -> i.getResource().getServices())
-                .flatMap(s -> s != null ? s.stream() : Stream.of(null))
-                .collect(Collectors.toList());
+                    .flatMap(c -> c.getImages().stream())
+                    .filter(i -> i.getResource() instanceof ImageContent)
+                    .map(i -> i.getResource().getServices())
+                    .flatMap(s -> s != null ? s.stream() : Stream.of(null))
+                    .collect(Collectors.toList());
             if (!services.stream().allMatch(ImageService.class::isInstance)) {
               System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains images with no Image API service.");
               continue;
@@ -190,6 +191,6 @@ public class ParsingTest {
 
   public void testParseHugeCollection() throws Exception {
     Collection coll = mapper.readValue(new URL("http://manifests.britishart.yale.edu/collection/top"), Collection.class);
-    assertThat(coll.getManifests()).hasSize(1337);
+    assertThat(coll.getManifests()).hasSize(23217);
   }
 }
