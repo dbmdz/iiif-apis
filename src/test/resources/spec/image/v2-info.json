@@ -1,0 +1,38 @@
+{
+  "@context": "http://iiif.io/api/image/2/context.json",
+  "@id": "https://dlcs.io/thumbs/2/1/9cdfff15-8abe-464a-94ce-28b14f246374",
+  "profile": [
+    "http://iiif.io/api/image/2/level0.json",
+    {
+      "formats": [
+        "jpg"
+      ],
+      "qualities": [
+        "color"
+      ],
+      "supports": [
+        "sizeByWhListed"
+      ]
+    }
+  ],
+  "width": 648,
+  "height": 1024,
+  "sizes": [
+    {
+      "width": 648,
+      "height": 1024
+    },
+    {
+      "width": 253,
+      "height": 400
+    },
+    {
+      "width": 127,
+      "height": 200
+    },
+    {
+      "width": 63,
+      "height": 100
+    }
+  ]
+}
