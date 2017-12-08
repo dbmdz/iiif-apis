@@ -1,16 +1,14 @@
 package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableSet;
 import com.google.common.io.Resources;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
+import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
-import java.util.Set;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -67,4 +65,26 @@ public class ExternalTest {
     assertThat(thumb).isNotNull();
     assertThat(thumb.getIdentifier().toString()).contains("native.jpg");
   }
+
+  @Test
+  public void testWellcomeImageInfo() throws Exception {
+    Service service = readFromResources("wellcome_info.json", Service.class);
+    assertThat(service).isInstanceOf(ImageService.class);
+    ImageService info = (ImageService) service;
+    assertThat(info.getWidth()).isEqualTo(648);
+    assertThat(info.getHeight()).isEqualTo(1024);
+    assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
+        "http://iiif.io/api/image/2/level0.json");
+    assertThat(info.getSizes()).containsExactly(
+        new Size(648, 1024),
+        new Size(253, 400),
+        new Size(127, 200),
+        new Size(63, 100));
+    assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
+    ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
+    assertThat(profile.getFormats()).containsExactlyInAnyOrder(ImageApiProfile.Format.JPG);
+    assertThat(profile.getQualities()).containsExactlyInAnyOrder(ImageApiProfile.Quality.COLOR);
+    assertThat(profile.getFeatures()).containsExactly(ImageApiProfile.Feature.SIZE_BY_WH_LISTED);
+  }
+
 }

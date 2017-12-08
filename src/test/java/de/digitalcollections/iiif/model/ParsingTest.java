@@ -141,29 +141,6 @@ public class ParsingTest {
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG, Format.PNG);
     assertThat(profile.getQualities()).containsExactlyInAnyOrder(Quality.GRAY, Quality.DEFAULT);
   }
-  
-  @Test
-  public void testV2ImageInfo() throws Exception {
-    // FIXME: It's kind of ugly that we have to deserialize into the generic typefirst
-    //        and then cast it, but if we use @JsonDeserialize on ImageService, we run into
-    //        an infinite recursion...
-    Service service = readFromResources("spec/image/v2-info.json", Service.class);
-    assertThat(service).isInstanceOf(ImageService.class);
-    ImageService info = (ImageService) service;
-    assertThat(info.getWidth()).isEqualTo(648);
-    assertThat(info.getHeight()).isEqualTo(1024);
-    assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
-            "http://iiif.io/api/image/2/level0.json");
-    assertThat(info.getSizes()).containsExactly(
-            new Size(648, 1024),
-            new Size(253, 400),
-            new Size(127, 200),
-            new Size(63, 100));
-    assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
-    ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
-    assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG);
-    assertThat(profile.getQualities()).containsExactlyInAnyOrder(Quality.COLOR);
-  }
 
   private void parseCollection(URL collUrl) throws Exception {
     System.out.println("Parsing collection " + collUrl.toString());
