@@ -136,8 +136,9 @@ public class ImageApiProfile extends Profile {
         this.imageApiFeature = ImageApiFeature.OTHER;
         this.customFeature = URI.create(featureName);
       } else {
-        this.imageApiFeature = ImageApiFeature.valueOf(
-            CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, featureName));
+        String name = CaseFormat.LOWER_CAMEL.to(CaseFormat.UPPER_UNDERSCORE, featureName);
+        name = name.replaceAll("([A-Z])(\\d)", "$1_$2");
+        this.imageApiFeature = ImageApiFeature.valueOf(name);
         this.customFeature = null;
       }
     }

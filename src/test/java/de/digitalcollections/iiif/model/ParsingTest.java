@@ -142,55 +142,24 @@ public class ParsingTest {
     assertThat(profile.getQualities()).containsExactlyInAnyOrder(Quality.GRAY, Quality.DEFAULT);
   }
 
-  private void parseCollection(URL collUrl) throws Exception {
-    System.out.println("Parsing collection " + collUrl.toString());
-    Collection coll = mapper.readValue(collUrl, Collection.class);
-    if (coll.getManifests() != null) {
-      for (Manifest manifRef : coll.getManifests()) {
-        System.out.println("Parsing manifest " + manifRef.getIdentifier());
-        try {
-          Manifest manifest = mapper.readValue(manifRef.getIdentifier().toURL(), Manifest.class);
-          if (manifest.getSequences() != null) {
-            boolean hasOnlyImages = manifest.getDefaultSequence().getCanvases().stream()
-                    .flatMap(c -> c.getImages().stream())
-                    .map(i -> i.getResource())
-                    .allMatch(i -> i instanceof ImageContent || i instanceof Choice);
-            if (!hasOnlyImages) {
-              System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains canvases with non-image resources.");
-              continue;
-            }
-
-            List<Service> services = manifest.getDefaultSequence().getCanvases().stream()
-                    .flatMap(c -> c.getImages().stream())
-                    .filter(i -> i.getResource() instanceof ImageContent)
-                    .map(i -> i.getResource().getServices())
-                    .flatMap(s -> s != null ? s.stream() : Stream.of(null))
-                    .collect(Collectors.toList());
-            if (!services.stream().allMatch(ImageService.class::isInstance)) {
-              System.out.println("ERROR: " + manifRef.getIdentifier().toString() + " contains images with no Image API service.");
-              continue;
-            }
-          }
-        } catch (Exception e) {
-          System.out.println("Error parsing " + manifRef.getIdentifier().toString());
-          e.printStackTrace();
-        }
-      }
-    }
-    if (coll.getCollections() != null) {
-      for (Collection subcoll : coll.getCollections()) {
-        parseCollection(subcoll.getIdentifier().toURL());
-      }
-    }
-  }
-
-  public void testUniverse() throws Exception {
-    //parseCollection(new URL("https://github.com/ryanfb/iiif-universe/raw/gh-pages/iiif-universe.json"));
-    parseCollection(new URL("http://www.e-codices.unifr.ch/metadata/iiif/collection.json"));
-  }
-
-  public void testParseHugeCollection() throws Exception {
-    Collection coll = mapper.readValue(new URL("http://manifests.britishart.yale.edu/collection/top"), Collection.class);
-    assertThat(coll.getManifests()).hasSize(23217);
+  @Test
+  public void testParseImageApiFeatures() throws Exception {
+    ImageApiProfile profile = readFromResources("featureProfile.json", ImageApiProfile.class);
+    assertThat(profile.getFeatures()).containsExactlyInAnyOrder(
+        ImageApiProfile.Feature.BASE_URI_REDIRECT,
+        ImageApiProfile.Feature.CORS,
+        ImageApiProfile.Feature.JSONLD_MEDIA_TYPE,
+        ImageApiProfile.Feature.MIRRORING,
+        ImageApiProfile.Feature.PROFILE_LINK_HEADER,
+        ImageApiProfile.Feature.REGION_BY_PX,
+        ImageApiProfile.Feature.REGION_SQUARE,
+        ImageApiProfile.Feature.REGION_BY_PCT,
+        ImageApiProfile.Feature.ROTATION_BY_90S,
+        ImageApiProfile.Feature.SIZE_BY_CONFINED_WH,
+        ImageApiProfile.Feature.SIZE_BY_H,
+        ImageApiProfile.Feature.SIZE_BY_PCT,
+        ImageApiProfile.Feature.SIZE_BY_W,
+        ImageApiProfile.Feature.SIZE_BY_WH
+    );
   }
 }

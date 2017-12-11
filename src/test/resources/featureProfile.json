@@ -1,0 +1,18 @@
+{
+  "supports": [
+    "baseUriRedirect",
+    "cors",
+    "jsonldMediaType",
+    "mirroring",
+    "profileLinkHeader",
+    "regionByPct",
+    "regionByPx",
+    "regionSquare",
+    "rotationBy90s",
+    "sizeByConfinedWh",
+    "sizeByH",
+    "sizeByPct",
+    "sizeByW",
+    "sizeByWh"
+  ]
+}
