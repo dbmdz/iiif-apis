@@ -7,6 +7,7 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile.Format;
 import de.digitalcollections.iiif.model.image.ImageApiProfile.Quality;
 import de.digitalcollections.iiif.model.interfaces.Selector;
 import java.awt.Dimension;
+import java.awt.geom.Rectangle2D;
 import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
@@ -111,11 +112,16 @@ public class ImageApiSelector implements Selector {
    * @return The canonical form of the Image API request
    */
   public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality) {
+    Dimension scaleReference = nativeSize;
+    Rectangle2D canonicalRegion = RegionRequest.fromString(region.getCanonicalForm(nativeSize)).getRegion();
+    if (canonicalRegion != null) {
+      scaleReference = new Dimension((int) canonicalRegion.getWidth(), (int) canonicalRegion.getHeight());
+    }
     return String.format(
         "%s%s/%s/%s/%s.%s",
         identifier != null ? urlEncode(identifier) + "/" : "",
         region.getCanonicalForm(nativeSize),
-        size.getCanonicalForm(nativeSize, profile),
+        size.getCanonicalForm(scaleReference, profile),
         rotation.toString(),
         quality.equals(defaultQuality) ? "default" : quality.toString(),
         format.toString());

@@ -134,7 +134,7 @@ public class SelectorTest {
     assertThat(
         ImageApiSelector.fromString("id/pct:0,0,50.0,50.0/pct:50/0/gray.jpg")
             .getCanonicalForm(nativeDims, profile, nativeQuality))
-        .isEqualTo("id/0,0,400,300/400,/0/gray.jpg");
+        .isEqualTo("id/0,0,400,300/200,/0/gray.jpg");
     assertThat(
         ImageApiSelector.fromString("id/full/800,/0/gray.jpg")
             .getCanonicalForm(nativeDims, profile, nativeQuality))
