@@ -156,7 +156,8 @@ public class SizeRequest {
       return "full";
     } else if (this.width != null && this.height == null) {
       return this.toString();
-    } else if (Math.round(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
+    } else if (Math.floor(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth() ||
+               Math.ceil(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
       return String.format("%d,", resolved.width);
     } else {
       return String.format("%d,%d", resolved.width, resolved.height);
