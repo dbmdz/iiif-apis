@@ -208,6 +208,9 @@ public class RegionRequest {
     } else {
       rect = absoluteBox;
     }
+    if (rect.x >= imageDims.width || rect.y >= imageDims.height) {
+      throw new IllegalArgumentException("X and Y must be smaller than the native width/height");
+    }
     if (rect.x + rect.width > imageDims.width) {
       rect.width = imageDims.width - rect.x;
     }
