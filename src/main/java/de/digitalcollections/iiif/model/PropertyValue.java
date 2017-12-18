@@ -27,10 +27,12 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 @JsonSerialize(using = PropertyValueSerializer.class)
 @JsonDeserialize(using = PropertyValueDeserializer.class)
-public class PropertyValue  {
+public class PropertyValue {
+
   private Map<Locale, List<String>> localizations = new LinkedHashMap<>();
 
-  public PropertyValue() { }
+  public PropertyValue() {
+  }
 
   public PropertyValue(String first, String... rest) {
     this(Locale.ROOT, first, rest);
@@ -85,11 +87,40 @@ public class PropertyValue  {
   }
 
   public String getFirstValue() {
+    if (getValues() == null) {
+      return null;
+    }
     return getValues().get(0);
   }
 
+  /*
+   * see http://iiif.io/api/presentation/2.1/#language-of-property-values
+   * example: {"description": {"@value": "Here is a longer description of the object", "@language": "en"}}
+   *
+   * In the case where multiple values are supplied, clients must use the following algorithm to determine
+   * which values to display to the user.
+   *
+   * <ul>
+   * <li>If none of the values have a language associated with them, the client must display all of the values.</li>
+   * <li>Else, the client should try to determine the user’s language preferences, or failing that use some
+   * default language preferences. Then:</li>
+   *   <ul>
+   *   <li>If any of the values have a language associated with them, the client must display all of the values
+   *     associated with the language that best matches the language preference.</li>
+   *   <li>If all of the values have a language associated with them, and none match the language preference,
+   *     the client must select a language and display all of the values associated with that language.</li>
+   *   <li>If some of the values have a language associated with them, but none match the language preference,
+   *     the client must display all of the values that do not have a language associated with them.</li>
+   *   </ul>
+   * </ul>
+   */
   public String getFirstValue(Locale locale) {
-    return getValues(locale).get(0);
+    List<String> values = getValues(locale);
+    if (values == null) {
+      return getFirstValue();
+    } else {
+      return values.get(0);
+    }
   }
 
   @Override
