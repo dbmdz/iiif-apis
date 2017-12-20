@@ -18,8 +18,8 @@ import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
-import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 import org.geojson.Feature;
@@ -56,13 +56,18 @@ public class ProblemHandler extends DeserializationProblemHandler {
      * 2. Find a String-constructor on the target class
      * 3. Build the object */
     if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
+      }
       try {
-        Constructor<?> constructor = instClass.getConstructor(String.class);
-        return constructor.newInstance(p.getValueAsString());
+        // Special case for empty strings in collection fields.
+        if (p.getValueAsString().isEmpty() && Collection.class.isAssignableFrom(instClass)) {
+          return instClass.getConstructor().newInstance();
+        } else {
+          Constructor<?> constructor = instClass.getConstructor(String.class);
+          return constructor.newInstance(p.getValueAsString());
+        }
       } catch (Exception e) {
         // Fall through
       }
-    }
     return super.handleMissingInstantiator(ctxt, instClass, valueInsta, p, msg);
   }
 
