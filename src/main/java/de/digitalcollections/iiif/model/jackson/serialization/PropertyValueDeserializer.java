@@ -37,16 +37,20 @@ public class PropertyValueDeserializer extends JsonDeserializer<PropertyValue> {
         if (ObjectNode.class.isAssignableFrom(arr.get(i).getClass())) {
           // Complex object
           curObj = (ObjectNode) arr.get(i);
-          Locale lang = Locale.forLanguageTag(curObj.get("@language").textValue());
+          String lang = "";
+          if (curObj.has("@language")) {
+            lang = curObj.get("@language").textValue();
+          }
+          final Locale locale = Locale.forLanguageTag(lang);
           TreeNode valueNode = curObj.get("@value");
           if (TextNode.class.isAssignableFrom(valueNode.getClass())) {
             // Single value
-            propVal.addValue(lang, curObj.get("@value").textValue());
+            propVal.addValue(locale, curObj.get("@value").textValue());
           } else if (valueNode instanceof ArrayNode) {
             // Multiple values
             StreamSupport.stream(((ArrayNode) valueNode).spliterator(), false)
                 .map(JsonNode::textValue)
-                .forEach(v -> propVal.addValue(lang, v));
+                .forEach(v -> propVal.addValue(locale, v));
           }
         } else if (TextNode.class.isAssignableFrom(arr.get(i).getClass())) {
           // Simple string

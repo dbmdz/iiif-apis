@@ -8,6 +8,7 @@ import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
+import java.util.Locale;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -85,6 +86,24 @@ public class ExternalTest {
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(ImageApiProfile.Format.JPG);
     assertThat(profile.getQualities()).containsExactlyInAnyOrder(ImageApiProfile.Quality.COLOR);
     assertThat(profile.getFeatures()).containsExactly(ImageApiProfile.Feature.SIZE_BY_WH_LISTED);
+  }
+
+  @Test
+  public void testGallicaPropValsWithNoLanguage() throws Exception {
+    Manifest manifest = readFromResources("gallica_propvals_without_language.json", Manifest.class);
+    PropertyValue creator = manifest.getMetadata().stream()
+        .filter(me -> me.getLabelString().equals("Creator"))
+        .map(me -> me.getValue())
+        .findFirst()
+        .orElseThrow(() -> new Exception("Could not find 'Creator' in metadata"));
+    assertThat(creator.getValues()).hasSize(5);
+    assertThat(creator.getLocalizations()).containsOnly(Locale.forLanguageTag(""));
+    assertThat(creator.getValues()).containsExactly(
+        "Vincentius Bellovacensis (1190?-1264). Auteur du texte",
+        "Jean de Vignay (1282?-13..). Traducteur",
+        "Maître de Papeleu. Enlumineur",
+        "Maître de Cambrai. Enlumineur",
+        "Mahiet. Enlumineur");
   }
 
 }
