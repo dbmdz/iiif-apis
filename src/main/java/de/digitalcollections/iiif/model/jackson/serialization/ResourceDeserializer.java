@@ -120,7 +120,6 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     // More reliable way: Walk up the parsing context until we hit a IIIF resource that we can deduce the type from
     // Usually this shouldn't be more than two levels up
     JsonStreamContext parent = ctxt.getParser().getParsingContext().getParent();
-    int parentLevel = 1;
     while (parent != null && (parent.getCurrentValue() == null || !(parent.getCurrentValue() instanceof Resource))) {
       parent = parent.getParent();
     }
