@@ -1,0 +1,143 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "https://wellcomelibrary.org/iiif/b15404535/manifest",
+  "@type": "sc:Manifest",
+  "label": "Reichseierkarte : gültig ab 13. Nov. 1944.",
+  "metadata": [
+    {
+      "label": "Title",
+      "value": "Reichseierkarte :"
+    },
+    {
+      "label": "Publication date",
+      "value": "1944."
+    },
+    {
+      "label": "Summary",
+      "value": "Sheet of food rations coupons for eggs printed in black on green paper. Divided into a grid of small stamps with general information in the bottom left corner. The eagle with outstretched wings atop a swastika is above the title."
+    },
+    {
+      "label": "Attribution",
+      "value": "Wellcome Library<br/>License: Copyright not cleared"
+    },
+    {
+      "label": "",
+      "value": "<a href='https://search.wellcomelibrary.org/iii/encore/record/C__Rb1540453'>View full catalogue record</a>"
+    },
+    {
+      "label": "Full conditions of use",
+      "value": "The copyright of this item has not been evaluated. Please refer to the original publisher/creator of this item for more information. You are free to use this item in any way that is permitted by the copyright and related rights legislation that applies to your use. <br/>See <a target=\"_top\" href=\"http://rightsstatements.org/page/CNE/1.0/?language=en\">rightsstatements.org</a> for more information."
+    }
+  ],
+  "license": "",
+  "logo": "https://wellcomelibrary.org/assets/img/squarelogo64.png",
+  "related": {
+    "@id": "https://wellcomelibrary.org/item/b15404535",
+    "format": "text/html"
+  },
+  "seeAlso": [
+    {
+      "@id": "https://wellcomelibrary.org/data/b15404535.json",
+      "format": "application/json",
+      "profile": "http://wellcomelibrary.org/profiles/res"
+    },
+    {
+      "@id": "https://wellcomelibrary.org/resource/schemaorg/b15404535",
+      "format": "application/ld+json",
+      "profile": "http://iiif.io/community/profiles/discovery/schema"
+    },
+    {
+      "@id": "https://wellcomelibrary.org/resource/dublincore/b15404535",
+      "format": "application/ld+json",
+      "profile": "http://iiif.io/community/profiles/discovery/dc"
+    }
+  ],
+  "service": [
+    {
+      "@context": "http://wellcomelibrary.org/ld/iiif-ext/0/context.json",
+      "@id": "https://wellcomelibrary.org/iiif/b15404535-0/access-control-hints-service",
+      "profile": "http://wellcomelibrary.org/ld/iiif-ext/access-control-hints",
+      "accessHint": "open"
+    },
+    {
+      "@context": "http://universalviewer.io/context.json",
+      "@id": "http://wellcomelibrary.org/service/trackingLabels/b15404535",
+      "profile": "http://universalviewer.io/tracking-extensions-profile",
+      "trackingLabel": "Format: monograph, Institution: n/a, Identifier: b15404535, Digicode: digephemera, Collection code: n/a"
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "https://wellcomelibrary.org/iiif/b15404535/sequence/s0",
+      "@type": "sc:Sequence",
+      "label": "Sequence s0",
+      "rendering": {
+        "@id": "https://dlcs.io/pdf/wellcome/pdf-item/b15404535/0",
+        "format": "application/pdf",
+        "label": "Download as PDF"
+      },
+      "viewingHint": "paged",
+      "canvases": [
+        {
+          "@id": "https://wellcomelibrary.org/iiif/b15404535/canvas/c0",
+          "@type": "sc:Canvas",
+          "label": " - ",
+          "thumbnail": {
+            "@id": "https://dlcs.io/thumbs/wellcome/1/f830d746-6ff1-466f-8c57-7a94c252782d/full/100,74/0/default.jpg",
+            "@type": "dctypes:Image",
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json",
+              "@id": "https://dlcs.io/thumbs/wellcome/1/f830d746-6ff1-466f-8c57-7a94c252782d",
+              "protocol": "http://iiif.io/api/image",
+              "height": 761,
+              "width": 1024,
+              "sizes": [
+                {
+                  "width": 100,
+                  "height": 74
+                },
+                {
+                  "width": 200,
+                  "height": 149
+                },
+                {
+                  "width": 400,
+                  "height": 297
+                },
+                {
+                  "width": 1024,
+                  "height": 761
+                }
+              ],
+              "profile": [
+                "http://iiif.io/api/image/2/level0.json"
+              ]
+            }
+          },
+          "height": 3739,
+          "width": 5029,
+          "images": [
+            {
+              "@id": "https://wellcomelibrary.org/iiif/b15404535/imageanno/f830d746-6ff1-466f-8c57-7a94c252782d",
+              "@type": "oa:Annotation",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "https://dlcs.io/iiif-img/wellcome/1/f830d746-6ff1-466f-8c57-7a94c252782d/full/!1024,1024/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "height": 761,
+                "width": 1024,
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://dlcs.io/iiif-img/wellcome/1/f830d746-6ff1-466f-8c57-7a94c252782d",
+                  "profile": "http://iiif.io/api/image/2/level1.json"
+                }
+              },
+              "on": "https://wellcomelibrary.org/iiif/b15404535/canvas/c0"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -112,4 +112,11 @@ public class ExternalTest {
     Manifest manifest = readFromResources("textgridlab.org-textgrid:3b09k.0-manifest.json", Manifest.class);
     assertThat(manifest).isNotNull();
   }
+
+  @Test
+  public void testWellcomeWithEmptyLicenseString() throws Exception {
+    Manifest manifest = readFromResources("wellcomelibrary-b15404535-empty-license-string-manifest.json", Manifest.class);
+    assertThat(manifest).isNotNull();
+  }
+
 }
