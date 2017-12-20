@@ -96,55 +96,6 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     }
   }
 
-  @Override
-  public void serializeWithType(Resource value, JsonGenerator gen, SerializerProvider serializers,
-      TypeSerializer typeSer) throws IOException {
-    JsonStreamContext ctx = gen.getOutputContext();
-    if (ctx.getParent() == null) {
-      value._context = Resource.CONTEXT;
-    }
-
-    // Remove @type from ImageContent if necessary
-    if (ImmutableSet.of("thumbnail", "logo").contains(getContainingField(gen))) {
-      ImageContent imgContent = (ImageContent) value;
-      imgContent._type = null;
-    }
-
-    Completeness completeness = ModelUtilities.getCompleteness(value, value.getClass());
-    if (value instanceof Canvas) {
-      // Get name of the field
-      String currentName = ctx.getCurrentName();
-
-      /* Special case for "on"-fields on Image annotations on canvases: If they have only `@id` and `@type` set, we
-       * skip the type to reduce the verbosity of the JSON. */
-      if (Objects.equals(currentName, "on")) {
-        // Is the annotation on a canvas?
-        String onType = value.getType();
-
-        // Go up two levels: on-resource -> annotation -> resource
-        Resource onResource = (Resource) ctx.getParent().getParent().getCurrentValue();
-        if (onResource != null && completeness == ModelUtilities.Completeness.ID_AND_TYPE && onType.equals(onResource.getType())) {
-          // Only skip @type if there is no additional information besides @type and @id
-          completeness = ModelUtilities.Completeness.ID_ONLY;
-        }
-      }
-    }
-    switch (completeness) {
-      case EMPTY:
-        // Empty IIIF Resources should be null
-        gen.writeNull();
-        break;
-      case ID_ONLY:
-      case ID_AND_TYPE:
-        // Resources with only an identifier should be a string
-        gen.writeObject(value.getIdentifier().toString());
-        break;
-      default:
-        // Otherwise delegate to default serializer
-        defaultSerializer.serializeWithType(value, gen, serializers, typeSer);
-    }
-  }
-
   private static String getContainingField(JsonGenerator gen) {
     JsonStreamContext ctx = gen.getOutputContext();
     if (ctx.inArray()) {

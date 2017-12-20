@@ -26,29 +26,6 @@ import org.geojson.Feature;
 
 public class ProblemHandler extends DeserializationProblemHandler {
   @Override
-  public JavaType handleUnknownTypeId(DeserializationContext ctxt, JavaType baseType, String subTypeId,
-      TypeIdResolver idResolver, String failureMsg) throws IOException {
-    if (baseType.isTypeOrSubTypeOf(Service.class)) {
-      // Handle unknown services. We do this here instead of setting a `defaultImpl` since we want
-      // to preserve the @context value, which would get lost.
-      return ctxt.getTypeFactory().constructType(GenericService.class);
-    } else if (baseType.isTypeOrSubTypeOf(Resource.class)) {
-      // Handle other unknown resources
-      return ctxt.getTypeFactory().constructType(OtherContent.class);
-    } else if (baseType.isTypeOrSubTypeOf(Selector.class)) {
-      if (ctxt.getParser().getCurrentToken() == JsonToken.START_ARRAY) {
-        String type = ctxt.getParser().nextTextValue();
-        if (type.equals(ContentAsText.TYPE)) {
-          ctxt.getParser().finishToken();
-          type = ctxt.getParser().nextTextValue();
-        }
-        return idResolver.typeFromId(ctxt, type);
-      }
-    }
-    return super.handleUnknownTypeId(ctxt, baseType, subTypeId, idResolver, failureMsg);
-  }
-
-  @Override
   public Object handleMissingInstantiator(DeserializationContext ctxt, Class<?> instClass, ValueInstantiator valueInsta,
       JsonParser p, String msg) throws IOException {
     /* FIXME: For some reason Jackson can't find the {@link Canvas(String)} constructor, so we do it ourselves:
@@ -103,14 +80,7 @@ public class ProblemHandler extends DeserializationProblemHandler {
     if (targetType.isEnum()) {
       String lowerCased = valueToConvert.toLowerCase();
       Optional<?> match = Arrays.stream(targetType.getEnumConstants())
-          .filter(v -> v.toString().equals(lowerCased))
-          .findFirst();
-      if (match.isPresent()) {
-        return match.get();
-      }
-      String upperCased = valueToConvert.toUpperCase();
-      match = Arrays.stream(targetType.getEnumConstants())
-          .filter(v -> v.toString().equals(upperCased))
+          .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))
           .findFirst();
       if (match.isPresent()) {
         return match.get();
