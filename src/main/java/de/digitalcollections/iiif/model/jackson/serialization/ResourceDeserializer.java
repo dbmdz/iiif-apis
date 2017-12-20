@@ -107,13 +107,21 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
 
   /** Get type for  "on" values that are plain URIs by deducing the type from their parent. */
   private String getOnType(DeserializationContext ctxt) {
-    Annotation anno = (Annotation) ctxt.getParser().getCurrentValue();
-    if (anno.getMotivation().equals(Motivation.PAINTING)) {
-      return "sc:Canvas";
+    // Easiest way: The parser has already constructed an annotation object with a motivation.
+    // This is highly dependendant on the order of keys in the JSON, i.e. if "on" is the first key in the annotation
+    // object, this won't work.
+    Object curVal = ctxt.getParser().getCurrentValue();
+    boolean isPaintingAnno = (curVal != null && curVal instanceof Annotation &&
+                              ((Annotation) curVal).getMotivation() != null &&
+                              ((Annotation) curVal).getMotivation().equals(Motivation.PAINTING));
+    if (isPaintingAnno) {
+        return "sc:Canvas";
     }
+    // More reliable way: Walk up the parsing context until we hit a IIIF resource that we can deduce the type from
+    // Usually this shouldn't be more than two levels up
     JsonStreamContext parent = ctxt.getParser().getParsingContext().getParent();
-    /* Parent resource is two levels up: on-resource -> annotation -> resource */
-    if (parent != null) {
+    int parentLevel = 1;
+    while (parent != null && (parent.getCurrentValue() == null || !(parent.getCurrentValue() instanceof Resource))) {
       parent = parent.getParent();
     }
     if (parent != null) {
