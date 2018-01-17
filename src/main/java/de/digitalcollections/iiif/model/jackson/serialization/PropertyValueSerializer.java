@@ -58,6 +58,8 @@ public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
           writeSingleLocalization(jgen, language, value.getValues(language));
         }
         jgen.writeEndArray();
+      } else {
+        jgen.writeNull();
       }
     }
   }

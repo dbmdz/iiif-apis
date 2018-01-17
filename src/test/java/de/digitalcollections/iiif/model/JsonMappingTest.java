@@ -120,4 +120,15 @@ public class JsonMappingTest {
     assertThat(mapper.readValue(json, Collection.class).getNavDate()).isEqualTo(navDate);
   }
 
+  @Test
+  public void testMetadataEntryWithNoValue() throws Exception {
+    PropertyValue label = new PropertyValue("Key");
+    PropertyValue value = new PropertyValue();
+    MetadataEntry meta = new MetadataEntry(label, value);
+    String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(meta);
+    MetadataEntry parsed = mapper.readValue(json, MetadataEntry.class);
+    assertThat(parsed.getLabel().getValues()).containsExactly("Key");
+    assertThat(parsed.getValue()).isNull();
+  }
+
 }
