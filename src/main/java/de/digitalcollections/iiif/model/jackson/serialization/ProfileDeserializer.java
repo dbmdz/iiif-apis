@@ -28,7 +28,7 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
   public Profile deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
       if (isImageApiProfile(p.getValueAsString())) {
-        return new ImageApiProfile(p.getValueAsString());
+        return ImageApiProfile.fromUrl(p.getValueAsString());
       } else {
         return new Profile(URI.create(p.getValueAsString()));
       }

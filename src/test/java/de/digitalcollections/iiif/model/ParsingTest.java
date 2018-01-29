@@ -11,14 +11,9 @@ import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
 import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
-import de.digitalcollections.iiif.model.sharedcanvas.Collection;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
-import java.net.URL;
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -110,14 +105,14 @@ public class ParsingTest {
     assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
     assertThat(choice.getDefault().getServices().get(0)).isInstanceOf(ImageService.class);
     assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(
-            new ImageApiProfile("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
+            ImageApiProfile.fromUrl("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
     assertThat(choice.getAlternatives()).hasSize(2);
     assertThat(choice.getAlternatives()).allMatch(r -> r instanceof ImageContent);
   }
 
   @Test
   public void testV10ImageInfo() throws Exception {
-    // FIXME: It's kind of ugly that we have to deserialize into the generic typefirst
+    // FIXME: It's kind of ugly that we have to deserialize into the generic type first
     //        and then cast it, but if we use @JsonDeserialize on ImageService, we run into
     //        an infinite recursion...
     Service service = readFromResources("v1Info.json", Service.class);

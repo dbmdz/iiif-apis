@@ -164,14 +164,50 @@ public class ImageApiProfile extends Profile {
         return false;
       }
       Feature other = (Feature) obj;
-      return Objects.equals(this.imageApiFeature, other.imageApiFeature) &&
-            Objects.equals(this.customFeature, other.customFeature);
+      return Objects.equals(this.imageApiFeature, other.imageApiFeature)
+            && Objects.equals(this.customFeature, other.customFeature);
     }
   }
 
   public static final ImageApiProfile LEVEL_ZERO = new ImageApiProfile("http://iiif.io/api/image/2/level0.json");
+  static {
+    LEVEL_ZERO.addFormat(Format.JPG);
+    LEVEL_ZERO.addQuality(Quality.DEFAULT);
+  }
+
   public static final ImageApiProfile LEVEL_ONE = new ImageApiProfile("http://iiif.io/api/image/2/level1.json");
+  static {
+    LEVEL_ONE.addFeature(
+        Feature.REGION_BY_PX,
+        Feature.SIZE_BY_W,
+        Feature.SIZE_BY_H,
+        Feature.SIZE_BY_PCT,
+        Feature.BASE_URI_REDIRECT,
+        Feature.CORS,
+        Feature.JSONLD_MEDIA_TYPE);
+    LEVEL_ONE.addFormat(Format.JPG);
+    LEVEL_ONE.addQuality(Quality.DEFAULT);
+  }
+
   public static final ImageApiProfile LEVEL_TWO = new ImageApiProfile("http://iiif.io/api/image/2/level2.json");
+  static {
+    LEVEL_TWO.addFeature(
+        Feature.REGION_BY_PX,
+        Feature.REGION_BY_PCT,
+        Feature.SIZE_BY_W,
+        Feature.SIZE_BY_H,
+        Feature.SIZE_BY_PCT,
+        Feature.SIZE_BY_CONFINED_WH,
+        Feature.SIZE_BY_DISTORTED_WH,
+        Feature.SIZE_BY_WH,
+        Feature.ROTATION_BY_90S,
+        Feature.BASE_URI_REDIRECT,
+        Feature.CORS,
+        Feature.JSONLD_MEDIA_TYPE);
+    LEVEL_TWO.addFormat(Format.JPG, Format.PNG);
+    LEVEL_TWO.addQuality(Quality.DEFAULT, Quality.COLOR, Quality.GRAY, Quality.BITONAL);
+  }
+
   public static final Set<String> V1_PROFILES = ImmutableSet.of(
       "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
       "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
@@ -188,22 +224,53 @@ public class ImageApiProfile extends Profile {
   @JsonProperty("@type")
   public static final String TYPE = "iiif:ImageProfile";
 
-  Set<Format> formats;
-  Set<Quality> qualities;
+  private Set<Format> formats = new LinkedHashSet<>();
+  private Set<Quality> qualities = new LinkedHashSet<>();
 
   @JsonProperty("supports")
-  Set<Feature> features;
+  Set<Feature> features = new LinkedHashSet<>();
 
   Integer maxArea;
   Integer maxHeight;
   Integer maxWidth;
 
+  public static ImageApiProfile fromUrl(String url) {
+    URI uri = URI.create(url);
+    if (uri.equals(LEVEL_ZERO.getIdentifier())) {
+      return LEVEL_ZERO;
+    } else if (uri.equals(LEVEL_ONE.getIdentifier())) {
+      return LEVEL_ONE;
+    } else if (uri.equals(LEVEL_TWO.getIdentifier())) {
+      return LEVEL_TWO;
+    } else if (V1_PROFILES.contains(url)) {
+      String lvl = url.split("#level")[1];
+      if (lvl.equals("0")) {
+        return new ImageApiProfile(url, LEVEL_ZERO);
+      } else if (lvl.equals("1")) {
+        return new ImageApiProfile(url, LEVEL_ONE);
+      } else if (lvl.equals("2")) {
+        return new ImageApiProfile(url, LEVEL_TWO);
+      }
+    }
+    return new ImageApiProfile(url);
+  }
+
   public ImageApiProfile() {
     super(null);
   }
 
-  public ImageApiProfile(String url) {
+  private ImageApiProfile(String url) {
     super(URI.create(url));
+  }
+
+  private ImageApiProfile(String url, ImageApiProfile profile) {
+    this(url);
+    this.setFormats(profile.getFormats());
+    this.setQualities(profile.getQualities());
+    this.setFeatures(profile.getFeatures());
+    this.setMaxWidth(profile.getMaxWidth());
+    this.setMaxHeight(profile.getMaxHeight());
+    this.setMaxArea(profile.getMaxArea());
   }
 
   public Set<Format> getFormats() {
@@ -215,9 +282,6 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addFormat(Format first, Format... rest) {
-    if (this.formats == null) {
-      this.formats = new LinkedHashSet<>();
-    }
     this.formats.addAll(Lists.asList(first, rest));
     return this;
   }
@@ -231,9 +295,6 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addQuality(Quality first, Quality... rest) {
-    if (this.qualities == null) {
-      this.qualities = new LinkedHashSet<>();
-    }
     this.qualities.addAll(Lists.asList(first, rest));
     return this;
   }
@@ -247,9 +308,6 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addFeature(Feature first, Feature... rest) {
-    if (this.features == null) {
-      this.features = new LinkedHashSet<>();
-    }
     this.features.addAll(Lists.asList(first, rest));
     return this;
   }

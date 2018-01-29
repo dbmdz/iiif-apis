@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class SelectorTest {
   @Test
-  public void testParseRequestFromUri() {
+  public void testParseRequestFromUri() throws ResolvingException {
     URI uri = URI.create("http://www.example.org/image-service/abcd1234/full/full/0/default.jpg");
     ImageApiSelector selector = ImageApiSelector.fromImageApiUri(uri);
     assertThat(selector.getRegion().getRegion()).isNull();
@@ -28,7 +28,7 @@ public class SelectorTest {
   }
 
   @Test
-  public void testRegion() {
+  public void testRegion() throws ResolvingException {
     Dimension imageDims = new Dimension(3844, 7387);
     RegionRequest req = RegionRequest.fromString("full");
     assertThat(req).hasFieldOrPropertyWithValue("region", null);
@@ -60,10 +60,9 @@ public class SelectorTest {
   }
 
   @Test
-  public void testSize() {
+  public void testSize() throws ResolvingException {
     Dimension imageDim = new Dimension(300, 200);
     ImageApiProfile profile = new ImageApiProfile();
-    profile.setMaxWidth(200);
 
     SizeRequest req = SizeRequest.fromString("full");
     assertThat(req.toString()).isEqualTo("full");
@@ -71,7 +70,9 @@ public class SelectorTest {
 
     req = SizeRequest.fromString("max");
     assertThat(req.toString()).isEqualTo("max");
+    profile.setMaxWidth(200);
     assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(200, 133));
+    profile.setMaxWidth(null);
 
     req = SizeRequest.fromString("150,");
     assertThat(req.toString()).isEqualTo("150,");
@@ -93,18 +94,18 @@ public class SelectorTest {
     assertThat(req.toString()).isEqualTo("!225,100");
     assertThat(req.isBestFit()).isTrue();
     assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(150, 100));
-    assertThat(req.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(100, 66));
+    assertThat(SizeRequest.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(100, 66));
 
     imageDim = new Dimension(200, 400);
     req = SizeRequest.fromString("!100,500");
     assertThat(req.toString()).isEqualTo("!100,500");
     assertThat(req.isBestFit()).isTrue();
     assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(100, 200));
-    assertThat(req.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(50, 100));
+    assertThat(SizeRequest.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(50, 100));
   }
 
   @Test
-  public void testRotation() {
+  public void testRotation() throws ResolvingException {
     RotationRequest req = RotationRequest.fromString("180");
     assertThat(req.toString()).isEqualTo("180");
     assertThat(req).hasFieldOrPropertyWithValue("rotation", 180.0);

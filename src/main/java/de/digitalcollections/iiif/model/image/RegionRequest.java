@@ -28,13 +28,17 @@ public class RegionRequest {
 
     @Override
     public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
       RelativeBox that = (RelativeBox) o;
-      return Objects.equal(x, that.x) &&
-          Objects.equal(y, that.y) &&
-          Objects.equal(w, that.w) &&
-          Objects.equal(h, that.h);
+      return Objects.equal(x, that.x)
+          && Objects.equal(y, that.y)
+          && Objects.equal(w, that.w)
+          && Objects.equal(h, that.h);
     }
 
     @Override
@@ -47,24 +51,24 @@ public class RegionRequest {
   private RelativeBox relativeBox;
   private boolean square = false;
 
-  private static final Pattern parsePat = Pattern.compile("^(pct:)?([0-9.]+),([0-9.]+),([0-9.]+),([0-9.]+)$");
+  private static final Pattern PARSE_PAT = Pattern.compile("^(pct:)?([0-9.]+),([0-9.]+),([0-9.]+),([0-9.]+)$");
 
   /**
    * Parse an IIIF Image API compliant region request string
    *
-   * @throws IllegalArgumentException if the request string is malformed.
+   * @throws ResolvingException if the request string is malformed.
    */
   @JsonCreator
-  public static RegionRequest fromString(String str) throws IllegalArgumentException {
+  public static RegionRequest fromString(String str) throws ResolvingException {
     if (str.equals("full")) {
       return new RegionRequest();
     }
     if (str.equals("square")) {
       return new RegionRequest(true);
     }
-    Matcher matcher = parsePat.matcher(str);
+    Matcher matcher = PARSE_PAT.matcher(str);
     if (!matcher.matches()) {
-      throw new IllegalArgumentException("Bad format: " + str);
+      throw new ResolvingException("Bad format: " + str);
     }
     if (matcher.group(1) == null) {
       return new RegionRequest(
@@ -95,9 +99,9 @@ public class RegionRequest {
     this.square = square;
   }
 
-  private RegionRequest(BigDecimal x, BigDecimal y, BigDecimal width, BigDecimal height) throws IllegalArgumentException {
+  private RegionRequest(BigDecimal x, BigDecimal y, BigDecimal width, BigDecimal height) throws ResolvingException {
     if (Stream.of(x, y, width, height).anyMatch(v -> v.doubleValue() > 100.0)) {
-      throw new IllegalArgumentException("No parameter can be greater than 100!");
+      throw new ResolvingException("No parameter can be greater than 100!");
     }
     this.relativeBox = new RelativeBox(x, y, width, height);
   }
@@ -107,9 +111,9 @@ public class RegionRequest {
    *
    * The values must be between 0.0 and 100.0.
    *
-   * @throws IllegalArgumentException if the values fall outside of the allowed range
+   * @throws ResolvingException if the values fall outside of the allowed range
    */
-  public RegionRequest(double x, double y, double width, double height) throws IllegalArgumentException {
+  public RegionRequest(double x, double y, double width, double height) throws ResolvingException {
     this(BigDecimal.valueOf(x), BigDecimal.valueOf(y), BigDecimal.valueOf(width), BigDecimal.valueOf(height));
   }
 
@@ -165,7 +169,7 @@ public class RegionRequest {
     }
   }
 
-  public String getCanonicalForm(Dimension imageDims) {
+  public String getCanonicalForm(Dimension imageDims) throws ResolvingException {
     Rectangle resolved = this.resolve(imageDims);
     boolean isFull = resolved.x == 0
         && resolved.y == 0
@@ -181,7 +185,7 @@ public class RegionRequest {
   /**
    * Resolve the region request into an actual region that can be used for cropping the image
    */
-  public Rectangle resolve(Dimension imageDims) {
+  public Rectangle resolve(Dimension imageDims) throws ResolvingException {
     if (square) {
       if (imageDims.width > imageDims.height) {
         return new Rectangle(
@@ -209,7 +213,7 @@ public class RegionRequest {
       rect = absoluteBox;
     }
     if (rect.x >= imageDims.width || rect.y >= imageDims.height) {
-      throw new IllegalArgumentException("X and Y must be smaller than the native width/height");
+      throw new ResolvingException("X and Y must be smaller than the native width/height");
     }
     if (rect.x + rect.width > imageDims.width) {
       rect.width = imageDims.width - rect.x;
@@ -222,12 +226,16 @@ public class RegionRequest {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     RegionRequest that = (RegionRequest) o;
-    return square == that.square &&
-        Objects.equal(absoluteBox, that.absoluteBox) &&
-        Objects.equal(relativeBox, that.relativeBox);
+    return square == that.square
+        && Objects.equal(absoluteBox, that.absoluteBox)
+        && Objects.equal(relativeBox, that.relativeBox);
   }
 
   @Override

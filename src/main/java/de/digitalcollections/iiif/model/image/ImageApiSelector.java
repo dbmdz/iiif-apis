@@ -50,22 +50,30 @@ public class ImageApiSelector implements Selector {
     return TYPE;
   }
 
-  public static ImageApiSelector fromImageApiUri(URI imageApiUri) {
+  public static ImageApiSelector fromImageApiUri(URI imageApiUri) throws ResolvingException {
     return fromString(imageApiUri.getPath());
   }
 
-  public static ImageApiSelector fromString(String str) {
+  public static ImageApiSelector fromString(String str) throws ResolvingException {
     Matcher matcher = REQUEST_PAT.matcher(str);
     if (!matcher.find()) {
-      throw new IllegalArgumentException("Malformed IIIF Image API request: " + str);
+      throw new ResolvingException("Malformed IIIF Image API request: " + str);
     }
     ImageApiSelector selector = new ImageApiSelector();
     selector.setIdentifier(new Precoded(matcher.group("identifier")).decoded().toString());
     selector.setRegion(matcher.group("region"));
     selector.setSize(matcher.group("size"));
     selector.setRotation(matcher.group("rotation"));
-    selector.setQuality(Quality.valueOf(matcher.group("quality").toUpperCase()));
-    selector.setFormat(Format.valueOf(matcher.group("format").toUpperCase()));
+    try {
+      selector.setQuality(Quality.valueOf(matcher.group("quality").toUpperCase()));
+    } catch (IllegalArgumentException e) {
+      throw new ResolvingException("Illegal value for quality: " + matcher.group("quality"));
+    }
+    try {
+      selector.setFormat(Format.valueOf(matcher.group("format").toUpperCase()));
+    } catch (IllegalArgumentException e) {
+      throw new ResolvingException("Illegal value for format: " + matcher.group("format"));
+    }
     return selector;
   }
 
@@ -111,7 +119,7 @@ public class ImageApiSelector implements Selector {
    * @param defaultQuality  The native/default quality of the image the selector is applied to
    * @return The canonical form of the Image API request
    */
-  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality) {
+  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality) throws ResolvingException {
     Dimension scaleReference = nativeSize;
     Rectangle2D canonicalRegion = RegionRequest.fromString(region.getCanonicalForm(nativeSize)).getRegion();
     if (canonicalRegion != null) {
@@ -143,7 +151,7 @@ public class ImageApiSelector implements Selector {
     this.region = region;
   }
 
-  public void setRegion(String region) {
+  public void setRegion(String region) throws ResolvingException {
     this.region = RegionRequest.fromString(region);
   }
 
@@ -155,7 +163,7 @@ public class ImageApiSelector implements Selector {
     this.size = size;
   }
 
-  public void setSize(String size) {
+  public void setSize(String size) throws ResolvingException {
     this.size = SizeRequest.fromString(size);
   }
 
@@ -167,7 +175,7 @@ public class ImageApiSelector implements Selector {
     this.rotation = rotation;
   }
 
-  public void setRotation(String rotation) {
+  public void setRotation(String rotation) throws ResolvingException {
     this.rotation = RotationRequest.fromString(rotation);
   }
 

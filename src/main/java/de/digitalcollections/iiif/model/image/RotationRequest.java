@@ -16,20 +16,20 @@ public class RotationRequest {
   /**
    * Parse a rotation request from an IIIF Image API compliant rotation string.
    *
-   * @throws IllegalArgumentException if the rotation string is malformed
+   * @throws ResolvingException if the rotation string is malformed
    */
   @JsonCreator
-  public static RotationRequest fromString(String str) {
+  public static RotationRequest fromString(String str) throws ResolvingException {
     Matcher matcher = PATTERN.matcher(str);
     if (!matcher.matches()) {
-      throw new IllegalArgumentException("Bad format: " + str);
+      throw new ResolvingException("Bad format: " + str);
     }
     return new RotationRequest(
         new BigDecimal(matcher.group(2)),
         !(matcher.group(1) == null));
   }
 
-  public RotationRequest(int rotation) {
+  public RotationRequest(int rotation) throws ResolvingException {
     this(BigDecimal.valueOf(rotation), false);
   }
 
@@ -38,11 +38,11 @@ public class RotationRequest {
    *
    * @param rotation Rotation in degrees. Must be between 0 and 360
    * @param mirror Mirror the image when rotating
-   * @throws IllegalArgumentException if the rotation degrees are not between 0 and 360
+   * @throws ResolvingException if the rotation degrees are not between 0 and 360
    */
-  public RotationRequest(BigDecimal rotation, boolean mirror) throws IllegalArgumentException {
+  public RotationRequest(BigDecimal rotation, boolean mirror) throws ResolvingException {
     if (rotation.floatValue() < 0 || rotation.floatValue() > 360) {
-      throw new IllegalArgumentException("Rotation must be between 0 and 360");
+      throw new ResolvingException("Rotation must be between 0 and 360");
     }
     this.rotation = rotation;
     this.mirror = mirror;
@@ -71,11 +71,15 @@ public class RotationRequest {
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     RotationRequest that = (RotationRequest) o;
-    return mirror == that.mirror &&
-        Objects.equal(rotation, that.rotation);
+    return mirror == that.mirror
+        && Objects.equal(rotation, that.rotation);
   }
 
   @Override

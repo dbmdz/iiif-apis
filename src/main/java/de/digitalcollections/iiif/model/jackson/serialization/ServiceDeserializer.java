@@ -79,9 +79,9 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       service.setContext(URI.create(obj.get("@context").asText()));
     }
     if (obj.has("profile")) {
-      service.addProfile(new ImageApiProfile(obj.get("profile").asText()));
+      service.addProfile(ImageApiProfile.fromUrl(obj.get("profile").asText()));
     } else if (obj.has("dcterms:conformsTo")) {
-      service.addProfile(new ImageApiProfile(obj.get("dcterms:conformsTo").asText()));
+      service.addProfile(ImageApiProfile.fromUrl(obj.get("dcterms:conformsTo").asText()));
     }
     if (obj.has("width")) {
       service.setWidth(obj.get("width").asInt());
