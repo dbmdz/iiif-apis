@@ -339,8 +339,11 @@ public class ImageApiProfile extends Profile {
 
   /** Merge multiple profiles into one.
       Useful for image servers that want to consolidate the limits given in a info.json. */
-  public static ImageApiProfile merge(List<ImageApiProfile> profiles) {
-    return profiles.stream().reduce(new ImageApiProfile(), ImageApiProfile::merge);
+  public static ImageApiProfile merge(List<Profile> profiles) {
+    return profiles.stream()
+        .filter(ImageApiProfile.class::isInstance)
+        .map(ImageApiProfile.class::cast)
+        .reduce(new ImageApiProfile(), ImageApiProfile::merge);
   }
 
   /** Merge two profiles. */

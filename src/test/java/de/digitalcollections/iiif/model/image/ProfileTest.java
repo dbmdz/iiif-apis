@@ -1,5 +1,6 @@
 package de.digitalcollections.iiif.model.image;
 
+import de.digitalcollections.iiif.model.Profile;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ProfileTest {
   @Test
   public void testMerge() {
-    List<ImageApiProfile> profiles = new ArrayList<>();
+    List<Profile> profiles = new ArrayList<>();
     profiles.add(ImageApiProfile.LEVEL_ONE);
     ImageApiProfile extraProfile = new ImageApiProfile();
     extraProfile.addFeature(ImageApiProfile.Feature.REGION_BY_PCT,
