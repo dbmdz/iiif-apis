@@ -10,6 +10,7 @@ import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.Profile;
 import java.net.URI;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -334,6 +335,46 @@ public class ImageApiProfile extends Profile {
 
   public void setMaxWidth(Integer maxWidth) {
     this.maxWidth = maxWidth;
+  }
+
+  /** Merge multiple profiles into one.
+      Useful for image servers that want to consolidate the limits given in a info.json. */
+  public static ImageApiProfile merge(List<ImageApiProfile> profiles) {
+    return profiles.stream().reduce(new ImageApiProfile(), ImageApiProfile::merge);
+  }
+
+  /** Merge two profiles. */
+  public ImageApiProfile merge(ImageApiProfile other) {
+    ImageApiProfile merged = new ImageApiProfile();
+    merged.features.addAll(this.features);
+    merged.features.addAll(other.features);
+    merged.formats.addAll(this.formats);
+    merged.formats.addAll(other.formats);
+    merged.qualities.addAll(this.qualities);
+    merged.qualities.addAll(other.qualities);
+    other.getFeatures().forEach(merged::addFeature);
+    if (this.maxWidth != null && other.maxWidth == null) {
+      merged.maxWidth = this.maxWidth;
+    } else if (this.maxWidth == null && other.maxWidth != null) {
+      merged.maxWidth = other.maxWidth;
+    } else if (this.maxWidth != null) {
+      merged.maxWidth = Math.min(this.maxWidth, other.maxWidth);
+    }
+    if (this.maxHeight != null && other.maxHeight == null) {
+      merged.maxHeight = this.maxHeight;
+    } else if (this.maxHeight == null && other.maxHeight != null) {
+      merged.maxHeight = other.maxHeight;
+    } else if (this.maxHeight != null) {
+      merged.maxHeight = Math.min(this.maxHeight, other.maxHeight);
+    }
+    if (this.maxArea != null && other.maxArea == null) {
+      merged.maxArea = this.maxArea;
+    } else if (this.maxArea == null && other.maxArea != null) {
+      merged.maxArea = other.maxArea;
+    } else if (this.maxArea != null) {
+      merged.maxArea = Math.min(this.maxArea, other.maxArea);
+    }
+    return merged;
   }
 
   @Override
