@@ -193,18 +193,24 @@ public class SizeRequest {
           dim.width = profile.maxWidth;
           dim.height = (int) (profile.maxWidth / aspect);
         }
-        if (profile.maxHeight != null && dim.height > profile.maxHeight) {
+        int maxHeight = profile.maxHeight != null ? profile.maxHeight : profile.maxWidth;
+        if (dim.height > maxHeight) {
           // Adjust height if it exceeds maximum height
-          dim.height = profile.maxHeight;
+          dim.height = maxHeight;
           dim.width = (int) (aspect * dim.height);
         }
       }
       if (profile != null && profile.maxArea != null) {
         // Fit width and height into the maximum available area, preserving the aspect ratio
-        int currentArea = dim.width * dim.height;
+        long currentArea = (long) dim.width * (long) dim.height;
         if (currentArea > profile.maxArea) {
-          dim.width = (int) Math.sqrt(aspect / (double) profile.maxArea);
+          dim.width = (int) Math.sqrt(aspect * (double) profile.maxArea);
           dim.height = (int) (dim.width / aspect);
+          if (dim.width <= 0 || dim.height <= 0) {
+            throw new ResolvingException(String.format(
+                "Cannot fit image with dimensions %dx%d into maximum area of %d pixels.",
+                nativeSize.width, nativeSize.height, profile.maxArea));
+          }
         }
       }
       return dim;
@@ -235,12 +241,13 @@ public class SizeRequest {
         out.height = (int) (out.width / aspect);
       }
     }
+    Integer maxHeight = profile.maxHeight != null ? profile.maxHeight : profile.maxWidth;
     if (profile.maxWidth != null && out.width > profile.maxWidth) {
       throw new ResolvingException(String.format(
           "Requested width (%d) exceeds maximum width (%d) as specified in the profile.", out.width, profile.maxWidth));
-    } else if (profile.maxHeight != null && out.height > profile.maxHeight) {
+    } else if (maxHeight != null && out.height > maxHeight) {
       throw new ResolvingException(String.format(
-          "Requested height (%d) exceeds maximum height (%d) as specified in the profile.", out.height, profile.maxHeight));
+          "Requested height (%d) exceeds maximum height (%d) as specified in the profile.", out.height, maxHeight));
     } else if (profile.maxArea != null && out.height * out.width > profile.maxArea) {
       throw new ResolvingException(String.format(
           "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",

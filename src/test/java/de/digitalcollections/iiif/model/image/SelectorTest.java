@@ -7,6 +7,7 @@ import java.net.URI;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class SelectorTest {
   @Test
@@ -102,6 +103,49 @@ public class SelectorTest {
     assertThat(req.isBestFit()).isTrue();
     assertThat(req.resolve(imageDim, profile)).isEqualTo(new Dimension(100, 200));
     assertThat(SizeRequest.fromString("!100,100").resolve(imageDim, profile)).isEqualTo(new Dimension(50, 100));
+  }
+
+  @Test
+  public void testMaxSizeRequests() throws ResolvingException {
+    Dimension imageDim = new Dimension(100000, 100000);
+    Dimension stretchedDim = new Dimension(100, 100000);
+    ImageApiProfile profile = new ImageApiProfile();
+    profile.setMaxWidth(65000);
+
+    assertThat(SizeRequest.fromString("max").resolve(imageDim, profile))
+        .isEqualTo(new Dimension(65000, 65000));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("full").resolve(imageDim, profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("80000,").resolve(imageDim, profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString(",80000").resolve(imageDim, profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("pct:80").resolve(imageDim, profile));
+
+    assertThat(SizeRequest.fromString("max").resolve(stretchedDim, profile))
+        .isEqualTo(new Dimension(65, 65000));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString(",80000").resolve(stretchedDim, profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("full").resolve(stretchedDim, profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("70000,").resolve(new Dimension(100, 100), profile));
+    assertThatExceptionOfType(ResolvingException.class)
+        .isThrownBy(() -> SizeRequest.fromString("50000,").resolve(new Dimension(100, 100), profile));
+
+    profile.addFeature(ImageApiProfile.Feature.SIZE_ABOVE_FULL);
+    Dimension smallDim = new Dimension(1024, 768);
+    assertThat(SizeRequest.fromString("max").resolve(smallDim, profile))
+        .isEqualTo(new Dimension(1024, 768));
+    assertThat(SizeRequest.fromString("65000,").resolve(smallDim, profile))
+        .isEqualTo(new Dimension(65000, 48750));
+
+    profile.setMaxArea((long) 1e6);
+    assertThat(SizeRequest.fromString("max").resolve(imageDim, profile))
+        .isEqualTo(new Dimension(1000, 1000));
+    assertThat(SizeRequest.fromString("max").resolve(stretchedDim, profile))
+        .isEqualTo(new Dimension(31, 31000));
   }
 
   @Test

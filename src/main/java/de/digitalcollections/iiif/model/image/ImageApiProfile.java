@@ -230,7 +230,7 @@ public class ImageApiProfile extends Profile {
   @JsonProperty("supports")
   Set<Feature> features = new LinkedHashSet<>();
 
-  Integer maxArea;
+  Long maxArea;
   Integer maxHeight;
   Integer maxWidth;
 
@@ -312,11 +312,11 @@ public class ImageApiProfile extends Profile {
     return this;
   }
 
-  public Integer getMaxArea() {
+  public Long getMaxArea() {
     return maxArea;
   }
 
-  public void setMaxArea(Integer maxArea) {
+  public void setMaxArea(Long maxArea) {
     this.maxArea = maxArea;
   }
 
