@@ -9,10 +9,12 @@ import com.google.common.collect.Lists;
 import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.Profile;
 import java.net.URI;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * An Image API profile.
@@ -225,11 +227,11 @@ public class ImageApiProfile extends Profile {
   @JsonProperty("@type")
   public static final String TYPE = "iiif:ImageProfile";
 
-  private Set<Format> formats = new LinkedHashSet<>();
-  private Set<Quality> qualities = new LinkedHashSet<>();
+  private Set<Format> formats;
+  private Set<Quality> qualities;
 
   @JsonProperty("supports")
-  Set<Feature> features = new LinkedHashSet<>();
+  Set<Feature> features;
 
   Long maxArea;
   Integer maxHeight;
@@ -283,6 +285,9 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addFormat(Format first, Format... rest) {
+    if (this.formats == null) {
+      this.formats = new LinkedHashSet<>();
+    }
     this.formats.addAll(Lists.asList(first, rest));
     return this;
   }
@@ -296,6 +301,9 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addQuality(Quality first, Quality... rest) {
+    if (this.qualities == null) {
+      this.qualities = new LinkedHashSet<>();
+    }
     this.qualities.addAll(Lists.asList(first, rest));
     return this;
   }
@@ -309,6 +317,9 @@ public class ImageApiProfile extends Profile {
   }
 
   public ImageApiProfile addFeature(Feature first, Feature... rest) {
+    if (this.features == null) {
+      this.features = new LinkedHashSet<>();
+    }
     this.features.addAll(Lists.asList(first, rest));
     return this;
   }
@@ -346,16 +357,23 @@ public class ImageApiProfile extends Profile {
         .reduce(new ImageApiProfile(), ImageApiProfile::merge);
   }
 
+  private <T> Stream<T> streamNotNull(Collection<T> src) {
+    if (src != null) {
+      return src.stream();
+    } else {
+      return Stream.empty();
+    }
+  }
+
   /** Merge two profiles. */
   public ImageApiProfile merge(ImageApiProfile other) {
     ImageApiProfile merged = new ImageApiProfile();
-    merged.features.addAll(this.features);
-    merged.features.addAll(other.features);
-    merged.formats.addAll(this.formats);
-    merged.formats.addAll(other.formats);
-    merged.qualities.addAll(this.qualities);
-    merged.qualities.addAll(other.qualities);
-    other.getFeatures().forEach(merged::addFeature);
+    streamNotNull(this.features).forEach(merged::addFeature);
+    streamNotNull(other.features).forEach(merged::addFeature);
+    streamNotNull(this.formats).forEach(merged::addFormat);
+    streamNotNull(other.formats).forEach(merged::addFormat);
+    streamNotNull(this.qualities).forEach(merged::addQuality);
+    streamNotNull(other.qualities).forEach(merged::addQuality);
     if (this.maxWidth != null && other.maxWidth == null) {
       merged.maxWidth = this.maxWidth;
     } else if (this.maxWidth == null && other.maxWidth != null) {

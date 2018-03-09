@@ -1,11 +1,16 @@
 package de.digitalcollections.iiif.model.image;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.PathNotFoundException;
 import de.digitalcollections.iiif.model.Profile;
+import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 public class ProfileTest {
   @Test
@@ -40,5 +45,27 @@ public class ProfileTest {
         ImageApiProfile.Format.JPG, ImageApiProfile.Format.JP2);
     assertThat(merged.getMaxWidth()).isEqualTo(1024);
     assertThat(merged.getMaxArea()).isEqualTo(500000);
+  }
+
+  @Test
+  public void testCustomProfileSerialization() throws JsonProcessingException {
+    ImageApiProfile profile = new ImageApiProfile();
+    profile.addFeature(
+        ImageApiProfile.Feature.PROFILE_LINK_HEADER,
+        ImageApiProfile.Feature.CANONICAL_LINK_HEADER,
+        ImageApiProfile.Feature.REGION_SQUARE,
+        ImageApiProfile.Feature.ROTATION_BY_90S,
+        ImageApiProfile.Feature.MIRRORING,
+        ImageApiProfile.Feature.SIZE_ABOVE_FULL);
+    profile.addFormat(ImageApiProfile.Format.GIF);
+
+    // Indicate to the client if we cannot deliver full resolution versions of the image
+    profile.setMaxWidth(2048);
+    profile.setMaxHeight(4096);
+
+    IiifObjectMapper mapper = new IiifObjectMapper();
+    String json = mapper.writeValueAsString(profile);
+    assertThatExceptionOfType(PathNotFoundException.class).isThrownBy(
+        () -> JsonPath.parse(json).read("$.qualities"));
   }
 }

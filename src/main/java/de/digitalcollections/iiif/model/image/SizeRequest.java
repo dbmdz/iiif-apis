@@ -252,7 +252,7 @@ public class SizeRequest {
       throw new ResolvingException(String.format(
           "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",
           out.width, out.height, out.width * out.height, profile.maxArea));
-    } else if (!profile.features.contains(ImageApiProfile.Feature.SIZE_ABOVE_FULL)
+    } else if ((profile.features == null || !profile.features.contains(ImageApiProfile.Feature.SIZE_ABOVE_FULL))
                && (out.width > nativeSize.width || out.height > nativeSize.height)) {
       throw new ResolvingException(String.format(
           "Requested dimensions (%dx%d) exceed native dimensions (%dx%d), profile states that upscaling is not supported.",
