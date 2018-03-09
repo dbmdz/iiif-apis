@@ -1,5 +1,6 @@
 package de.digitalcollections.iiif.model;
 
+import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import java.util.Locale;
 import org.junit.Test;
 
@@ -25,6 +26,19 @@ public class PropertyValueTest {
     propVal = new PropertyValue();
     propVal.addValue(Locale.FRENCH, "Français");
     assertThat(propVal.getValues()).containsExactly("Français");
+  }
+
+  @Test
+  public void multiValuedLanguage() throws Exception {
+    IiifObjectMapper mapper = new IiifObjectMapper();
+    PropertyValue propVal = new PropertyValue();
+    propVal.addValue(Locale.ENGLISH, "one", "two");
+    String json = mapper.writeValueAsString(propVal);
+    assertThat(json).isEqualTo(
+        "[{'@language':'en','@value':'one'},{'@language':'en','@value':'two'}]".replace("'", "\""));
+    PropertyValue deserialized = mapper.readValue(json, PropertyValue.class);
+    assertThat(deserialized.getLocalizations()).containsOnly(Locale.ENGLISH);
+    assertThat(deserialized.getValues(Locale.ENGLISH)).containsExactly("one", "two");
   }
 
 }

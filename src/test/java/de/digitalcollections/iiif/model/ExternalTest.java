@@ -118,5 +118,4 @@ public class ExternalTest {
     Manifest manifest = readFromResources("wellcomelibrary-b15404535-empty-license-string-manifest.json", Manifest.class);
     assertThat(manifest).isNotNull();
   }
-
 }

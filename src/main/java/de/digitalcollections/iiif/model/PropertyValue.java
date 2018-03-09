@@ -7,6 +7,7 @@ import de.digitalcollections.iiif.model.jackson.serialization.PropertyValueDeser
 import de.digitalcollections.iiif.model.jackson.serialization.PropertyValueSerializer;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -77,8 +78,10 @@ public class PropertyValue {
       return localizations.get(defaultLang);
     } else if (localizations.containsKey(Locale.ROOT)) {
       return localizations.get(Locale.ROOT);
-    } else {
+    } else if (localizations.size() > 0) {
       return localizations.entrySet().iterator().next().getValue();
+    } else {
+      return Collections.emptyList();
     }
   }
 
