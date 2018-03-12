@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SizeRequest {
+
   private static final Pattern PARSE_PAT = Pattern.compile("^(!|pct:)?(?:([0-9]+)?,([0-9]+)?|([0-9.]+))$");
   private boolean max = false;
   private boolean bestFit = false;
@@ -40,9 +41,9 @@ public class SizeRequest {
     if (matcher.group(1) != null) {
       if (matcher.group(1).equals("!")) {
         return new SizeRequest(
-            Integer.valueOf(matcher.group(2)),
-            Integer.valueOf(matcher.group(3)),
-            true);
+                Integer.valueOf(matcher.group(2)),
+                Integer.valueOf(matcher.group(3)),
+                true);
       } else if (matcher.group(1).equals("pct:")) {
         return new SizeRequest(new BigDecimal(matcher.group(4)));
       }
@@ -148,7 +149,7 @@ public class SizeRequest {
   /**
    * Get the canonical form of this request.
    *
-   * @See http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   * @see http://iiif.io/api/image/2.1/#canonical-uri-syntax
    */
   public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) throws ResolvingException {
     Dimension resolved = this.resolve(nativeSize, profile);
@@ -160,7 +161,7 @@ public class SizeRequest {
     } else if (this.width != null && this.height == null) {
       return this.toString();
     } else if (Math.floor(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()
-               || Math.ceil(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
+            || Math.ceil(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
       return String.format("%d,", resolved.width);
     } else {
       return String.format("%d,%d", resolved.width, resolved.height);
@@ -181,12 +182,12 @@ public class SizeRequest {
     if (max) {
       // By default, identical to the largest available size or the native size if no sizes were specified
       Dimension dim = availableSizes.stream()
-          // Avoid upscaling when dealing with region requests
-          .filter(s -> s.width <= nativeSize.width && s.height <= nativeSize.height)
-          // Select the largest available size
-          .max(Comparator.comparing(Dimension::getWidth).thenComparing(Dimension::getHeight))
-          // Otherwise, fall back to the native size
-          .orElse(new Dimension(nativeSize.width, nativeSize.height));
+              // Avoid upscaling when dealing with region requests
+              .filter(s -> s.width <= nativeSize.width && s.height <= nativeSize.height)
+              // Select the largest available size
+              .max(Comparator.comparing(Dimension::getWidth).thenComparing(Dimension::getHeight))
+              // Otherwise, fall back to the native size
+              .orElse(new Dimension(nativeSize.width, nativeSize.height));
       if (profile != null && profile.maxWidth != null) {
         if (dim.width > profile.maxWidth) {
           // If maximum width is set, width cannot exceed it
@@ -208,8 +209,8 @@ public class SizeRequest {
           dim.height = (int) (dim.width / aspect);
           if (dim.width <= 0 || dim.height <= 0) {
             throw new ResolvingException(String.format(
-                "Cannot fit image with dimensions %dx%d into maximum area of %d pixels.",
-                nativeSize.width, nativeSize.height, profile.maxArea));
+                    "Cannot fit image with dimensions %dx%d into maximum area of %d pixels.",
+                    nativeSize.width, nativeSize.height, profile.maxArea));
           }
         }
       }
@@ -244,19 +245,19 @@ public class SizeRequest {
     Integer maxHeight = profile.maxHeight != null ? profile.maxHeight : profile.maxWidth;
     if (profile.maxWidth != null && out.width > profile.maxWidth) {
       throw new ResolvingException(String.format(
-          "Requested width (%d) exceeds maximum width (%d) as specified in the profile.", out.width, profile.maxWidth));
+              "Requested width (%d) exceeds maximum width (%d) as specified in the profile.", out.width, profile.maxWidth));
     } else if (maxHeight != null && out.height > maxHeight) {
       throw new ResolvingException(String.format(
-          "Requested height (%d) exceeds maximum height (%d) as specified in the profile.", out.height, maxHeight));
+              "Requested height (%d) exceeds maximum height (%d) as specified in the profile.", out.height, maxHeight));
     } else if (profile.maxArea != null && out.height * out.width > profile.maxArea) {
       throw new ResolvingException(String.format(
-          "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",
-          out.width, out.height, out.width * out.height, profile.maxArea));
+              "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",
+              out.width, out.height, out.width * out.height, profile.maxArea));
     } else if ((profile.features == null || !profile.features.contains(ImageApiProfile.Feature.SIZE_ABOVE_FULL))
-               && (out.width > nativeSize.width || out.height > nativeSize.height)) {
+            && (out.width > nativeSize.width || out.height > nativeSize.height)) {
       throw new ResolvingException(String.format(
-          "Requested dimensions (%dx%d) exceed native dimensions (%dx%d), profile states that upscaling is not supported.",
-          out.width, out.height, nativeSize.width, nativeSize.height));
+              "Requested dimensions (%dx%d) exceed native dimensions (%dx%d), profile states that upscaling is not supported.",
+              out.width, out.height, nativeSize.width, nativeSize.height));
     }
     return out;
   }
@@ -267,8 +268,8 @@ public class SizeRequest {
    */
   public Dimension resolve(Rectangle region, ImageApiProfile profile) throws ResolvingException {
     return resolve(
-        new Dimension(region.width, region.height),
-        profile);
+            new Dimension(region.width, region.height),
+            profile);
   }
 
   /**
@@ -305,10 +306,10 @@ public class SizeRequest {
     }
     SizeRequest that = (SizeRequest) o;
     return max == that.max
-        && bestFit == that.bestFit
-        && Objects.equal(width, that.width)
-        && Objects.equal(height, that.height)
-        && Objects.equal(percentage, that.percentage);
+            && bestFit == that.bestFit
+            && Objects.equal(width, that.width)
+            && Objects.equal(height, that.height)
+            && Objects.equal(percentage, that.percentage);
   }
 
   @Override
