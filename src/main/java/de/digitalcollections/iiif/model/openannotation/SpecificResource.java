@@ -34,7 +34,7 @@ public class SpecificResource extends Resource<SpecificResource> {
     return TYPE;
   }
 
-  public Resource getFull() {
+  public Resource<?> getFull() {
     return full;
   }
 

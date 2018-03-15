@@ -38,7 +38,7 @@ public class Annotation extends Resource<Annotation> {
     this.motivation = motivation;
   }
 
-  public Resource getResource() {
+  public Resource<?> getResource() {
     return resource;
   }
 

@@ -70,11 +70,12 @@ public class SearchResult extends AnnotationList {
    * @throws IllegalArgumentException if the resource is not a {@link SearchLayer}
    */
   @Override
-  public Resource addWithin(Resource first, Resource... rest) throws IllegalArgumentException {
+  public SearchResult addWithin(Resource first, Resource... rest) throws IllegalArgumentException {
     if (!(first instanceof SearchLayer) || Arrays.stream(rest).anyMatch(r -> !(r instanceof SearchLayer))) {
       throw new IllegalArgumentException("SearchResult can only be within a SearchLayer.");
     }
-    return super.addWithin(first, rest);
+    super.addWithin(first, rest);
+    return this;
   }
 
   @Override
