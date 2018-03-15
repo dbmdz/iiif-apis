@@ -25,7 +25,7 @@ import java.util.Set;
 @JsonPropertyOrder({"@context", "@type", "@id", "label", "metadata", "description", "navDate",
                     "license", "attribution", "service", "seeAlso", "rendering", "within",
                     "sequences", "structures"})
-public class Manifest extends Resource {
+public class Manifest extends Resource<Manifest> {
   public static final String TYPE = "sc:Manifest";
 
   private ViewingDirection viewingDirection;

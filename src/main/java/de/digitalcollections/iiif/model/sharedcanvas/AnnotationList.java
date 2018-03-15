@@ -19,8 +19,8 @@ import java.util.List;
  *
  * See http://iiif.io/api/presentation/2.1/#annotation-list
  */
-public class AnnotationList extends Resource implements Pageable<AnnotationList> {
-  public final static String TYPE = "sc:AnnotationList";
+public class AnnotationList extends Resource<Annotation> implements Pageable<AnnotationList> {
+  public static final String TYPE = "sc:AnnotationList";
 
   private List<Annotation> resources;
 

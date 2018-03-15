@@ -7,7 +7,6 @@ import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.Profile;
-import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
@@ -15,7 +14,6 @@ import de.digitalcollections.iiif.model.image.ImageApiSelector;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
-import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.openannotation.SpecificResource;
 import de.digitalcollections.iiif.model.openannotation.SvgSelector;
@@ -31,7 +29,6 @@ import java.net.URI;
 import java.util.Locale;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -151,10 +148,9 @@ public class SpecExamplesDeserializationTest {
   public void testAnnotationWithChoice() throws IOException {
     Annotation anno = readFromResources("annotationWithChoice.json", Annotation.class);
     assertThat(anno).isNotNull();
-    assertThat(anno.getResource()).isInstanceOf(Choice.class);
-    Choice choice = (Choice) anno.getResource();
-    assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
-    assertThat(choice.getAlternatives())
+    assertThat(anno.getResource()).isInstanceOf(ImageContent.class);
+    assertThat(anno.getResource().getAlternatives()).isNotEmpty();
+    assertThat(anno.getResource().getAlternatives())
             .allMatch(ImageContent.class::isInstance);
     assertThat(anno.getOn()).isInstanceOf(Canvas.class);
   }

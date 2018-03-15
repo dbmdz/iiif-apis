@@ -13,7 +13,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
  * - http://iiif.io/api/presentation/2.1/#style
  * - http://iiif.io/api/presentation/2.1/#rotation
  */
-public class SpecificResource extends Resource {
+public class SpecificResource extends Resource<SpecificResource> {
   public static final String TYPE = "oa:SpecificResource";
 
   private Resource full;

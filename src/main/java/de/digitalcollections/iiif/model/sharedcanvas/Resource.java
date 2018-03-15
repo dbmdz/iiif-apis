@@ -13,6 +13,7 @@ import de.digitalcollections.iiif.model.PropertyValue;
 import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.jackson.SerializerModifier;
+import de.digitalcollections.iiif.model.openannotation.Choice;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,12 +26,13 @@ import static com.google.common.collect.Lists.asList;
  * Abstract IIIF resource, most other resources are based on this.
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
-public abstract class Resource {
+public abstract class Resource<T> implements Choice<T>  {
 
-  public final static String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
+  public static final String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
 
   /** Only used during serialization,
    *  @see SerializerModifier **/
+  @SuppressWarnings("CheckStyle")
   @JsonProperty("@context")
   public String _context;
 
@@ -40,6 +42,12 @@ public abstract class Resource {
   private PropertyValue label;
 
   private PropertyValue description;
+
+  @JsonIgnore
+  private boolean isDefault;
+
+  @JsonIgnore
+  private List<T> alternatives;
 
   @JsonProperty("service")
   private List<Service> services;
@@ -408,5 +416,22 @@ public abstract class Resource {
   @Override
   public String toString() {
     return String.format("Resource(type='%s',id='%s')", getType(), getIdentifier());
+  }
+
+  @JsonIgnore
+  public boolean isDefaultChoice() {
+    return this.isDefault;
+  }
+
+  public void setIsDefaultChoice(boolean is) {
+    this.isDefault = is;
+  }
+
+  public List<T> getAlternatives() {
+    return alternatives;
+  }
+
+  public void setAlternatives(List<T> alternatives) {
+    this.alternatives = alternatives;
   }
 }

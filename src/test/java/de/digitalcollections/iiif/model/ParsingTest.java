@@ -8,8 +8,6 @@ import de.digitalcollections.iiif.model.image.ImageApiSelector;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
-import de.digitalcollections.iiif.model.openannotation.Annotation;
-import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
@@ -48,13 +46,15 @@ public class ParsingTest {
     assertThat(sel.getFormat()).isEqualTo(Format.PNG);
   }
 
+  /*
   @Test
   public void testAnnotationWithNilChoice() throws Exception {
     Annotation anno = readFromResources("annoWithNilChoice.json", Annotation.class);
-    assertThat(anno.getResource()).isInstanceOf(Choice.class);
-    Choice choice = (Choice) anno.getResource();
-    assertThat(choice.getAlternatives().get(0)).isNull();
+    assertThat(anno.getResource()).isInstanceOf(ChoiceImpl.class);
+    ChoiceImpl choice = (ChoiceImpl) anno.getResource();
+    assertThat(anno.getResource().getAlternatives().get(0)).isNull();
   }
+  */
 
   @Test
   public void testManifestWithStringLogo() throws Exception {
@@ -100,14 +100,14 @@ public class ParsingTest {
     Canvas canvas = manifest.getDefaultSequence().getCanvases().get(0);
     assertThat(canvas.getImages().get(0).getResource().getServices().get(0)).isInstanceOf(ImageService.class);
     canvas = manifest.getDefaultSequence().getCanvases().get(6);
-    assertThat(canvas.getImages().get(0).getResource()).isInstanceOf(Choice.class);
-    Choice choice = (Choice) canvas.getImages().get(0).getResource();
-    assertThat(choice.getDefault()).isInstanceOf(ImageContent.class);
-    assertThat(choice.getDefault().getServices().get(0)).isInstanceOf(ImageService.class);
-    assertThat(choice.getDefault().getServices().get(0).getProfiles()).containsExactly(
+    assertThat(canvas.getImages().get(0).getResource()).isInstanceOf(ImageContent.class);
+    ImageContent imgContent = (ImageContent) canvas.getImages().get(0).getResource();
+    assertThat(imgContent.getAlternatives()).isNotEmpty();
+    assertThat(imgContent.getServices().get(0)).isInstanceOf(ImageService.class);
+    assertThat(imgContent.getServices().get(0).getProfiles()).containsExactly(
             ImageApiProfile.fromUrl("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
-    assertThat(choice.getAlternatives()).hasSize(2);
-    assertThat(choice.getAlternatives()).allMatch(r -> r instanceof ImageContent);
+    assertThat(imgContent.getAlternatives()).hasSize(2);
+    assertThat(imgContent.getAlternatives()).allMatch(ImageContent.class::isInstance);
   }
 
   @Test

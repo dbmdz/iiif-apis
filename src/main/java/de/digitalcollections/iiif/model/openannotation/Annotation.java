@@ -15,8 +15,8 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
  * their content with the descriptions created by others.
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "motivation", "resource", "on"})
-public class Annotation extends Resource {
-  public final static String TYPE = "oa:Annotation";
+public class Annotation extends Resource<Annotation> {
+  public static final String TYPE = "oa:Annotation";
 
   private Resource resource;
   private Motivation motivation;
@@ -55,7 +55,7 @@ public class Annotation extends Resource {
     return motivation;
   }
 
-  public Resource getOn() {
+  public Resource<?> getOn() {
     return on;
   }
 

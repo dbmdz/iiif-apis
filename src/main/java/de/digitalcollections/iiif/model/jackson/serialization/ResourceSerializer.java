@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonStreamContext;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.google.common.collect.ImmutableSet;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.ModelUtilities;
@@ -15,6 +14,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class ResourceSerializer extends JsonSerializer<Resource> {
@@ -29,6 +29,22 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     // Add @context to top-level object
     if (gen.getOutputContext().getParent() == null) {
       value._context = Resource.CONTEXT;
+    }
+
+    if (value.getAlternatives() != null && !value.getAlternatives().isEmpty()) {
+      gen.writeStartObject();
+      gen.writeStringField("@type", "oa:Choice");
+      gen.writeFieldName("default");
+      List<Resource> alternatives = value.getAlternatives();
+      value.setAlternatives(null);
+      defaultSerializer.serialize(value, gen, serializers);
+      gen.writeArrayFieldStart("item");
+      for (Resource alt : alternatives) {
+        defaultSerializer.serialize(alt, gen, serializers);
+      }
+      gen.writeEndArray();
+      gen.writeEndObject();
+      return;
     }
 
     // Remove @type from ImageContent if necessary
@@ -53,25 +69,25 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       }
       String withinType = value.getType();
       boolean skipType = (
-              ("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType)) ||
-              ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType)) ||
-              ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
+              ("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType))
+              || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
+              || ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else if (Objects.equals(containingField, "on") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       boolean skipType = (
-            value instanceof Canvas &&
-            gen.getCurrentValue() instanceof Annotation &&
-            Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
+            value instanceof Canvas
+            && gen.getCurrentValue() instanceof Annotation
+            && Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else {
       ImmutableSet<String> skipParents = ImmutableSet.of("otherContent", "contentLayer", "ranges", "annotations");
       boolean shouldSkip = (
-            Arrays.asList("prev", "next", "first", "last").contains(containingField) ||
-            (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
+            Arrays.asList("prev", "next", "first", "last").contains(containingField)
+            || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
       if (shouldSkip) {
         completeness = Completeness.ID_ONLY;
       }

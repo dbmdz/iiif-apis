@@ -16,7 +16,6 @@ import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
-import de.digitalcollections.iiif.model.openannotation.Choice;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.openannotation.CssStyle;
 import de.digitalcollections.iiif.model.openannotation.SpecificResource;
@@ -199,8 +198,8 @@ public class SpecExamplesSerializationTest {
     ImageContent blackWhite = new ImageContent("http://example.org/iiif/book1/res/page1-blackandwhite.jpg");
     blackWhite.setFormat((MimeType) null);  // Spec example doesn't have format, so we skip it
     blackWhite.addLabel("Black and White");
-    Choice choice = new Choice(color, blackWhite);
-    anno.setResource(choice);
+    color.addAlternative(blackWhite);
+    anno.setResource(color);
     assertSerializationEqualsSpec(anno, "annotationWithChoice.json");
   }
 

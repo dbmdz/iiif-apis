@@ -12,7 +12,6 @@ import de.digitalcollections.iiif.model.enums.ViewingHint.Type;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
-import de.digitalcollections.iiif.model.openannotation.Choice;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +27,8 @@ import java.util.stream.Collectors;
  *
  * See http://iiif.io/api/presentation/2.1/#canvas
  */
-public class Canvas extends Resource {
-  public final static String TYPE = "sc:Canvas";
+public class Canvas extends Resource<Canvas> {
+  public static final String TYPE = "sc:Canvas";
 
   private List<Annotation> images;
   private List<AnnotationList> otherContent;
@@ -55,27 +54,12 @@ public class Canvas extends Resource {
     return images;
   }
 
-  private boolean isValidResource(Resource res) {
-    if (res instanceof ImageContent) {
-      return true;
-    } else if (res instanceof Choice) {
-      Choice choice = (Choice) res;
-      return isValidResource(choice.getDefault()) && choice.getAlternatives().stream().allMatch(this::isValidResource);
-    } else {
-      return false;
-    }
-  }
-
   /**
    * Sets the image annotations on this canvas. Must all be instances of {@link ImageContent}
    *
    * @throws IllegalArgumentException if at least one of the image annotations is not an {@link ImageContent}
    */
   public void setImages(List<Annotation> images) throws IllegalArgumentException {
-    if (!images.stream().allMatch(a -> isValidResource(a.getResource())))  {
-      throw new IllegalArgumentException("All annotations must **only** have ImageContent resources. Use otherContent" +
-                                         " for other types of content.");
-    }
     this.images = images;
   }
 

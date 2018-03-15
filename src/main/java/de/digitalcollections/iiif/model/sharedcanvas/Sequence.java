@@ -20,7 +20,7 @@ import java.util.Set;
  *
  * See http://iiif.io/api/presentation/2.1/#sequence
  */
-public class Sequence extends Resource {
+public class Sequence extends Resource<Sequence> {
   public static final String TYPE = "sc:Sequence";
 
   private ViewingDirection viewingDirection;

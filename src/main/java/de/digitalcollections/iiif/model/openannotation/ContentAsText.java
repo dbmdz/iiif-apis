@@ -11,12 +11,13 @@ import java.util.Locale;
 /**
  * A resource that contains embedded textual content.
  */
-public class ContentAsText extends Resource {
+public class ContentAsText extends Resource<ContentAsText> {
   public static final String TYPE = "cnt:ContentAsText";
-  String chars;
-  MimeType format;
-  Locale language;
-  String type;
+
+  private String chars;
+  private MimeType format;
+  private Locale language;
+  private String type;
 
   @JsonProperty("@type")
   public List<String> getTypes() {

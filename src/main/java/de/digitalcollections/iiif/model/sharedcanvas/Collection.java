@@ -26,8 +26,8 @@ import static java.util.Arrays.stream;
  *
  * See http://iiif.io/api/presentation/2.1/#collection
  */
-public class Collection extends Resource implements Pageable<Collection>, PageContainer<Collection> {
-  public final static String TYPE = "sc:Collection";
+public class Collection extends Resource<Collection> implements Pageable<Collection>, PageContainer<Collection> {
+  public static final String TYPE = "sc:Collection";
 
   private OffsetDateTime navDate;
 

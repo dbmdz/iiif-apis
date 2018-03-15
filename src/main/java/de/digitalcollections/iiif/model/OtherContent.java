@@ -14,7 +14,7 @@ import java.net.URI;
  * Used in the "related", "renderings" and "otherContent" fields of IIIF resources.
  */
 @JsonPropertyOrder({"@id", "@type"})
-public class OtherContent extends Resource {
+public class OtherContent extends Resource<OtherContent> {
   private MimeType format;
   private Profile profile;
   private Integer width;

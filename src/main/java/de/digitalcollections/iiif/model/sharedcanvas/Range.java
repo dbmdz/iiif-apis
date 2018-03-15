@@ -27,7 +27,7 @@ import static java.util.Arrays.stream;
  *
  * See http://iiif.io/api/presentation/2.1/#range
  */
-public class Range extends Resource {
+public class Range extends Resource<Range> {
   public static final String TYPE = "sc:Range";
 
   private ViewingDirection viewingDirection;

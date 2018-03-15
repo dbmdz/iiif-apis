@@ -18,7 +18,7 @@ import java.util.List;
  *
  * See http://iiif.io/api/presentation/2.1/#layer
  */
-public class Layer extends Resource implements PageContainer<AnnotationList> {
+public class Layer extends Resource<Layer> implements PageContainer<AnnotationList> {
   public static final String TYPE = "sc:Layer";
 
   private ViewingDirection viewingDirection;
