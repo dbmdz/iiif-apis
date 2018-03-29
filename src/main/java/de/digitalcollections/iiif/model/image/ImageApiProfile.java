@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 public class ImageApiProfile extends Profile {
   public enum Format {
     JPG(MimeType.fromTypename("image/jpeg")),
-    TIF(MimeType.fromTypename("image/tif")),
+    TIF(MimeType.fromTypename("image/tiff")),
     PNG(MimeType.fromTypename("image/png")),
     GIF(MimeType.fromTypename("image/gif")),
     JP2(MimeType.fromTypename("image/jp2")),
