@@ -12,8 +12,7 @@ script:
 - mvn clean install
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- if [[ "$PROJECT_VERSION" == *SNAPSHOT ]]; then mvn deploy -B -DskipTests=true --settings
-  settings.xml; fi
+- if [[ "$PROJECT_VERSION" == *SNAPSHOT ]]; then mvn deploy -B -DskipTests=true --settings settings.xml; fi
 deploy:
   provider: releases
   api_key:
