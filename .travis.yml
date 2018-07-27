@@ -6,8 +6,7 @@ addons:
     packages:
     - libxml2-utils
 before_script:
-- PROJECT_VERSION=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()'
-  pom.xml)
+- PROJECT_VERSION=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml)
 script:
 - mvn clean install
 after_success:
