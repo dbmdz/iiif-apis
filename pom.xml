@@ -49,14 +49,14 @@
     <version.geojson>1.8</version.geojson>
     <version.guava>23.0</version.guava>
     <version.jackson>2.9.7</version.jackson>
-    <version.jacoco-maven-plugin>0.7.9</version.jacoco-maven-plugin>
+    <version.jacoco-maven-plugin>0.8.2</version.jacoco-maven-plugin>
     <version.jsonassert>1.5.0</version.jsonassert>
     <version.junit>4.12</version.junit>
     <version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
     <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
-    <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
+    <version.maven-javadoc-plugin>3.0.1</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-    <version.maven-surefire-plugin>2.20.1</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>2.22.1</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
     <version.reflections>0.9.10</version.reflections>
     <version.uri-toolkit>0.8</version.uri-toolkit>
