@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdDelegatingSerializer;
 import com.fasterxml.jackson.databind.util.Converter;
 import com.fasterxml.jackson.databind.util.StdConverter;
-import de.digitalcollections.core.model.api.MimeType;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.util.function.Function;
 
 public class IiifModule extends SimpleModule {
+
   public IiifModule() {
     super("iiif-module");
 
@@ -21,7 +22,6 @@ public class IiifModule extends SimpleModule {
     this.addSerializer(new StdDelegatingSerializer(MimeType.class, toString(MimeType::getTypeName)));
     this.addDeserializer(MimeType.class, new StdDelegatingDeserializer<>(fromString(MimeType::fromTypename)));
   }
-
 
   /** Helper function to create Converter from lambda **/
   private <T> Converter<String, T> fromString(Function<String, ? extends T> fun) {
