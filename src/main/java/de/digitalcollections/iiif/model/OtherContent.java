@@ -3,10 +3,9 @@ package de.digitalcollections.iiif.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.net.URI;
-
 
 /**
  * Type for Content resources such as images or texts that are associated with a canvas.
@@ -15,6 +14,7 @@ import java.net.URI;
  */
 @JsonPropertyOrder({"@id", "@type"})
 public class OtherContent extends Resource<OtherContent> {
+
   private MimeType format;
   private Profile profile;
   private Integer width;

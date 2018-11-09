@@ -149,7 +149,7 @@ public class SizeRequest {
   /**
    * Get the canonical form of this request.
    *
-   * @see http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   * @see <a href="http://iiif.io/api/image/2.1/#canonical-uri-syntax">http://iiif.io/api/image/2.1/#canonical-uri-syntax</a>
    */
   public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) throws ResolvingException {
     Dimension resolved = this.resolve(nativeSize, profile);

@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
-import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingHint.Type;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.openannotation.Annotation;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  * See http://iiif.io/api/presentation/2.1/#canvas
  */
 public class Canvas extends Resource<Canvas> {
+
   public static final String TYPE = "sc:Canvas";
 
   private List<Annotation> images;
@@ -94,8 +95,8 @@ public class Canvas extends Resource<Canvas> {
     }
     this.images.add(wrapImageInAnnotation(first));
     this.images.addAll(Arrays.stream(rest)
-        .map(this::wrapImageInAnnotation)
-        .collect(Collectors.toList()));
+            .map(this::wrapImageInAnnotation)
+            .collect(Collectors.toList()));
     // If we only have one image, set width/height from the image content by default
     if (this.images.size() == 1 && this.getWidth() == null && this.getHeight() == null) {
       this.setWidthFromImage(this.images.get(0));
@@ -115,7 +116,6 @@ public class Canvas extends Resource<Canvas> {
   public Integer getHeight() {
     return height;
   }
-
 
   public void setWidth(Integer width) {
     this.width = width;

@@ -4,7 +4,7 @@
 
   <groupId>de.digitalcollections.iiif</groupId>
   <artifactId>iiif-apis</artifactId>
-  <version>0.3.3</version>
+  <version>0.3.4-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>DigitalCollections: IIIF API Library</name>
@@ -45,7 +45,7 @@
 
     <version.assertj>3.8.0</version.assertj>
     <version.assertj-json>1.1.0</version.assertj-json>
-    <version.dc-core>2.1.0</version.dc-core>
+    <version.dc-model>2.0.0-SNAPSHOT</version.dc-model>
     <version.geojson>1.8</version.geojson>
     <version.guava>23.0</version.guava>
     <version.jackson>2.9.7</version.jackson>
@@ -54,9 +54,9 @@
     <version.junit>4.12</version.junit>
     <version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
     <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
-    <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
+    <version.maven-javadoc-plugin>3.0.1</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-    <version.maven-surefire-plugin>2.20.1</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>2.22.1</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
     <version.reflections>0.9.10</version.reflections>
     <version.uri-toolkit>0.8</version.uri-toolkit>
@@ -95,9 +95,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>de.digitalcollections.core</groupId>
-      <artifactId>dc-core-model</artifactId>
-      <version>${version.dc-core}</version>
+      <groupId>de.digitalcollections.model</groupId>
+      <artifactId>dc-model</artifactId>
+      <version>${version.dc-model}</version>
     </dependency>
     <dependency>
       <groupId>de.grundid.opendatalab</groupId>

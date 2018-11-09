@@ -3,9 +3,9 @@ package de.digitalcollections.iiif.model;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.net.URI;
 
 /**
@@ -15,6 +15,7 @@ import java.net.URI;
  * http://iiif.io/api/presentation/2.1/#image-resources
  */
 public class ImageContent extends Resource<ImageContent> {
+
   public static final String TYPE = "dctypes:Image";
 
   // We sometimes want to set this to null during serialization, hence the copy in an instance variable

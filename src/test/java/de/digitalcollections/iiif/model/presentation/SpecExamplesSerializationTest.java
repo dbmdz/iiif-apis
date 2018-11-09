@@ -2,12 +2,12 @@ package de.digitalcollections.iiif.model.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-import de.digitalcollections.core.model.api.MimeType;
+import de.digitalcollections.iiif.model.GenericService;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.MetadataEntry;
+import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.OtherContent;
 import de.digitalcollections.iiif.model.PropertyValue;
-import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
@@ -20,7 +20,6 @@ import de.digitalcollections.iiif.model.openannotation.ContentAsText;
 import de.digitalcollections.iiif.model.openannotation.CssStyle;
 import de.digitalcollections.iiif.model.openannotation.SpecificResource;
 import de.digitalcollections.iiif.model.openannotation.SvgSelector;
-import de.digitalcollections.iiif.model.GenericService;
 import de.digitalcollections.iiif.model.sharedcanvas.AnnotationList;
 import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Collection;
@@ -28,6 +27,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Layer;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import de.digitalcollections.iiif.model.sharedcanvas.Range;
 import de.digitalcollections.iiif.model.sharedcanvas.Sequence;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -42,6 +42,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class SpecExamplesSerializationTest {
+
   private ObjectMapper mapper;
 
   @Before
@@ -51,7 +52,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-        Resources.getResource("spec/presentation/" + filename), Charset.defaultCharset());
+            Resources.getResource("spec/presentation/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
@@ -63,26 +64,26 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testFullResponse() throws IOException, JSONException {
     Manifest manifest = new Manifest("http://example.org/iiif/book1/manifest",
-                                     "Book 1");
+            "Book 1");
     manifest.addMetadata("Author", "Anne Author");
     PropertyValue multiValue = new PropertyValue();
     multiValue.addValue(Locale.ENGLISH, "Paris, circa 1400");
     multiValue.addValue(Locale.FRENCH, "Paris, environ 14eme siecle");
     manifest.addMetadata(new MetadataEntry(new PropertyValue("Published"),
-                                           multiValue));
+            multiValue));
     manifest.addDescription("A longer description of this example book. It should give some real information.");
     manifest.setNavDate(OffsetDateTime.of(1856, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC));
     manifest.addLicense("https://creativecommons.org/publicdomain/zero/1.0/");
     manifest.addAttribution("Provided by Example Organization");
 
     manifest.addService(new GenericService(
-        "http://example.org/ns/jsonld/context.json",
-        "http://example.org/service/example",
-        "http://example.org/docs/example-service.html"));
+            "http://example.org/ns/jsonld/context.json",
+            "http://example.org/service/example",
+            "http://example.org/docs/example-service.html"));
     manifest.addSeeAlso(new OtherContent(
-        "http://example.org/library/catalog/book1.marc",
-        "application/marc",
-        "http://example.org/profiles/marc21"));
+            "http://example.org/library/catalog/book1.marc",
+            "application/marc",
+            "http://example.org/profiles/marc21"));
     OtherContent rendering = new OtherContent("http://example.org/iiif/book1.pdf");
     rendering.addLabel("Download as PDF");
     manifest.addRendering(rendering);
@@ -141,9 +142,9 @@ public class SpecExamplesSerializationTest {
 
     Range introRange = new Range("http://example.org/iiif/book1/range/r1", "Introduction");
     introRange.addCanvas(
-        seq.getCanvases().get(0).getIdentifier().toString(),
-        seq.getCanvases().get(1).getIdentifier().toString(),
-        seq.getCanvases().get(2).getIdentifier().toString() + "#xywh=0,0,750,300");
+            seq.getCanvases().get(0).getIdentifier().toString(),
+            seq.getCanvases().get(1).getIdentifier().toString(),
+            seq.getCanvases().get(2).getIdentifier().toString() + "#xywh=0,0,750,300");
     manifest.addRange(introRange);
 
     assertSerializationEqualsSpec(manifest, "full_response.json");
@@ -223,26 +224,26 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testCollection() throws Exception {
     Collection coll = new Collection("http://example.org/iiif/collection/top",
-                                     "Top Level Collection for Example Organization");
+            "Top Level Collection for Example Organization");
     coll.addViewingHint(ViewingHint.TOP);
     coll.addDescription("Description of Collection");
     coll.addAttribution("Provided by Example Organization");
 
     Collection sub1 = new Collection("http://example.org/iiif/collection/sub1", "Sub-Collection 1");
     Collection subsub1 = new Collection("http://example.org/iiif/collection/part1",
-                                        "My Multi-volume Set");
+            "My Multi-volume Set");
     subsub1.addViewingHint(ViewingHint.MULTI_PART);
     Collection subsub3 = new Collection("http://example.org/iiif/collection/part2",
-                                        "My Sub Collection");
+            "My Sub Collection");
     subsub3.addViewingHint(ViewingHint.INDIVIDUALS);
     sub1.addMember(
-        subsub1,
-        new Manifest("http://example.org/iiif/book1/manifest1", "My Book"),
-        subsub3);
+            subsub1,
+            new Manifest("http://example.org/iiif/book1/manifest1", "My Book"),
+            subsub3);
     coll.addCollection(
-        sub1,
-        new Collection("http://example.org/iiif/collection/part2",
-                       "Sub Collection 2"));
+            sub1,
+            new Collection("http://example.org/iiif/collection/part2",
+                    "Sub Collection 2"));
     coll.addManifest(new Manifest("http://example.org/iiif/book1/manifest", "Book 1"));
     assertSerializationEqualsSpec(coll, "collection.json");
   }
@@ -290,12 +291,12 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testLayer() throws Exception {
     Layer layer = new Layer("http://example.org/iiif/book1/layer/transcription",
-                            "Diplomatic Transcription");
+            "Diplomatic Transcription");
     layer.addOtherContent(
-        "http://example.org/iiif/book1/list/l1",
-        "http://example.org/iiif/book1/list/l2",
-        "http://example.org/iiif/book1/list/l3",
-        "http://example.org/iiif/book1/list/l4");
+            "http://example.org/iiif/book1/list/l1",
+            "http://example.org/iiif/book1/list/l2",
+            "http://example.org/iiif/book1/list/l3",
+            "http://example.org/iiif/book1/list/l4");
     assertSerializationEqualsSpec(layer, "layer.json");
   }
 
@@ -354,16 +355,16 @@ public class SpecExamplesSerializationTest {
     Range memberRange = new Range("http://example.org/iiif/book1/range/r1", "Introduction");
     memberRange.setContentLayer("http://example.org/iiif/book1/layer/introTexts");
     tocRange.addMember(
-        new Canvas("http://example.org/iiif/book1/canvas/cover", "Front Cover"),
-        memberRange,
-        new Canvas("http://example.org/iiif/book1/canvas/backCover", "Back Cover"));
+            new Canvas("http://example.org/iiif/book1/canvas/cover", "Front Cover"),
+            memberRange,
+            new Canvas("http://example.org/iiif/book1/canvas/backCover", "Back Cover"));
 
     Range canvasRange = new Range("http://example.org/iiif/book1/range/r1", "Introduction");
     canvasRange.addRange("http://example.org/iiif/book1/range/r1-1");
     canvasRange.addCanvas(
-        "http://example.org/iiif/book1/canvas/p1",
-        "http://example.org/iiif/book1/canvas/p2",
-        "http://example.org/iiif/book1/canvas/p3#xywh=0,0,750,300");
+            "http://example.org/iiif/book1/canvas/p1",
+            "http://example.org/iiif/book1/canvas/p2",
+            "http://example.org/iiif/book1/canvas/p3#xywh=0,0,750,300");
 
     Range lastRange = new Range("http://example.org/iiif/book1/range/r1-1", "Objectives and Scope");
     lastRange.addCanvas("http://example.org/iiif/book1/canvas/p2#xywh=0,0,500,500");
@@ -398,9 +399,9 @@ public class SpecExamplesSerializationTest {
     seq.setStartCanvas(URI.create("http://example.org/iiif/book1/canvas/p2"));
 
     seq.addCanvas(
-        new Canvas("http://example.org/iiif/book1/canvas/p1", "p. 1"),
-        new Canvas("http://example.org/iiif/book1/canvas/p2", "p. 2"),
-        new Canvas("http://example.org/iiif/book1/canvas/p3", "p. 3"));
+            new Canvas("http://example.org/iiif/book1/canvas/p1", "p. 1"),
+            new Canvas("http://example.org/iiif/book1/canvas/p2", "p. 2"),
+            new Canvas("http://example.org/iiif/book1/canvas/p3", "p. 3"));
     assertSerializationEqualsSpec(seq, "sequence.json");
   }
 
