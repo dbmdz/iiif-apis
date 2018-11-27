@@ -23,6 +23,19 @@
       <email>johannes.baiter@gmail.com</email>
       <id>jbaiter</id>
     </developer>
+    <developer>
+      <name>Ralf Eichinger</name>
+      <email>ralf.eichinger@gmail.com</email>
+      <id>datazuul</id>
+    </developer>
+    <developer>
+      <name>Matthias Lindinger</name>
+      <id>morpheus-87</id>
+    </developer>
+    <developer>
+      <name>Stefan Schweter</name>
+      <id>stefan-it</id>
+    </developer>
   </developers>
   <ciManagement>
     <url>https://travis-ci.org/dbmdz/iiif-apis</url>
