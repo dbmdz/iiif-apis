@@ -8,6 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RotationRequest {
+
   // Matches floating point values
   private static final Pattern PATTERN = Pattern.compile("^(!)?([0-9]*\\.?[0-9]+)$");
   BigDecimal rotation;
@@ -16,6 +17,8 @@ public class RotationRequest {
   /**
    * Parse a rotation request from an IIIF Image API compliant rotation string.
    *
+   * @param str iiif image api compliant rotation string
+   * @return RotationRequest represented by th given string
    * @throws ResolvingException if the rotation string is malformed
    */
   @JsonCreator
@@ -25,8 +28,8 @@ public class RotationRequest {
       throw new ResolvingException("Bad format: " + str);
     }
     return new RotationRequest(
-        new BigDecimal(matcher.group(2)),
-        !(matcher.group(1) == null));
+            new BigDecimal(matcher.group(2)),
+            !(matcher.group(1) == null));
   }
 
   public RotationRequest(int rotation) throws ResolvingException {
@@ -58,6 +61,7 @@ public class RotationRequest {
 
   /**
    * Create an IIIF Image API compatible rotation string.
+   * @return IIIF Image API compatible rotation string represented by this instance
    */
   @JsonValue
   @Override
@@ -79,7 +83,7 @@ public class RotationRequest {
     }
     RotationRequest that = (RotationRequest) o;
     return mirror == that.mirror
-        && Objects.equal(rotation, that.rotation);
+            && Objects.equal(rotation, that.rotation);
   }
 
   @Override

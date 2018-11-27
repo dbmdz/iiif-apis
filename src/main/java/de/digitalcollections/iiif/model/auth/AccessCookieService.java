@@ -24,6 +24,7 @@ import java.util.List;
 @JsonPropertyOrder({"@context", "@id", "profile", "label", "header", "description", "confirmLabel",
                     "failureHeader", "failureDescription", "service"})
 public class AccessCookieService extends Service {
+
   public static final String CONTEXT = "http://iiif.io/api/auth/1/context.json";
 
   @JsonProperty("profile")
@@ -50,6 +51,8 @@ public class AccessCookieService extends Service {
   /**
    * Create a new access cookie service from an (optional) identifier and an authentication pattern.
    *
+   * @param identifier (optional) identifier
+   * @param pattern authentication pattern
    * @throws IllegalArgumentException If the auth pattern is not "external" and no identifier is provided.
    */
   public AccessCookieService(URI identifier, AuthPattern pattern) throws IllegalArgumentException {

@@ -28,6 +28,7 @@ import static java.util.Arrays.stream;
  * See http://iiif.io/api/presentation/2.1/#range
  */
 public class Range extends Resource<Range> {
+
   public static final String TYPE = "sc:Range";
 
   private ViewingDirection viewingDirection;
@@ -95,8 +96,8 @@ public class Range extends Resource<Range> {
     Completeness completeness = ModelUtilities.getCompleteness(res, res.getClass());
     if (completeness != Completeness.ID_AND_TYPE && completeness != Completeness.ID_ONLY) {
       throw new IllegalArgumentException(
-          "Member resource must only have an identifier and no other field." +
-          " Use add<Resource>(URI first, URI... rest) for convenience.");
+              "Member resource must only have an identifier and no other field."
+              + " Use add<Resource>(URI first, URI... rest) for convenience.");
     }
   }
 
@@ -117,7 +118,7 @@ public class Range extends Resource<Range> {
 
   public Range addCanvas(String idOfFirst, String... idsOfRest) {
     return this.addCanvas(new Canvas(idOfFirst),
-                          Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
+            Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
   }
 
   public List<Range> getRanges() {
@@ -141,7 +142,7 @@ public class Range extends Resource<Range> {
 
   public Range addRange(String first, String... rest) {
     return this.addRange(new Range(first),
-                         Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
+            Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
   }
 
   public List<Resource> getMembers() {
@@ -158,9 +159,11 @@ public class Range extends Resource<Range> {
   }
 
   /**
-   * Sets the member resources. Must be either instances of {@link Range} or {@link Canvas}.
+   * Sets the member resources.
+   * Must be either instances of {@link Range} or {@link Canvas}.
    * All members must have an identifier and a label.
    *
+   * @param members member resources
    * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
    *         an identifier and a label;
    */
@@ -170,19 +173,23 @@ public class Range extends Resource<Range> {
   }
 
   /**
-   * Adds one or more member resources. Must be either instances of {@link Range} or {@link Canvas}.
+   * Adds one or more member resources.
+   * Must be either instances of {@link Range} or {@link Canvas}.
    * All members must have an identifier and a label.
    *
+   * @param first first member
+   * @param rest other members
+   * @return this instance with added members
    * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
    *         an identifier and a label;
    */
-  public Range addMember(Resource first, Resource... rest) throws IllegalArgumentException{
+  public Range addMember(Resource first, Resource... rest) throws IllegalArgumentException {
     if (this.members == null) {
       this.members = new ArrayList<>();
     }
-    List<Resource> members = Lists.asList(first, rest);
-    members.forEach(this::checkMember);
-    this.members.addAll(members);
+    List<Resource> membersToAdd = Lists.asList(first, rest);
+    membersToAdd.forEach(this::checkMember);
+    this.members.addAll(membersToAdd);
     return this;
   }
 }

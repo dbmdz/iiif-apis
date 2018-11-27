@@ -27,6 +27,7 @@ import static java.util.Arrays.stream;
  * See http://iiif.io/api/presentation/2.1/#collection
  */
 public class Collection extends Resource<Collection> implements Pageable<Collection>, PageContainer<Collection> {
+
   public static final String TYPE = "sc:Collection";
 
   private OffsetDateTime navDate;
@@ -111,7 +112,6 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
     return this;
   }
 
-
   public List<Resource> getMembers() {
     return members;
   }
@@ -127,11 +127,12 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
     }
   }
 
-
   /**
-   * Set the list of member resources. Must be either instances of {@link Manifest} or {@link Collection}.
+   * Set the list of member resources.
+   * Must be either instances of {@link Manifest} or {@link Collection}.
    * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
    *
+   * @param members member resources
    * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
    *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
    */
@@ -140,11 +141,14 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
     this.members = members;
   }
 
-
   /**
-   * Adds one or more member resources. Must be either instances of {@link Manifest} or {@link Collection}.
+   * Adds one or more member resources.
+   * Must be either instances of {@link Manifest} or {@link Collection}.
    * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
    *
+   * @param first first member
+   * @param rest other members
+   * @return this collection with added members
    * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
    *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
    */

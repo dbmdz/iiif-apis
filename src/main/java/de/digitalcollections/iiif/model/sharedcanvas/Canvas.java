@@ -58,6 +58,7 @@ public class Canvas extends Resource<Canvas> {
   /**
    * Sets the image annotations on this canvas. Must all be instances of {@link ImageContent}
    *
+   * @param images image annotations on this canvas
    * @throws IllegalArgumentException if at least one of the image annotations is not an {@link ImageContent}
    */
   public void setImages(List<Annotation> images) throws IllegalArgumentException {

@@ -24,9 +24,10 @@ import static com.google.common.collect.Lists.asList;
 
 /**
  * Abstract IIIF resource, most other resources are based on this.
+ * @param <T> a resource type, e.g. Canvas, Annotation
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
-public abstract class Resource<T> implements Choice<T>  {
+public abstract class Resource<T> implements Choice<T> {
 
   public static final String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
 
@@ -353,6 +354,7 @@ public abstract class Resource<T> implements Choice<T>  {
   /**
    * Sets the renderings. All renderings must have both a profile and a format.
    *
+   * @param renderings list of renderings with profile and format
    * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
    */
   public void setRenderings(List<OtherContent> renderings) throws IllegalArgumentException {
@@ -363,15 +365,18 @@ public abstract class Resource<T> implements Choice<T>  {
   /**
    * Add one or more renderings. All renderings must have both a profile and a format.
    *
+   * @param first first rendering
+   * @param rest list of other renderings
+   * @return current instance
    * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
    */
   public Resource addRendering(OtherContent first, OtherContent... rest) {
     if (renderings == null) {
       this.renderings = new ArrayList<>();
     }
-    List<OtherContent> renderings = Lists.asList(first, rest);
-    renderings.forEach(this::verifyRendering);
-    this.renderings.addAll(renderings);
+    List<OtherContent> renderingsToAdd = Lists.asList(first, rest);
+    renderingsToAdd.forEach(this::verifyRendering);
+    this.renderings.addAll(renderingsToAdd);
     return this;
   }
 
@@ -427,10 +432,12 @@ public abstract class Resource<T> implements Choice<T>  {
     this.isDefault = is;
   }
 
+  @Override
   public List<T> getAlternatives() {
     return alternatives;
   }
 
+  @Override
   public void setAlternatives(List<T> alternatives) {
     this.alternatives = alternatives;
   }

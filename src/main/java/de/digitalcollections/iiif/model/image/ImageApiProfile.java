@@ -252,12 +252,15 @@ public class ImageApiProfile extends Profile {
       return LEVEL_TWO;
     } else if (V1_PROFILES.contains(url)) {
       String lvl = url.split("#level")[1];
-      if (lvl.equals("0")) {
-        return new ImageApiProfile(url, LEVEL_ZERO);
-      } else if (lvl.equals("1")) {
-        return new ImageApiProfile(url, LEVEL_ONE);
-      } else if (lvl.equals("2")) {
-        return new ImageApiProfile(url, LEVEL_TWO);
+      switch (lvl) {
+        case "0":
+          return new ImageApiProfile(url, LEVEL_ZERO);
+        case "1":
+          return new ImageApiProfile(url, LEVEL_ONE);
+        case "2":
+          return new ImageApiProfile(url, LEVEL_TWO);
+        default:
+          break;
       }
     }
     return new ImageApiProfile(url);
@@ -353,8 +356,12 @@ public class ImageApiProfile extends Profile {
     this.maxWidth = maxWidth;
   }
 
-  /** Merge multiple profiles into one.
-      Useful for image servers that want to consolidate the limits given in a info.json. */
+  /**
+   * Merge multiple profiles into one. Useful for image servers that want to consolidate the limits given in a info.json.
+   *
+   * @param profiles profiles to be merged
+   * @return merged profile
+   */
   public static ImageApiProfile merge(List<Profile> profiles) {
     return profiles.stream()
             .filter(ImageApiProfile.class::isInstance)
@@ -370,7 +377,11 @@ public class ImageApiProfile extends Profile {
     }
   }
 
-  /** Merge two profiles. */
+  /**
+   * Merge two profiles.
+   * @param other profile to be merged
+   * @return merged profile
+   */
   public ImageApiProfile merge(ImageApiProfile other) {
     ImageApiProfile merged = new ImageApiProfile();
     streamNotNull(this.features).forEach(merged::addFeature);

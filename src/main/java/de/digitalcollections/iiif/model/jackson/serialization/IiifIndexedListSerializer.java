@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This is a custom serializer for `List<Object>` that has some special cases required by
+ * This is a custom serializer for `List&lt;Object&gt;` that has some special cases required by
  * the IIIF specification, namely that some fields should not be encoded as arrays if
  * they only contain a single element.
  *
@@ -23,9 +23,10 @@ import java.util.List;
  * to it where possible.
  */
 public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<?>> {
+
   private static final ImmutableSet<String> UNWRAP_FIELDS = ImmutableSet.of(
-      "service", "profile", "within", "logo", "description", "viewingHint",
-      "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
+          "service", "profile", "within", "logo", "description", "viewingHint",
+          "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
 
   private final IndexedListSerializer defaultSerializer;
 
@@ -35,24 +36,21 @@ public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<
   }
 
   private IiifIndexedListSerializer(IiifIndexedListSerializer src, BeanProperty prop,
-                                    TypeSerializer vts, JsonSerializer<?> valueSerializer,
-                                    Boolean unwrapSingle) {
+          TypeSerializer vts, JsonSerializer<?> valueSerializer,
+          Boolean unwrapSingle) {
     super(src, prop, vts, valueSerializer, unwrapSingle);
     this.defaultSerializer = src.defaultSerializer;
   }
 
-
-
   @Override
   public AsArraySerializerBase<List<?>> withResolved(BeanProperty property, TypeSerializer vts,
-      JsonSerializer<?> elementSerializer, Boolean unwrapSingle) {
+          JsonSerializer<?> elementSerializer, Boolean unwrapSingle) {
     return new IiifIndexedListSerializer(this, property, vts, elementSerializer, unwrapSingle);
   }
 
   @Override
   public final void serialize(List<?> value, JsonGenerator gen, SerializerProvider provider)
-      throws IOException
-  {
+          throws IOException {
     final int len = value.size();
     String currentName = gen.getOutputContext().getCurrentName();
     // Special case: Unwrap certain fields
