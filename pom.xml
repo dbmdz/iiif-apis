@@ -4,7 +4,7 @@
 
   <groupId>de.digitalcollections.iiif</groupId>
   <artifactId>iiif-apis</artifactId>
-  <version>0.3.4</version>
+  <version>0.3.5</version>
   <packaging>jar</packaging>
 
   <name>DigitalCollections: IIIF API Library</name>
