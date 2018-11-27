@@ -26,6 +26,7 @@ import java.util.stream.Stream;
  * and http://iiif.io/api/image/2.1/compliance/ for an overview of the available compliance levels.
  */
 public class ImageApiProfile extends Profile {
+
   public enum Format {
     JPG(MimeType.fromTypename("image/jpeg")),
     TIF(MimeType.fromTypename("image/tiff")),
@@ -63,10 +64,11 @@ public class ImageApiProfile extends Profile {
   }
 
   public static class Feature {
+
     private enum ImageApiFeature {
-      BASE_URI_REDIRECT,  CANONICAL_LINK_HEADER,  CORS,  JSONLD_MEDIA_TYPE,  MIRRORING,  PROFILE_LINK_HEADER,
-      REGION_BY_PCT,  REGION_BY_PX,  REGION_SQUARE, ROTATION_ARBITRARY,  ROTATION_BY_90S,  SIZE_ABOVE_FULL,
-      SIZE_BY_WH_LISTED, SIZE_BY_FORCED_WH,  SIZE_BY_H,  SIZE_BY_PCT, SIZE_BY_W,  SIZE_BY_WH, SIZE_BY_CONFINED_WH,
+      BASE_URI_REDIRECT, CANONICAL_LINK_HEADER, CORS, JSONLD_MEDIA_TYPE, MIRRORING, PROFILE_LINK_HEADER,
+      REGION_BY_PCT, REGION_BY_PX, REGION_SQUARE, ROTATION_ARBITRARY, ROTATION_BY_90S, SIZE_ABOVE_FULL,
+      SIZE_BY_WH_LISTED, SIZE_BY_FORCED_WH, SIZE_BY_H, SIZE_BY_PCT, SIZE_BY_W, SIZE_BY_WH, SIZE_BY_CONFINED_WH,
       SIZE_BY_DISTORTED_WH, OTHER
     }
 
@@ -168,59 +170,62 @@ public class ImageApiProfile extends Profile {
       }
       Feature other = (Feature) obj;
       return Objects.equals(this.imageApiFeature, other.imageApiFeature)
-            && Objects.equals(this.customFeature, other.customFeature);
+              && Objects.equals(this.customFeature, other.customFeature);
     }
   }
 
   public static final ImageApiProfile LEVEL_ZERO = new ImageApiProfile("http://iiif.io/api/image/2/level0.json");
+
   static {
     LEVEL_ZERO.addFormat(Format.JPG);
     LEVEL_ZERO.addQuality(Quality.DEFAULT);
   }
 
   public static final ImageApiProfile LEVEL_ONE = new ImageApiProfile("http://iiif.io/api/image/2/level1.json");
+
   static {
     LEVEL_ONE.addFeature(
-        Feature.REGION_BY_PX,
-        Feature.SIZE_BY_W,
-        Feature.SIZE_BY_H,
-        Feature.SIZE_BY_PCT,
-        Feature.BASE_URI_REDIRECT,
-        Feature.CORS,
-        Feature.JSONLD_MEDIA_TYPE);
+            Feature.REGION_BY_PX,
+            Feature.SIZE_BY_W,
+            Feature.SIZE_BY_H,
+            Feature.SIZE_BY_PCT,
+            Feature.BASE_URI_REDIRECT,
+            Feature.CORS,
+            Feature.JSONLD_MEDIA_TYPE);
     LEVEL_ONE.addFormat(Format.JPG);
     LEVEL_ONE.addQuality(Quality.DEFAULT);
   }
 
   public static final ImageApiProfile LEVEL_TWO = new ImageApiProfile("http://iiif.io/api/image/2/level2.json");
+
   static {
     LEVEL_TWO.addFeature(
-        Feature.REGION_BY_PX,
-        Feature.REGION_BY_PCT,
-        Feature.SIZE_BY_W,
-        Feature.SIZE_BY_H,
-        Feature.SIZE_BY_PCT,
-        Feature.SIZE_BY_CONFINED_WH,
-        Feature.SIZE_BY_DISTORTED_WH,
-        Feature.SIZE_BY_WH,
-        Feature.ROTATION_BY_90S,
-        Feature.BASE_URI_REDIRECT,
-        Feature.CORS,
-        Feature.JSONLD_MEDIA_TYPE);
+            Feature.REGION_BY_PX,
+            Feature.REGION_BY_PCT,
+            Feature.SIZE_BY_W,
+            Feature.SIZE_BY_H,
+            Feature.SIZE_BY_PCT,
+            Feature.SIZE_BY_CONFINED_WH,
+            Feature.SIZE_BY_DISTORTED_WH,
+            Feature.SIZE_BY_WH,
+            Feature.ROTATION_BY_90S,
+            Feature.BASE_URI_REDIRECT,
+            Feature.CORS,
+            Feature.JSONLD_MEDIA_TYPE);
     LEVEL_TWO.addFormat(Format.JPG, Format.PNG);
     LEVEL_TWO.addQuality(Quality.DEFAULT, Quality.COLOR, Quality.GRAY, Quality.BITONAL);
   }
 
   public static final Set<String> V1_PROFILES = ImmutableSet.of(
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
 
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
@@ -247,12 +252,15 @@ public class ImageApiProfile extends Profile {
       return LEVEL_TWO;
     } else if (V1_PROFILES.contains(url)) {
       String lvl = url.split("#level")[1];
-      if (lvl.equals("0")) {
-        return new ImageApiProfile(url, LEVEL_ZERO);
-      } else if (lvl.equals("1")) {
-        return new ImageApiProfile(url, LEVEL_ONE);
-      } else if (lvl.equals("2")) {
-        return new ImageApiProfile(url, LEVEL_TWO);
+      switch (lvl) {
+        case "0":
+          return new ImageApiProfile(url, LEVEL_ZERO);
+        case "1":
+          return new ImageApiProfile(url, LEVEL_ONE);
+        case "2":
+          return new ImageApiProfile(url, LEVEL_TWO);
+        default:
+          break;
       }
     }
     return new ImageApiProfile(url);
@@ -348,13 +356,17 @@ public class ImageApiProfile extends Profile {
     this.maxWidth = maxWidth;
   }
 
-  /** Merge multiple profiles into one.
-      Useful for image servers that want to consolidate the limits given in a info.json. */
+  /**
+   * Merge multiple profiles into one. Useful for image servers that want to consolidate the limits given in a info.json.
+   *
+   * @param profiles profiles to be merged
+   * @return merged profile
+   */
   public static ImageApiProfile merge(List<Profile> profiles) {
     return profiles.stream()
-        .filter(ImageApiProfile.class::isInstance)
-        .map(ImageApiProfile.class::cast)
-        .reduce(new ImageApiProfile(), ImageApiProfile::merge);
+            .filter(ImageApiProfile.class::isInstance)
+            .map(ImageApiProfile.class::cast)
+            .reduce(new ImageApiProfile(), ImageApiProfile::merge);
   }
 
   private <T> Stream<T> streamNotNull(Collection<T> src) {
@@ -365,7 +377,11 @@ public class ImageApiProfile extends Profile {
     }
   }
 
-  /** Merge two profiles. */
+  /**
+   * Merge two profiles.
+   * @param other profile to be merged
+   * @return merged profile
+   */
   public ImageApiProfile merge(ImageApiProfile other) {
     ImageApiProfile merged = new ImageApiProfile();
     streamNotNull(this.features).forEach(merged::addFeature);

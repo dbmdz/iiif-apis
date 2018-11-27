@@ -24,6 +24,8 @@ public class SizeRequest {
   /**
    * Parse an IIIF Image API compliant size request string
    *
+   * @param str IIIF Image API compliant size request string
+   * @return parsed SizeRequest
    * @throws ResolvingException if the request string is malformed
    */
   @JsonCreator
@@ -68,7 +70,9 @@ public class SizeRequest {
 
   /**
    * Create a size request for the maximum supported size of the image region, if isMax is true.
-   * If isMax is false, ise it behaves identically to the default constructor.
+   * If isMax is false, it behaves identically to the default constructor.
+   *
+   * @param isMax true causes a size request for the maximum supported size of the image region
    */
   public SizeRequest(boolean isMax) {
     this.max = isMax;
@@ -76,10 +80,10 @@ public class SizeRequest {
 
   /**
    * Create a size request for a given width or height.
+   * One of both can be null (the other value will be determined based on the aspect ratio of the image region), but not both at once.
    *
-   * One of both can be null (the other value will be determined based on the aspect ratio of the image region), but
-   * not both at once.
-   *
+   * @param width width of size request
+   * @param height height of size request
    * @throws ResolvingException if neither width nor height are specified
    */
   public SizeRequest(Integer width, Integer height) throws ResolvingException {
@@ -93,6 +97,10 @@ public class SizeRequest {
   /**
    * Create a size request for a given width and height and signal that the server can decide to render smaller
    * resolutions as it deems neccessary.
+   * @param width width of size request
+   * @param height height of size request
+   * @param bestFit true, if server can decide to render smaller resolutions as it deems neccessary
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved to Size Request
    */
   public SizeRequest(int width, int height, boolean bestFit) throws ResolvingException {
     this(width, height);
@@ -102,6 +110,7 @@ public class SizeRequest {
   /**
    * Create a size request that scaled both dimensions according to a fixed percentage, maintaining the aspect ratio.
    *
+   * @param percentage scaling percentage, maintaining aspect ratio
    * @throws ResolvingException if the percentage is not between 0 and 100
    */
   public SizeRequest(BigDecimal percentage) throws ResolvingException {
@@ -113,6 +122,7 @@ public class SizeRequest {
 
   /**
    * Return whether the maximum resolution was requested.
+   * @return true, if maximum resolution was requested
    */
   public boolean isMax() {
     return max;
@@ -120,6 +130,7 @@ public class SizeRequest {
 
   /**
    * Return whether the server can decide to render smaller resolutions than desired.
+   * @return true, if the server can decide to render smaller resolutions than desired
    */
   public boolean isBestFit() {
     return bestFit;
@@ -127,6 +138,7 @@ public class SizeRequest {
 
   /**
    * Get the requested width
+   * @return requested width
    */
   public Integer getWidth() {
     return width;
@@ -134,6 +146,7 @@ public class SizeRequest {
 
   /**
    * Get the requested height
+   * @return requested height
    */
   public Integer getHeight() {
     return height;
@@ -141,6 +154,7 @@ public class SizeRequest {
 
   /**
    * Get the requested percentage to be used for scaling
+   * @return requested percentage to be used for scaling
    */
   public BigDecimal getPercentage() {
     return percentage;
@@ -148,8 +162,12 @@ public class SizeRequest {
 
   /**
    * Get the canonical form of this request.
+   * @see <a href="http://iiif.io/api/image/2.1/#canonical-uri-syntax">IIIF Image API specification</a>
    *
-   * @see http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   * @param nativeSize native size of request
+   * @param profile image api profile
+   * @return canonical form of this request
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if nativeSize can not be converted to canonical form
    */
   public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) throws ResolvingException {
     Dimension resolved = this.resolve(nativeSize, profile);
@@ -175,6 +193,11 @@ public class SizeRequest {
   /**
    * Resolve the request to dimensions that can be used for scaling, based on the native size of the image region
    * and the available profile.
+   * @param nativeSize native size of the image region
+   * @param availableSizes available sizes
+   * @param profile image api profile
+   * @return resolved dimension
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved to Dimension
    */
   public Dimension resolve(Dimension nativeSize, List<Dimension> availableSizes, ImageApiProfile profile) throws ResolvingException {
     double aspect = (double) nativeSize.width / (double) nativeSize.height;
@@ -263,8 +286,11 @@ public class SizeRequest {
   }
 
   /**
-   * Like {@link #resolve(Dimension, ImageApiProfile)}, but can be used with a {@link Rectangle}, e.g. as returned
-   * from {@link RegionRequest#resolve(Dimension)}.
+   * Like {@link #resolve(Dimension, ImageApiProfile)}, but can be used with a {@link Rectangle}, e.g. as returned from {@link RegionRequest#resolve(Dimension)}.
+   * @param region image region
+   * @param profile image api profile
+   * @return resolved size dimension
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if rectangle region can not be resolved
    */
   public Dimension resolve(Rectangle region, ImageApiProfile profile) throws ResolvingException {
     return resolve(
@@ -274,6 +300,7 @@ public class SizeRequest {
 
   /**
    * Create an IIIF Image API compliant size request string
+   * @return String representation of size request
    */
   @JsonCreator
   @JsonValue

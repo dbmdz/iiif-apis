@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  * See http://iiif.io/api/presentation/2.1/#canvas
  */
 public class Canvas extends Resource<Canvas> {
+
   public static final String TYPE = "sc:Canvas";
 
   private List<Annotation> images;
@@ -57,6 +58,7 @@ public class Canvas extends Resource<Canvas> {
   /**
    * Sets the image annotations on this canvas. Must all be instances of {@link ImageContent}
    *
+   * @param images image annotations on this canvas
    * @throws IllegalArgumentException if at least one of the image annotations is not an {@link ImageContent}
    */
   public void setImages(List<Annotation> images) throws IllegalArgumentException {
@@ -94,8 +96,8 @@ public class Canvas extends Resource<Canvas> {
     }
     this.images.add(wrapImageInAnnotation(first));
     this.images.addAll(Arrays.stream(rest)
-        .map(this::wrapImageInAnnotation)
-        .collect(Collectors.toList()));
+            .map(this::wrapImageInAnnotation)
+            .collect(Collectors.toList()));
     // If we only have one image, set width/height from the image content by default
     if (this.images.size() == 1 && this.getWidth() == null && this.getHeight() == null) {
       this.setWidthFromImage(this.images.get(0));
@@ -115,7 +117,6 @@ public class Canvas extends Resource<Canvas> {
   public Integer getHeight() {
     return height;
   }
-
 
   public void setWidth(Integer width) {
     this.width = width;
