@@ -2,7 +2,6 @@ package de.digitalcollections.iiif.model.annex;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.GenericService;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.PropertyValue;
@@ -15,6 +14,7 @@ import de.digitalcollections.iiif.model.image.ImageService;
 import de.digitalcollections.iiif.model.image.Size;
 import de.digitalcollections.iiif.model.image.TileInfo;
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class SpecExamplesSerializationTest {
+
   private ObjectMapper mapper;
 
   @Before
@@ -34,7 +35,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-        Resources.getResource("spec/annex/" + filename), Charset.defaultCharset());
+            Resources.getResource("spec/annex/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
@@ -46,20 +47,20 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testAdditionalInfo() throws Exception {
     ImageService service = new ImageService("http://www.example.org/image-service/abcd1234",
-                                            ImageApiProfile.LEVEL_TWO);
+            ImageApiProfile.LEVEL_TWO);
 
     ImageApiProfile profile = new ImageApiProfile();
     profile.addFormat(Format.GIF, Format.PDF);
     profile.addQuality(Quality.COLOR, Quality.GRAY);
     profile.addFeature(Feature.CANONICAL_LINK_HEADER, Feature.ROTATION_ARBITRARY,
-                       new Feature("http://example.com/feature"));
+            new Feature("http://example.com/feature"));
     service.addProfile(profile);
 
     service.setWidth(6000);
     service.setHeight(4000);
     service.addSize(new Size(150, 100),
-                    new Size(600, 400),
-                    new Size(3000, 2000));
+            new Size(600, 400),
+            new Size(3000, 2000));
 
     TileInfo tileInfo = new TileInfo(512);
     tileInfo.addScaleFactor(1, 2, 4, 8, 16);
@@ -84,8 +85,8 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testGenericService() throws Exception {
     GenericService service = new GenericService("http://example.org/ns/jsonld/context.json",
-                                                "http://example.org/service/example.json",
-                                                 "http://example.org/docs/example-service.html");
+            "http://example.org/service/example.json",
+            "http://example.org/docs/example-service.html");
     service.setLabel(new PropertyValue("Example Service"));
     assertSerializationEqualsSpec(service, "genericService.json");
   }

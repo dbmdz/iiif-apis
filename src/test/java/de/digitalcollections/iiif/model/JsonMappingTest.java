@@ -27,6 +27,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
  * Tests for writing out IIIF JSON.
  */
 public class JsonMappingTest {
+
   private ObjectMapper mapper;
 
   @Before
@@ -73,8 +74,8 @@ public class JsonMappingTest {
 
     // Other stuff
     assertThatThrownBy(() -> canvas.addViewingHint(ViewingHint.INDIVIDUALS))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("Resources of type '%s' do not support the '%s' viewing hint.", "sc:Canvas", "individuals");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("Resources of type '%s' do not support the '%s' viewing hint.", "sc:Canvas", "individuals");
     canvas.addViewingHint(ViewingHint.NON_PAGED);
 
     // Licensing/Attribution
@@ -82,7 +83,7 @@ public class JsonMappingTest {
     canvas.addAttribution("Some fictional institution");
     canvas.addLogo("http://some.uri/logo.jpg");
     canvas.addLogo(new ImageContent(new ImageService(
-        "http://some.uri/iiif/logo", ImageApiProfile.LEVEL_ONE)));
+            "http://some.uri/iiif/logo", ImageApiProfile.LEVEL_ONE)));
 
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(canvas);
     DocumentContext ctx = JsonPath.parse(json);
@@ -96,7 +97,7 @@ public class JsonMappingTest {
 
     // Only the top-level object should have a IIIF Presentation API context
     assertThat(((JSONArray) ctx.read("..['@context']")).stream()
-      .filter(c -> c.equals("http://iiif.io/api/presentation/2/context.json"))).hasSize(1);
+            .filter(c -> c.equals("http://iiif.io/api/presentation/2/context.json"))).hasSize(1);
 
     Canvas parsedCanvas = mapper.readValue(json, Canvas.class);
     assertThat(parsedCanvas).isEqualToComparingFieldByFieldRecursively(canvas);

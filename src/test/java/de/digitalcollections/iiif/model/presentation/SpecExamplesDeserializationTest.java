@@ -2,7 +2,6 @@ package de.digitalcollections.iiif.model.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-import de.digitalcollections.core.model.api.MimeType;
 import de.digitalcollections.iiif.model.ImageContent;
 import de.digitalcollections.iiif.model.Motivation;
 import de.digitalcollections.iiif.model.OtherContent;
@@ -24,6 +23,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Layer;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import de.digitalcollections.iiif.model.sharedcanvas.Range;
 import de.digitalcollections.iiif.model.sharedcanvas.Sequence;
+import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Locale;
