@@ -12,15 +12,15 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import java.io.IOException;
 import java.net.URI;
 import java.util.stream.Collectors;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpecExamplesDeserializationTest {
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeEach
   public void setup() {
     mapper = new IiifObjectMapper();
   }

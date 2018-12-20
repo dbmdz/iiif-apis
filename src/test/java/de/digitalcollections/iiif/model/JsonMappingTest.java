@@ -17,8 +17,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Locale;
 import net.minidev.json.JSONArray;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -30,7 +30,7 @@ public class JsonMappingTest {
 
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeEach
   public void setup() {
     mapper = new IiifObjectMapper();
   }
