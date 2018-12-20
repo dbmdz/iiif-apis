@@ -36,6 +36,14 @@ public class JsonMappingTest {
   }
 
   @Test
+  public void testCopyConstructor() {
+    IiifObjectMapper test_mapper = new IiifObjectMapper();
+
+    // in newer jackson versions the `copy()` method needs to be public
+    ObjectMapper cloned_mapper = test_mapper.copy();
+  }
+
+  @Test
   public void testCanvasRoundtrip() throws IOException {
     Canvas canvas = new Canvas("http://some.uri");
     canvas.addLabel("A label");

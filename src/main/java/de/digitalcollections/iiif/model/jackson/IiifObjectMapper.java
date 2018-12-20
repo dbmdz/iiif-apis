@@ -21,6 +21,8 @@ public class IiifObjectMapper extends ObjectMapper {
   }
 
   public IiifObjectMapper() {
+    super();
+
     this.checkJacksonVersion();
 
     // Don't include null properties
@@ -45,5 +47,14 @@ public class IiifObjectMapper extends ObjectMapper {
 
     // Register the module
     this.registerModule(new IiifModule());
+  }
+
+  private IiifObjectMapper(IiifObjectMapper objectMapper) {
+    super(objectMapper);
+  }
+
+  @Override
+  public ObjectMapper copy() {
+    return new IiifObjectMapper(this);
   }
 }
