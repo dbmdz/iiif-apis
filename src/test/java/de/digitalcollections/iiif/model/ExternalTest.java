@@ -9,8 +9,8 @@ import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import java.util.Locale;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +21,7 @@ public class ExternalTest {
 
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeEach
   public void setup() {
     this.mapper = new IiifObjectMapper();
   }

@@ -2,7 +2,7 @@ package de.digitalcollections.iiif.model;
 
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import java.util.Locale;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

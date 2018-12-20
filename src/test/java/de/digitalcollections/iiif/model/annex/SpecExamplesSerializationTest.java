@@ -20,15 +20,15 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import org.geojson.Point;
 import org.json.JSONException;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class SpecExamplesSerializationTest {
 
   private ObjectMapper mapper;
 
-  @Before
+  @BeforeEach
   public void setup() {
     mapper = new IiifObjectMapper();
   }

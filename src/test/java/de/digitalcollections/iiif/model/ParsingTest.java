@@ -12,8 +12,8 @@ import de.digitalcollections.iiif.model.sharedcanvas.Canvas;
 import de.digitalcollections.iiif.model.sharedcanvas.Manifest;
 import java.io.IOException;
 import java.util.Locale;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +26,7 @@ public class ParsingTest {
 
   private IiifObjectMapper mapper;
 
-  @Before
+  @BeforeEach
   public void setup() {
     this.mapper = new IiifObjectMapper();
   }
