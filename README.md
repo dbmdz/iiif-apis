@@ -1,16 +1,16 @@
 # iiif-apis
 
-![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-≤2.1.1-blue.svg)
-![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-≤2.1.1-blue.svg)
-![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)
-![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)
+[![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-≤2.1.1-blue.svg)](https://iiif.io/api/image/2.1/)
+[![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-≤2.1.1-blue.svg)](https://iiif.io/api/presentation/2.1/)
+[![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)](https://iiif.io/api/auth/1.0/)
+[![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)](https://iiif.io/api/search/1.0/)
 
-[![Javadocs](http://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](http://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
-[![Build Status](https://travis-ci.org/dbmdz/iiif-apis.svg?branch=master)](https://travis-ci.org/dbmdz/iiif-apis)
-[![codecov](https://codecov.io/gh/dbmdz/iiif-apis/branch/master/graph/badge.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg?maxAge=2592000)](https://github.com/dbmdz/iiif-apis/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg?maxAge=2592000)](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22iiif-apis%22)
+[![Javadocs](https://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](https://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
+[![Build Status](https://img.shields.io/travis/dbmdz/iiif-apis/master.svg)](https://travis-ci.org/dbmdz/iiif-apis)
+[![Codecov](https://img.shields.io/codecov/c/github/dbmdz/iiif-apis/master.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
+[![License](https://img.shields.io/github/license/dbmdz/iiif-apis.svg)](LICENSE)
+[![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg)](https://github.com/dbmdz/iiif-apis/releases)
+[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg)](https://search.maven.org/search?q=a:iiif-apis)
 
 This module contains model classes for all currently available IIIF API entities, namely for the
 [Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
