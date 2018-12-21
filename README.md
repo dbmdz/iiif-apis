@@ -1,9 +1,9 @@
 # iiif-apis
 
-![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-≤2.1.1-blue.svg)
-![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-≤2.1.1-blue.svg)
-![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)
-![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)
+[![Image API 2.1.1 compliant](https://img.shields.io/badge/iiif--image--api-≤2.1.1-blue.svg)](https://iiif.io/api/image/2.1/)
+[![Presentation API 2.1.1 compliant](https://img.shields.io/badge/iiif--presentation--api-≤2.1.1-blue.svg)](https://iiif.io/api/presentation/2.1/)
+[![Authentication API 1.0 compliant](https://img.shields.io/badge/iiif--authentication--api-1.0-blue.svg)](https://iiif.io/api/auth/1.0/)
+[![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)](https://iiif.io/api/search/1.0/)
 
 [![Javadocs](https://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](https://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
 [![Build Status](https://img.shields.io/travis/dbmdz/iiif-apis/master.svg)](https://travis-ci.org/dbmdz/iiif-apis)
