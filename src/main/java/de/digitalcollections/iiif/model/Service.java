@@ -15,6 +15,7 @@ import java.util.List;
  */
 @JsonPropertyOrder({"@context", "@id", "@type"})
 public abstract class Service {
+
   @JsonProperty("@context")
   private URI context;
 
@@ -70,7 +71,7 @@ public abstract class Service {
 
   public Service addProfile(String first, String... rest) {
     return this.addProfile(new Profile(URI.create(first)),
-                           Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
+      Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
   }
 
   public PropertyValue getLabel() {

@@ -11,6 +11,7 @@ import java.net.URI;
  * for the available Image API profiles.
  */
 public class Profile {
+
   @JsonProperty("@id")
   private final URI identifier;
 

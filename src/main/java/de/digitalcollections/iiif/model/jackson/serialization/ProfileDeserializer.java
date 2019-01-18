@@ -20,8 +20,8 @@ public class ProfileDeserializer extends JsonDeserializer<Profile> {
 
   private boolean isImageApiProfile(final String profile) {
     return Stream.of(ImageApiProfile.LEVEL_ZERO, ImageApiProfile.LEVEL_ONE, ImageApiProfile.LEVEL_TWO)
-        .map(p -> p.getIdentifier().toString())
-        .anyMatch(profile::equals) || ImageApiProfile.V1_PROFILES.contains(profile);
+      .map(p -> p.getIdentifier().toString())
+      .anyMatch(profile::equals) || ImageApiProfile.V1_PROFILES.contains(profile);
   }
 
   @Override

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class PropertyValueTest {
+
   @Test
   public void testDefaultLocale() throws Exception {
     PropertyValue propVal = new PropertyValue();
@@ -35,7 +36,7 @@ public class PropertyValueTest {
     propVal.addValue(Locale.ENGLISH, "one", "two");
     String json = mapper.writeValueAsString(propVal);
     assertThat(json).isEqualTo(
-        "[{'@language':'en','@value':'one'},{'@language':'en','@value':'two'}]".replace("'", "\""));
+      "[{'@language':'en','@value':'one'},{'@language':'en','@value':'two'}]".replace("'", "\""));
     PropertyValue deserialized = mapper.readValue(json, PropertyValue.class);
     assertThat(deserialized.getLocalizations()).containsOnly(Locale.ENGLISH);
     assertThat(deserialized.getValues(Locale.ENGLISH)).containsExactly("one", "two");

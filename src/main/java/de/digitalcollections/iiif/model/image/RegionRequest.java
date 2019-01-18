@@ -38,9 +38,9 @@ public class RegionRequest {
       }
       RelativeBox that = (RelativeBox) o;
       return Objects.equal(x, that.x)
-              && Objects.equal(y, that.y)
-              && Objects.equal(w, that.w)
-              && Objects.equal(h, that.h);
+        && Objects.equal(y, that.y)
+        && Objects.equal(w, that.w)
+        && Objects.equal(h, that.h);
     }
 
     @Override
@@ -76,16 +76,16 @@ public class RegionRequest {
     }
     if (matcher.group(1) == null) {
       return new RegionRequest(
-              Integer.valueOf(matcher.group(2)),
-              Integer.valueOf(matcher.group(3)),
-              Integer.valueOf(matcher.group(4)),
-              Integer.valueOf(matcher.group(5)));
+        Integer.valueOf(matcher.group(2)),
+        Integer.valueOf(matcher.group(3)),
+        Integer.valueOf(matcher.group(4)),
+        Integer.valueOf(matcher.group(5)));
     } else {
       return new RegionRequest(
-              new BigDecimal(matcher.group(2)),
-              new BigDecimal(matcher.group(3)),
-              new BigDecimal(matcher.group(4)),
-              new BigDecimal(matcher.group(5)));
+        new BigDecimal(matcher.group(2)),
+        new BigDecimal(matcher.group(3)),
+        new BigDecimal(matcher.group(4)),
+        new BigDecimal(matcher.group(5)));
     }
   }
 
@@ -144,8 +144,8 @@ public class RegionRequest {
   public Rectangle2D getRegion() {
     if (isRelative()) {
       return new Rectangle2D.Double(
-              relativeBox.x.doubleValue(), relativeBox.y.doubleValue(),
-              relativeBox.w.doubleValue(), relativeBox.h.doubleValue());
+        relativeBox.x.doubleValue(), relativeBox.y.doubleValue(),
+        relativeBox.w.doubleValue(), relativeBox.h.doubleValue());
     } else {
       return absoluteBox;
     }
@@ -189,9 +189,9 @@ public class RegionRequest {
   public String getCanonicalForm(Dimension imageDims) throws ResolvingException {
     Rectangle resolved = this.resolve(imageDims);
     boolean isFull = resolved.x == 0
-            && resolved.y == 0
-            && resolved.width == imageDims.width
-            && resolved.height == imageDims.height;
+      && resolved.y == 0
+      && resolved.width == imageDims.width
+      && resolved.height == imageDims.height;
     if (isFull) {
       return "full";
     } else {
@@ -209,14 +209,14 @@ public class RegionRequest {
     if (square) {
       if (imageDims.width > imageDims.height) {
         return new Rectangle(
-                (imageDims.width - imageDims.height) / 2,
-                0,
-                imageDims.height, imageDims.height);
+          (imageDims.width - imageDims.height) / 2,
+          0,
+          imageDims.height, imageDims.height);
       } else if (imageDims.height > imageDims.width) {
         return new Rectangle(
-                0,
-                (imageDims.height - imageDims.width) / 2,
-                imageDims.width, imageDims.width);
+          0,
+          (imageDims.height - imageDims.width) / 2,
+          imageDims.width, imageDims.width);
       }
     }
     if (absoluteBox == null && relativeBox == null) {
@@ -225,10 +225,10 @@ public class RegionRequest {
     Rectangle rect;
     if (isRelative()) {
       rect = new Rectangle(
-              (int) Math.round(relativeBox.x.doubleValue() / 100. * imageDims.getWidth()),
-              (int) Math.round(relativeBox.y.doubleValue() / 100. * imageDims.getHeight()),
-              (int) Math.round(relativeBox.w.doubleValue() / 100. * imageDims.getWidth()),
-              (int) Math.round(relativeBox.h.doubleValue() / 100. * imageDims.getHeight()));
+        (int) Math.round(relativeBox.x.doubleValue() / 100. * imageDims.getWidth()),
+        (int) Math.round(relativeBox.y.doubleValue() / 100. * imageDims.getHeight()),
+        (int) Math.round(relativeBox.w.doubleValue() / 100. * imageDims.getWidth()),
+        (int) Math.round(relativeBox.h.doubleValue() / 100. * imageDims.getHeight()));
     } else {
       rect = absoluteBox;
     }
@@ -254,8 +254,8 @@ public class RegionRequest {
     }
     RegionRequest that = (RegionRequest) o;
     return square == that.square
-            && Objects.equal(absoluteBox, that.absoluteBox)
-            && Objects.equal(relativeBox, that.relativeBox);
+      && Objects.equal(absoluteBox, that.absoluteBox)
+      && Objects.equal(relativeBox, that.relativeBox);
   }
 
   @Override

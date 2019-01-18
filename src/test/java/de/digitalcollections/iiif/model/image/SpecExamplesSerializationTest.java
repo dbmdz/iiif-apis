@@ -31,7 +31,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-            Resources.getResource("spec/image/" + filename), Charset.defaultCharset());
+      Resources.getResource("spec/image/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
@@ -46,9 +46,9 @@ public class SpecExamplesSerializationTest {
     service.setWidth(6000);
     service.setHeight(4000);
     service.addSize(
-            new Size(150, 100),
-            new Size(600, 400),
-            new Size(3000, 2000));
+      new Size(150, 100),
+      new Size(600, 400),
+      new Size(3000, 2000));
 
     TileInfo ti1 = new TileInfo(512);
     ti1.addScaleFactor(1, 2, 4);
@@ -68,18 +68,18 @@ public class SpecExamplesSerializationTest {
     service.addLogo(logo);
 
     service.addLicense("http://example.org/rights/license1.html",
-            "http://rightsstatements.org/vocab/InC-EDU/1.0/");
+      "http://rightsstatements.org/vocab/InC-EDU/1.0/");
 
     ImageApiProfile profile = new ImageApiProfile();
     profile.addFormat(Format.GIF, Format.PDF);
     profile.addQuality(Quality.COLOR, Quality.GRAY);
     profile.addFeature(Feature.CANONICAL_LINK_HEADER, Feature.ROTATION_ARBITRARY, Feature.PROFILE_LINK_HEADER,
-            new Feature("http://example.com/feature/"));
+      new Feature("http://example.com/feature/"));
     service.addProfile(profile);
 
     service.addService(
-            new PhysicalDimensionsService(0.0025, Unit.INCHES),
-            new GeoService("http://www.example.org/geojson/paris.json"));
+      new PhysicalDimensionsService(0.0025, Unit.INCHES),
+      new GeoService("http://www.example.org/geojson/paris.json"));
 
     assertSerializationEqualsSpec(service, "fullResponse.json");
   }

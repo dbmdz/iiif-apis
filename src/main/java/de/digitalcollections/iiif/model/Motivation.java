@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Try to use the defined constants and only fall back to the constructor if your motivation is not covered by these.
  */
 public class Motivation {
+
   public static final Motivation PAINTING = new Motivation("sc:painting");
   public static final Motivation COMMENTING = new Motivation("oa:commenting");
   public static final Motivation LINKING = new Motivation("oa:linking");

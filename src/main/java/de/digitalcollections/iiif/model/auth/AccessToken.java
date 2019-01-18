@@ -11,6 +11,7 @@ import java.time.Duration;
  * See http://iiif.io/api/auth/1.0/#the-json-access-token-response
  */
 public class AccessToken {
+
   @JsonProperty("accessToken")
   private String token;
 

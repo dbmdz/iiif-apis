@@ -13,6 +13,7 @@ import java.net.URI;
  * the sole constructor argument.
  */
 public class ViewingHint {
+
   public enum Type {
     INDIVIDUALS,
     PAGED,
@@ -39,7 +40,6 @@ public class ViewingHint {
    * and thus the second canvas represents the back of the object in the first canvas.
    */
   public static ViewingHint PAGED = new ViewingHint(Type.PAGED);
-
 
   /**
    * Valid on manifest, sequence and range. A canvas with this viewingHint is a partial view and an appropriate
@@ -116,8 +116,6 @@ public class ViewingHint {
     return uri;
   }
 
-
-
   @Override
   @JsonValue
   public String toString() {
@@ -137,8 +135,8 @@ public class ViewingHint {
       return false;
     }
     ViewingHint that = (ViewingHint) o;
-    return this.type == that.type &&
-           (uri != null ? uri.equals(that.uri) : that.uri == null);
+    return this.type == that.type
+      && (uri != null ? uri.equals(that.uri) : that.uri == null);
   }
 
   @Override

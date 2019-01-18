@@ -14,6 +14,7 @@ import java.net.URI;
  * See http://iiif.io/api/auth/1.0/#access-token-service
  */
 public class AccessTokenService extends Service implements AuthService {
+
   public static final String PROFILE = "http://iiif.io/api/auth/1/token";
 
   @JsonCreator

@@ -34,21 +34,22 @@ import java.io.IOException;
  * if we left the type resolving to Jackson.
  */
 public class ResourceDeserializer extends JsonDeserializer<Resource> {
-  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING =
-      new ImmutableMap.Builder<String, Class<? extends Resource>>()
-        .put(Annotation.TYPE, Annotation.class)
-        .put(AnnotationList.TYPE, AnnotationList.class)
-        .put(Canvas.TYPE, Canvas.class)
-        .put(Collection.TYPE, Collection.class)
-        .put(Layer.TYPE, Layer.class)
-        .put(Manifest.TYPE, Manifest.class)
-        .put(Range.TYPE, Range.class)
-        .put(Sequence.TYPE, Sequence.class)
-        .put(ImageContent.TYPE, ImageContent.class)
-        .put(SpecificResource.TYPE, SpecificResource.class)
-        .put(ContentAsText.TYPE, ContentAsText.class)
-        .put(CssStyle.TYPE, CssStyle.class)
-        .build();
+
+  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING
+    = new ImmutableMap.Builder<String, Class<? extends Resource>>()
+      .put(Annotation.TYPE, Annotation.class)
+      .put(AnnotationList.TYPE, AnnotationList.class)
+      .put(Canvas.TYPE, Canvas.class)
+      .put(Collection.TYPE, Collection.class)
+      .put(Layer.TYPE, Layer.class)
+      .put(Manifest.TYPE, Manifest.class)
+      .put(Range.TYPE, Range.class)
+      .put(Sequence.TYPE, Sequence.class)
+      .put(ImageContent.TYPE, ImageContent.class)
+      .put(SpecificResource.TYPE, SpecificResource.class)
+      .put(ContentAsText.TYPE, ContentAsText.class)
+      .put(CssStyle.TYPE, CssStyle.class)
+      .build();
 
   public Resource deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
@@ -65,7 +66,7 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
       String stringValue = p.getValueAsString();
       String typeName = getMissingType(ctxt, containingField);
       return resourceFromString(MAPPING.getOrDefault(typeName, OtherContent.class),
-                                stringValue);
+        stringValue);
     } else if (p.getCurrentToken() == JsonToken.START_ARRAY) {
       // TODO
       throw new RuntimeException("Could not deserialize Resource.");
@@ -84,10 +85,10 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
   }
 
   private Resource parseChoice(String containingField, ObjectMapper mapper, ObjectNode tree,
-                               DeserializationContext ctxt) throws JsonProcessingException {
+    DeserializationContext ctxt) throws JsonProcessingException {
     ObjectNode defaultTree = (ObjectNode) tree.get("default");
     Class<? extends Resource> resourceType = MAPPING.getOrDefault(
-        getTypeName(containingField, ctxt, defaultTree), OtherContent.class);
+      getTypeName(containingField, ctxt, defaultTree), OtherContent.class);
     Resource defaultResource = mapper.treeToValue(defaultTree, resourceType);
     ArrayNode alternativesArray = (ArrayNode) tree.get("item");
     for (JsonNode subNode : alternativesArray) {
@@ -130,8 +131,8 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     // object, this won't work.
     Object curVal = ctxt.getParser().getCurrentValue();
     boolean isPaintingAnno = (curVal != null && curVal instanceof Annotation
-                              && ((Annotation) curVal).getMotivation() != null
-                              && ((Annotation) curVal).getMotivation().equals(Motivation.PAINTING));
+      && ((Annotation) curVal).getMotivation() != null
+      && ((Annotation) curVal).getMotivation().equals(Motivation.PAINTING));
     if (isPaintingAnno) {
       return "sc:Canvas";
     }
@@ -153,8 +154,8 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
       return clz.getConstructor(String.class).newInstance(resourceString);
     } catch (Exception e) {
       throw new IllegalArgumentException(String.format(
-          "Could not construct %s from '%s'",
-          clz.getName(), resourceString));
+        "Could not construct %s from '%s'",
+        clz.getName(), resourceString));
     }
   }
 

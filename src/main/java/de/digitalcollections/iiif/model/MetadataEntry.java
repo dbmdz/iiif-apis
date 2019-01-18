@@ -13,12 +13,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonPropertyOrder({"label", "value"})
 public class MetadataEntry {
+
   private PropertyValue label;
   private PropertyValue value;
 
   @JsonCreator
   public MetadataEntry(@JsonProperty("label") PropertyValue label,
-                       @JsonProperty("value") PropertyValue value) {
+    @JsonProperty("value") PropertyValue value) {
     this.label = label;
     this.value = value;
   }
@@ -49,6 +50,6 @@ public class MetadataEntry {
   @Override
   public String toString() {
     return String.format("MetadataEntry(label=[%s],value=[%s]",
-                         getLabel().toString(), getValue().toString());
+      getLabel().toString(), getValue().toString());
   }
 }

@@ -15,6 +15,7 @@ import java.util.Set;
  * See http://iiif.io/api/search/1.0/#response
  */
 public class TermList {
+
   public static final String CONTEXT = SearchResult.CONTEXT;
   public static final String TYPE = "search:TermList";
 

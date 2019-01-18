@@ -12,8 +12,9 @@ import java.util.List;
  * See http://iiif.io/api/search/1.0/#search-api-specific-responses
  */
 public class SearchHit {
+
   @JsonProperty("@type")
-  public final String TYPE = "search:Hit";
+  public final String type = "search:Hit";
 
   private List<Annotation> annotations;
   private List<TextQuoteSelector> selectors;

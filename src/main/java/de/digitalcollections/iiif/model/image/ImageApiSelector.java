@@ -28,11 +28,11 @@ public class ImageApiSelector implements Selector {
   public static final String TYPE = "iiif:ImageApiSelector";
 
   private static final Pattern REQUEST_PAT = Pattern.compile(
-          "/?(?<identifier>[^/]+)"
-          + "/(?<region>[^/]+)"
-          + "/(?<size>[^/]+)"
-          + "/(?<rotation>[^/]+)"
-          + "/(?<quality>[^/]+?)\\.(?<format>[^/]+?)$");
+    "/?(?<identifier>[^/]+)"
+    + "/(?<region>[^/]+)"
+    + "/(?<size>[^/]+)"
+    + "/(?<rotation>[^/]+)"
+    + "/(?<quality>[^/]+?)\\.(?<format>[^/]+?)$");
 
   private String identifier;
   private RegionRequest region;
@@ -89,13 +89,13 @@ public class ImageApiSelector implements Selector {
   @Override
   public String toString() {
     return String.format(
-            "%s%s/%s/%s/%s.%s",
-            identifier != null ? urlEncode(identifier) + "/" : "",
-            Objects.toString(region, "full"),
-            Objects.toString(size, "full"),
-            Objects.toString(rotation, "0"),
-            Objects.toString(quality, "default"),
-            Objects.toString(format, "jpg"));
+      "%s%s/%s/%s/%s.%s",
+      identifier != null ? urlEncode(identifier) + "/" : "",
+      Objects.toString(region, "full"),
+      Objects.toString(size, "full"),
+      Objects.toString(rotation, "0"),
+      Objects.toString(quality, "default"),
+      Objects.toString(format, "jpg"));
   }
 
   /** The spec says we have to urlencode values, but only characters outside of the US ASCII range and gen-delims
@@ -104,7 +104,7 @@ public class ImageApiSelector implements Selector {
    * Great and pragmatic choice for readability, more code for us :-) */
   private static String urlEncode(String str) {
     Set<String> excluded = ImmutableSet.of(
-            ":", "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=");
+      ":", "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=");
     String encoded = new Encoded(str).toString();
     for (String ex : excluded) {
       encoded = encoded.replaceAll(new Encoded(ex).toString(), ex);
@@ -128,13 +128,13 @@ public class ImageApiSelector implements Selector {
       scaleReference = new Dimension((int) canonicalRegion.getWidth(), (int) canonicalRegion.getHeight());
     }
     return String.format(
-            "%s%s/%s/%s/%s.%s",
-            identifier != null ? urlEncode(identifier) + "/" : "",
-            region.getCanonicalForm(nativeSize),
-            size.getCanonicalForm(scaleReference, profile),
-            rotation.toString(),
-            quality.equals(defaultQuality) ? "default" : quality.toString(),
-            format.toString());
+      "%s%s/%s/%s/%s.%s",
+      identifier != null ? urlEncode(identifier) + "/" : "",
+      region.getCanonicalForm(nativeSize),
+      size.getCanonicalForm(scaleReference, profile),
+      rotation.toString(),
+      quality.equals(defaultQuality) ? "default" : quality.toString(),
+      format.toString());
   }
 
   public String getIdentifier() {

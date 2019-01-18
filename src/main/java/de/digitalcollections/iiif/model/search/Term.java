@@ -12,6 +12,7 @@ import java.net.URI;
  * See http://iiif.io/api/search/1.0/#response
  */
 public class Term {
+
   private URI url;
   private String match;
   private Integer count;

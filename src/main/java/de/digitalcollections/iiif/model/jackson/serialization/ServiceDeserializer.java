@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.ImmutableSet;
 import de.digitalcollections.iiif.model.GenericService;
 import de.digitalcollections.iiif.model.Service;
 import de.digitalcollections.iiif.model.annex.GeoService;
@@ -91,14 +90,14 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     }
     if (obj.has("scale_factors") && (service.getWidth() != null && service.getHeight() != null)) {
       obj.withArray("scale_factors").forEach(
-              fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
-                                                service.getHeight() / fnode.asInt()))
+        fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
+          service.getHeight() / fnode.asInt()))
       );
     }
     if (obj.has("tile_width") && obj.has("scale_factors")) {
       TileInfo tinfo = new TileInfo(obj.get("tile_width").asInt());
       obj.withArray("scale_factors").forEach(
-              fnode -> tinfo.addScaleFactor(fnode.asInt()));
+        fnode -> tinfo.addScaleFactor(fnode.asInt()));
       if (obj.has("tile_height")) {
         tinfo.setHeight(obj.get("tile_height").intValue());
       }
@@ -108,14 +107,14 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       ImageApiProfile profile = new ImageApiProfile();
       if (obj.has("formats")) {
         obj.withArray("formats").forEach(
-                f -> profile.addFormat(ImageApiProfile.Format.valueOf(f.asText().toUpperCase())));
+          f -> profile.addFormat(ImageApiProfile.Format.valueOf(f.asText().toUpperCase())));
       }
       if (obj.has("qualities")) {
         List<String> qualities = StreamSupport.stream(
-                obj.withArray("qualities").spliterator(), false)
-                .map(q -> q.asText().equals("native") ? "default" : q.asText())
-                .map(q -> q.equals("grey") ? "gray" : q)
-                .collect(Collectors.toList());
+          obj.withArray("qualities").spliterator(), false)
+          .map(q -> q.asText().equals("native") ? "default" : q.asText())
+          .map(q -> q.equals("grey") ? "gray" : q)
+          .collect(Collectors.toList());
         qualities.forEach(q -> profile.addQuality(ImageApiProfile.Quality.valueOf(q.toUpperCase())));
       }
       service.addProfile(profile);

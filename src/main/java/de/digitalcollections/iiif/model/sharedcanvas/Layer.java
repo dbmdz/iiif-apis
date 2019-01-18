@@ -3,8 +3,8 @@ package de.digitalcollections.iiif.model.sharedcanvas;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
-import de.digitalcollections.iiif.model.interfaces.PageContainer;
 import de.digitalcollections.iiif.model.enums.ViewingDirection;
+import de.digitalcollections.iiif.model.interfaces.PageContainer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.List;
  * See http://iiif.io/api/presentation/2.1/#layer
  */
 public class Layer extends Resource<Layer> implements PageContainer<AnnotationList> {
+
   public static final String TYPE = "sc:Layer";
 
   private ViewingDirection viewingDirection;
@@ -43,7 +44,8 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
     this.addLabel(label);
   }
 
-  public Layer() { }
+  public Layer() {
+  }
 
   @Override
   public String getType() {
@@ -68,7 +70,7 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
 
   public Layer addOtherContent(String first, String... rest) {
     return this.addOtherContent(new AnnotationList(first),
-                                Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
+      Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
   }
 
   public Layer addOtherContent(AnnotationList first, AnnotationList... rest) {
@@ -78,7 +80,6 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
     this.otherContent.addAll(Lists.asList(first, rest));
     return this;
   }
-
 
   @Override
   public AnnotationList getFirst() {

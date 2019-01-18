@@ -11,6 +11,7 @@ import java.net.URI;
  * (http://iiif.io/api/annex/services/#physical-dimensions).
  */
 public class PhysicalDimensionsService extends Service {
+
   public enum Unit {
     MILLIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");
 
@@ -36,7 +37,7 @@ public class PhysicalDimensionsService extends Service {
 
   @JsonCreator
   public PhysicalDimensionsService(@JsonProperty("physicalScale") double physicalScale,
-                                   @JsonProperty("physicalUnits") Unit units) {
+    @JsonProperty("physicalUnits") Unit units) {
     super(URI.create(CONTEXT));
     this.addProfile(PROFILE);
     this.physicalScale = physicalScale;

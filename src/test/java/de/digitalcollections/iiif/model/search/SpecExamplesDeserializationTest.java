@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpecExamplesDeserializationTest {
+
   private ObjectMapper mapper;
 
   @BeforeEach
@@ -27,31 +28,31 @@ public class SpecExamplesDeserializationTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-        Resources.getResource("spec/search/" + filename), clz);
+      Resources.getResource("spec/search/" + filename), clz);
   }
 
   @Test
   public void testAutocomplete() throws Exception {
     ContentSearchService service = readFromResources("autocomplete.json", ContentSearchService.class);
     assertThat(service.getIdentifier().toString())
-        .isEqualTo("http://example.org/services/identifier/search");
+      .isEqualTo("http://example.org/services/identifier/search");
     assertThat(service.getAutocompleteService())
-        .isInstanceOf(AutocompleteService.class);
+      .isInstanceOf(AutocompleteService.class);
     assertThat(service.getAutocompleteService().getIdentifier().toString())
-        .isEqualTo("http://example.org/services/identifier/autocomplete");
+      .isEqualTo("http://example.org/services/identifier/autocomplete");
   }
 
   @Test
   public void testBasicSearch() throws Exception {
     SearchResult result = readFromResources("basicSearch.json", SearchResult.class);
     assertThat(result.getContext())
-        .containsExactly(Resource.CONTEXT, SearchResult.CONTEXT);
+      .containsExactly(Resource.CONTEXT, SearchResult.CONTEXT);
     assertThat(result.getResources()).hasSize(1);
     assertThat(result.getHits()).hasSize(1);
     SearchHit hit = result.getHits().get(0);
     assertThat(hit.getAnnotations()).hasSize(1);
     assertThat(hit.getAnnotations().get(0).getIdentifier().toString())
-        .isEqualTo("http://example.org/identifier/annotation/anno1");
+      .isEqualTo("http://example.org/identifier/annotation/anno1");
   }
 
   @Test
@@ -60,16 +61,16 @@ public class SpecExamplesDeserializationTest {
     assertThat(terms.getIgnored()).containsExactly("user");
     assertThat(terms.getTerms()).hasSize(4);
     assertThat(terms.getTerms().get(0))
-        .hasFieldOrPropertyWithValue("match", "bird")
-        .hasFieldOrPropertyWithValue("url", URI.create("http://example.org/service/identifier/search?motivation=painting&q=bird"))
-        .hasFieldOrPropertyWithValue("count", 15);
+      .hasFieldOrPropertyWithValue("match", "bird")
+      .hasFieldOrPropertyWithValue("url", URI.create("http://example.org/service/identifier/search?motivation=painting&q=bird"))
+      .hasFieldOrPropertyWithValue("count", 15);
   }
 
   @Test
   public void testFullResponseWithLabels() throws Exception {
     TermList terms = readFromResources("fullResponseWithLabels.json", TermList.class);
     assertThat(terms.getTerms().stream().map(Term::getLabelString))
-        .containsExactly("bird", "biro");
+      .containsExactly("bird", "biro");
   }
 
   @Test
@@ -78,24 +79,24 @@ public class SpecExamplesDeserializationTest {
     assertThat(result.getResources()).hasSize(1);
     Annotation anno = result.getResources().get(0);
     assertThat(anno.getResource())
-        .isInstanceOf(ContentAsText.class);
+      .isInstanceOf(ContentAsText.class);
     assertThat(((ContentAsText) anno.getResource()).getChars())
-        .isEqualTo("There are two birds in the bush.");
+      .isEqualTo("There are two birds in the bush.");
     assertThat(result.getHits()).hasSize(1);
     SearchHit hit = result.getHits().get(0);
     assertThat(hit.getAnnotations()).hasSize(1);
     assertThat(hit.getAnnotations().get(0).getIdentifier())
-        .isEqualTo(anno.getIdentifier());
+      .isEqualTo(anno.getIdentifier());
 
     assertThat(hit.getSelectors()).hasSize(2);
     assertThat(hit.getSelectors().get(0))
-        .hasFieldOrPropertyWithValue("exact", "birds")
-        .hasFieldOrPropertyWithValue("prefix", "There are two ")
-        .hasFieldOrPropertyWithValue("suffix", " in the bush");
+      .hasFieldOrPropertyWithValue("exact", "birds")
+      .hasFieldOrPropertyWithValue("prefix", "There are two ")
+      .hasFieldOrPropertyWithValue("suffix", " in the bush");
     assertThat(hit.getSelectors().get(1))
-        .hasFieldOrPropertyWithValue("exact", "bush")
-        .hasFieldOrPropertyWithValue("prefix", "two birds in the ")
-        .hasFieldOrPropertyWithValue("suffix", ".");
+      .hasFieldOrPropertyWithValue("exact", "bush")
+      .hasFieldOrPropertyWithValue("prefix", "two birds in the ")
+      .hasFieldOrPropertyWithValue("suffix", ".");
   }
 
   @Test
@@ -103,15 +104,15 @@ public class SpecExamplesDeserializationTest {
     SearchResult result = readFromResources("multiAnnotationHits.json", SearchResult.class);
     assertThat(result.getResources()).hasSize(2);
     assertThat(result.getResources().get(0).getOn())
-        .isInstanceOf(Canvas.class);
+      .isInstanceOf(Canvas.class);
     assertThat(result.getResources().get(1).getResource())
-        .isInstanceOf(ContentAsText.class);
+      .isInstanceOf(ContentAsText.class);
     assertThat(((ContentAsText) result.getResources().get(1).getResource()).getChars())
-        .isEqualTo("is worth two in the bush");
+      .isEqualTo("is worth two in the bush");
     assertThat(result.getHits()).hasSize(1);
     SearchHit hit = result.getHits().get(0);
     assertThat(hit.getAnnotations().stream().map(Resource::getIdentifier))
-        .containsExactlyElementsOf(result.getResources().stream().map(Resource::getIdentifier).collect(Collectors.toList()));
+      .containsExactlyElementsOf(result.getResources().stream().map(Resource::getIdentifier).collect(Collectors.toList()));
   }
 
   @Test
@@ -119,15 +120,15 @@ public class SpecExamplesDeserializationTest {
     SearchResult result = readFromResources("snippets.json", SearchResult.class);
     assertThat(result.getResources()).hasSize(1);
     assertThat(result.getResources().get(0).getResource())
-        .isInstanceOf(ContentAsText.class);
+      .isInstanceOf(ContentAsText.class);
     assertThat(((ContentAsText) result.getResources().get(0).getResource()).getChars())
-        .isEqualTo("birds");
+      .isEqualTo("birds");
 
     assertThat(result.getHits()).hasSize(1);
     assertThat(result.getHits().get(0).getAnnotations()).hasSize(1);
     assertThat(result.getHits().get(0))
-        .hasFieldOrPropertyWithValue("before", "There are two ")
-        .hasFieldOrPropertyWithValue("after", " in the bush");
+      .hasFieldOrPropertyWithValue("before", "There are two ")
+      .hasFieldOrPropertyWithValue("after", " in the bush");
   }
 
   @Test
@@ -136,11 +137,11 @@ public class SpecExamplesDeserializationTest {
     assertThat(list.getResources()).hasSize(1);
     Annotation anno = list.getResources().get(0);
     assertThat(((ContentAsText) anno.getResource()).getChars())
-        .isEqualTo("A bird in the hand is worth two in the bush");
+      .isEqualTo("A bird in the hand is worth two in the bush");
     assertThat(anno.getOn()).isInstanceOf(Canvas.class);
     assertThat(anno.getOn().getWithin().get(0)).isInstanceOf(Manifest.class);
     assertThat(anno.getOn().getWithin().get(0).getLabelString())
-        .isEqualTo("Example Manifest");
+      .isEqualTo("Example Manifest");
   }
 
   @Test

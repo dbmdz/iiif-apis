@@ -16,6 +16,7 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "motivation", "resource", "on"})
 public class Annotation extends Resource<Annotation> {
+
   public static final String TYPE = "oa:Annotation";
 
   private Resource resource;
@@ -62,7 +63,6 @@ public class Annotation extends Resource<Annotation> {
   public void setOn(Resource on) {
     this.on = on;
   }
-
 
   public CssStyle getStylesheet() {
     return stylesheet;

@@ -7,6 +7,7 @@ import com.google.common.base.CaseFormat;
 import java.io.IOException;
 
 public class EnumDeserializer extends JsonDeserializer<Enum> {
+
   private final Class<? extends Enum> enumType;
 
   public EnumDeserializer(Class<? extends Enum> enumType) {

@@ -16,6 +16,7 @@ import java.util.List;
  * See http://iiif.io/api/search/1.0/#simple-lists
  */
 public class SearchResult extends AnnotationList {
+
   public static final String CONTEXT = "http://iiif.io/api/search/1/context.json";
 
   private List<SearchHit> hits;

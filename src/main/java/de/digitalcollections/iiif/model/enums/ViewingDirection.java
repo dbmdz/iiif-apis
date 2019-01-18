@@ -23,4 +23,3 @@ public enum ViewingDirection {
     return stringValue;
   }
 }
-
