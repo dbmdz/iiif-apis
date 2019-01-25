@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
  */
 @JsonPropertyOrder({"label", "value"})
 public class MetadataEntry {
+
   private PropertyValue label;
   private PropertyValue value;
 

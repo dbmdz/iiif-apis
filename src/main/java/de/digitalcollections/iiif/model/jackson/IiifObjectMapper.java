@@ -16,7 +16,7 @@ public class IiifObjectMapper extends ObjectMapper {
     int currentMinor = this.version().getMinorVersion();
     if (currentMajor < neededMajor || (currentMajor == neededMajor && currentMinor < neededMinor)) {
       throw new RuntimeException(
-              String.format("iiif-apis requires Jackson >= 2.9.0. The version on your classpath is %s", this.version().toString()));
+          String.format("iiif-apis requires Jackson >= 2.9.0. The version on your classpath is %s", this.version().toString()));
     }
   }
 

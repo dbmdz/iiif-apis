@@ -12,6 +12,7 @@ import java.util.Set;
  * http://iiif.io/api/search/1.0/#paging-results
  */
 public class SearchLayer extends Layer {
+
   private Set<String> ignored;
 
   public SearchLayer() {

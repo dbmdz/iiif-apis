@@ -10,6 +10,7 @@ import de.digitalcollections.iiif.model.interfaces.Selector;
  * See http://iiif.io/api/search/1.0/#search-term-highlighting
  */
 public class TextQuoteSelector implements Selector {
+
   public static final String TYPE = "oa:TextQuoteSelector";
   private final String exact;
   private String prefix;

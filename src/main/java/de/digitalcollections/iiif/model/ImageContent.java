@@ -19,7 +19,7 @@ public class ImageContent extends Resource<ImageContent> {
   public static final String TYPE = "dctypes:Image";
 
   // We sometimes want to set this to null during serialization, hence the copy in an instance variable
-  @SuppressWarnings("CheckStyle")
+  @SuppressWarnings("checkstyle:membername")
   @JsonIgnore
   public String _type = TYPE;
 

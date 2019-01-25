@@ -13,13 +13,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
     include = As.EXISTING_PROPERTY,
     property = "error")
 @JsonSubTypes({
-    @Type(name=InvalidCredentials.TYPE, value=InvalidCredentials.class),
-    @Type(name=InvalidOrigin.TYPE, value=InvalidOrigin.class),
-    @Type(name=InvalidRequest.TYPE, value=InvalidRequest.class),
-    @Type(name=MissingCredentials.TYPE, value=MissingCredentials.class),
-    @Type(name=Unavailable.TYPE, value=Unavailable.class)})
+    @Type(name = InvalidCredentials.TYPE, value = InvalidCredentials.class),
+    @Type(name = InvalidOrigin.TYPE, value = InvalidOrigin.class),
+    @Type(name = InvalidRequest.TYPE, value = InvalidRequest.class),
+    @Type(name = MissingCredentials.TYPE, value = MissingCredentials.class),
+    @Type(name = Unavailable.TYPE, value = Unavailable.class)})
 @JsonIgnoreProperties({"suppressed", "stackTrace"})
 public abstract class AccessTokenError extends Exception {
+
   private String description;
 
   @JsonProperty("error")

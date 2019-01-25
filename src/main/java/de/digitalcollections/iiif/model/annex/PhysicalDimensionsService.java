@@ -11,6 +11,7 @@ import java.net.URI;
  * (http://iiif.io/api/annex/services/#physical-dimensions).
  */
 public class PhysicalDimensionsService extends Service {
+
   public enum Unit {
     MILLIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");
 

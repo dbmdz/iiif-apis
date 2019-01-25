@@ -15,6 +15,7 @@ import java.net.URI;
  * - {@link de.digitalcollections.iiif.model.annex.GeoService}
  */
 public class GenericService extends Service {
+
   @JsonCreator
   public GenericService(@JsonProperty("@context") URI context,
                         @JsonProperty("@id") String identifier) {

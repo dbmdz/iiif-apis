@@ -10,6 +10,7 @@ import java.util.List;
  * Describes an Image API tile.
  */
 public class TileInfo {
+
   private Integer width;
   private Integer height;
   private List<Integer> scaleFactors;

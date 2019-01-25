@@ -24,6 +24,7 @@ import static com.google.common.collect.Lists.asList;
 
 /**
  * Abstract IIIF resource, most other resources are based on this.
+ *
  * @param <T> a resource type, e.g. Canvas, Annotation
  */
 @JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
@@ -33,7 +34,7 @@ public abstract class Resource<T> implements Choice<T> {
 
   /** Only used during serialization,
    *  @see SerializerModifier **/
-  @SuppressWarnings("CheckStyle")
+  @SuppressWarnings("checkstyle:membername")
   @JsonProperty("@context")
   public String _context;
 
@@ -303,11 +304,11 @@ public abstract class Resource<T> implements Choice<T> {
   public void setViewingHints(List<ViewingHint> viewingHints) throws IllegalArgumentException {
     for (ViewingHint hint : viewingHints) {
       boolean supportsHint = (hint.getType() == ViewingHint.Type.OTHER
-              || this.getSupportedViewingHintTypes().contains(hint.getType()));
+                              || this.getSupportedViewingHintTypes().contains(hint.getType()));
       if (!supportsHint) {
         throw new IllegalArgumentException(String.format(
-                "Resources of type '%s' do not support the '%s' viewing hint.",
-                this.getType(), hint.toString()));
+            "Resources of type '%s' do not support the '%s' viewing hint.",
+            this.getType(), hint.toString()));
       }
     }
     this.viewingHints = viewingHints;

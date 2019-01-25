@@ -28,8 +28,8 @@ public class RotationRequest {
       throw new ResolvingException("Bad format: " + str);
     }
     return new RotationRequest(
-            new BigDecimal(matcher.group(2)),
-            !(matcher.group(1) == null));
+        new BigDecimal(matcher.group(2)),
+        !(matcher.group(1) == null));
   }
 
   public RotationRequest(int rotation) throws ResolvingException {
@@ -61,6 +61,7 @@ public class RotationRequest {
 
   /**
    * Create an IIIF Image API compatible rotation string.
+   *
    * @return IIIF Image API compatible rotation string represented by this instance
    */
   @JsonValue
@@ -83,7 +84,7 @@ public class RotationRequest {
     }
     RotationRequest that = (RotationRequest) o;
     return mirror == that.mirror
-            && Objects.equal(rotation, that.rotation);
+           && Objects.equal(rotation, that.rotation);
   }
 
   @Override

@@ -11,6 +11,7 @@ import java.net.URI;
  * {@link org.geojson.Feature} object that defines the location.
  */
 public class GeoService extends Service {
+
   public static final String CONTEXT = "http://geojson.org/geojson-ld/geojson-context.jsonld";
 
   @JsonUnwrapped

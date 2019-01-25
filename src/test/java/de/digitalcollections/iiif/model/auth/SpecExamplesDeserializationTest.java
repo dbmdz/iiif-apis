@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class SpecExamplesDeserializationTest {
+
   private ObjectMapper mapper;
 
   @BeforeEach
@@ -22,7 +23,7 @@ public class SpecExamplesDeserializationTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-        Resources.getResource("spec/auth/" + filename), clz);
+      Resources.getResource("spec/auth/" + filename), clz);
   }
 
   @Test
@@ -32,11 +33,11 @@ public class SpecExamplesDeserializationTest {
     assertThat(service.getLabelString()).isEqualTo("Login to Example Institution");
     assertThat(service.getHeaderString()).isEqualTo("Please Log In");
     assertThat(service.getFailureDescriptionString())
-        .isEqualTo("<a href=\"http://example.org/policy\">Access Policy</a>");
+      .isEqualTo("<a href=\"http://example.org/policy\">Access Policy</a>");
     assertThat(service.getServices()).hasSize(1);
     assertThat(service.getServices().get(0)).isInstanceOf(AccessTokenService.class);
     assertThat(((AccessTokenService) service.getServices().get(0)).getIdentifier().toString())
-        .isEqualTo("https://authentication.example.org/token");
+      .isEqualTo("https://authentication.example.org/token");
   }
 
   @Test
@@ -62,7 +63,7 @@ public class SpecExamplesDeserializationTest {
     AccessTokenError err = readFromResources("errorCondition.json", AccessTokenError.class);
     assertThat(err).isInstanceOf(InvalidCredentials.class);
     assertThat(err.getDescription())
-        .isEqualTo("The request had credentials that are not valid for the service.");
+      .isEqualTo("The request had credentials that are not valid for the service.");
   }
 
   @Test
@@ -89,6 +90,6 @@ public class SpecExamplesDeserializationTest {
   public void testTokenResponse() throws IOException {
     AccessToken token = readFromResources("tokenResponse.json", AccessToken.class);
     assertThat(token.getToken()).isEqualTo("TOKEN_HERE");
-    assertThat(token.getExpiresInDuration().toMillis()).isEqualTo(3600*1000);
+    assertThat(token.getExpiresInDuration().toMillis()).isEqualTo(3600 * 1000);
   }
 }

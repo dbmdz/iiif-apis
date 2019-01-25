@@ -16,14 +16,12 @@ public enum AuthPattern {
    * See http://iiif.io/api/auth/1.0/#login-interaction-pattern
    */
   LOGIN("http://iiif.io/api/auth/1/login"),
-
   /**
    * The user will be required to click a button within the client using content provided in the service description.
    *
    * See http://iiif.io/api/auth/1.0/#clickthrough-interaction-pattern
    */
   CLICKTHROUGH("http://iiif.io/api/auth/1/clickthrough"),
-
   /**
    * The user will not be required to interact with an authentication system, the client is expected to use the access
    * cookie service automatically.
@@ -31,7 +29,6 @@ public enum AuthPattern {
    * See http://iiif.io/api/auth/1.0/#kiosk-interaction-pattern
    */
   KIOSK("http://iiif.io/api/auth/1/kiosk"),
-
   /**
    * The user is expected to have already acquired the appropriate cookie, and the access cookie service will not be
    * used at all.

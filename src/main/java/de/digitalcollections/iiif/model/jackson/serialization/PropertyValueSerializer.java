@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 
 public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
+
   public PropertyValueSerializer() {
     this(null);
   }

@@ -25,8 +25,8 @@ import java.util.List;
 public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<?>> {
 
   private static final ImmutableSet<String> UNWRAP_FIELDS = ImmutableSet.of(
-          "service", "profile", "within", "logo", "description", "viewingHint",
-          "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
+      "service", "profile", "within", "logo", "description", "viewingHint",
+      "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
 
   private final IndexedListSerializer defaultSerializer;
 
@@ -36,21 +36,21 @@ public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<
   }
 
   private IiifIndexedListSerializer(IiifIndexedListSerializer src, BeanProperty prop,
-          TypeSerializer vts, JsonSerializer<?> valueSerializer,
-          Boolean unwrapSingle) {
+                                    TypeSerializer vts, JsonSerializer<?> valueSerializer,
+                                    Boolean unwrapSingle) {
     super(src, prop, vts, valueSerializer, unwrapSingle);
     this.defaultSerializer = src.defaultSerializer;
   }
 
   @Override
   public AsArraySerializerBase<List<?>> withResolved(BeanProperty property, TypeSerializer vts,
-          JsonSerializer<?> elementSerializer, Boolean unwrapSingle) {
+                                                     JsonSerializer<?> elementSerializer, Boolean unwrapSingle) {
     return new IiifIndexedListSerializer(this, property, vts, elementSerializer, unwrapSingle);
   }
 
   @Override
   public final void serialize(List<?> value, JsonGenerator gen, SerializerProvider provider)
-          throws IOException {
+      throws IOException {
     final int len = value.size();
     String currentName = gen.getOutputContext().getCurrentName();
     // Special case: Unwrap certain fields

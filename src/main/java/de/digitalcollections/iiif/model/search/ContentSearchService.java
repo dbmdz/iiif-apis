@@ -11,6 +11,7 @@ import java.net.URI;
  * See http://iiif.io/api/search/1.0/#search
  */
 public class ContentSearchService extends Service {
+
   public static final String CONTEXT = "http://iiif.io/api/search/1/context.json";
 
   @JsonProperty("service")

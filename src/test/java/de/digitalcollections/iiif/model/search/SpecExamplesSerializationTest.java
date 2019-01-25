@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class SpecExamplesSerializationTest {
+
   private ObjectMapper mapper;
 
   @BeforeEach
@@ -27,7 +28,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-        Resources.getResource("spec/search/" + filename), Charset.defaultCharset());
+      Resources.getResource("spec/search/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
@@ -58,10 +59,10 @@ public class SpecExamplesSerializationTest {
     TermList terms = new TermList("http://example.org/service/identifier/autocomplete?q=bir&motivation=painting");
     terms.addIgnored("user");
     terms.addTerm(
-        new Term("http://example.org/service/identifier/search?motivation=painting&q=bird", "bird", 15),
-        new Term("http://example.org/service/identifier/search?motivation=painting&q=biro", "biro", 3),
-        new Term("http://example.org/service/identifier/search?motivation=painting&q=birth", "birth", 9),
-        new Term("http://example.org/service/identifier/search?motivation=painting&q=birthday", "birthday", 21));
+      new Term("http://example.org/service/identifier/search?motivation=painting&q=bird", "bird", 15),
+      new Term("http://example.org/service/identifier/search?motivation=painting&q=biro", "biro", 3),
+      new Term("http://example.org/service/identifier/search?motivation=painting&q=birth", "birth", 9),
+      new Term("http://example.org/service/identifier/search?motivation=painting&q=birthday", "birthday", 21));
     assertSerializationEqualsSpec(terms, "fullResponse.json");
   }
 
@@ -70,8 +71,8 @@ public class SpecExamplesSerializationTest {
     TermList terms = new TermList("http://example.org/service/identifier/autocomplete?q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fb&motivation=tagging");
     terms.addIgnored("user");
     terms.addTerm(
-        new Term("http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbird", "http://semtag.example.org/tag/bird", 15, "bird"),
-        new Term("http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbiro", "http://semtag.example.org/tag/biro", 3, "biro"));
+      new Term("http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbird", "http://semtag.example.org/tag/bird", 15, "bird"),
+      new Term("http://example.org/service/identifier/autocomplete?motivation=tagging&q=http%3A%2F%2Fsemtag.example.org%2Ftag%2Fbiro", "http://semtag.example.org/tag/biro", 3, "biro"));
     assertSerializationEqualsSpec(terms, "fullResponseWithLabels.json");
   }
 
@@ -79,7 +80,7 @@ public class SpecExamplesSerializationTest {
   public void testHighlighting() throws Exception {
     SearchResult result = new SearchResult("http://example.org/service/manifest/search?q=b*&page=1");
     Annotation anno = new Annotation("http://example.org/identifier/annotation/anno-line",
-                                     Motivation.PAINTING);
+      Motivation.PAINTING);
     anno.setOn(new Canvas("http://example.org/identifier/canvas1#xywh=200,100,40,20"));
     anno.setResource(new ContentAsText("There are two birds in the bush."));
     result.addResource(anno);
@@ -87,8 +88,8 @@ public class SpecExamplesSerializationTest {
     SearchHit hit = new SearchHit();
     hit.addAnnotation(new Annotation(anno.getIdentifier().toString()));
     hit.addSelector(
-        new TextQuoteSelector("birds", "There are two ", " in the bush"),
-        new TextQuoteSelector("bush", "two birds in the ", "."));
+      new TextQuoteSelector("birds", "There are two ", " in the bush"),
+      new TextQuoteSelector("bush", "two birds in the ", "."));
     result.addHit(hit);
     assertSerializationEqualsSpec(result, "highlighting.json");
   }
@@ -97,18 +98,18 @@ public class SpecExamplesSerializationTest {
   public void testMultiAnnotationHits() throws Exception {
     SearchResult result = new SearchResult("http://example.org/service/manifest/search?q=hand+is");
     Annotation anno1 = new Annotation("http://example.org/identifier/annotation/anno-bird",
-                                     Motivation.PAINTING);
+      Motivation.PAINTING);
     anno1.setResource(new ContentAsText("A bird in the hand"));
     anno1.setOn(new Canvas("http://example.org/identifier/canvas1#xywh=200,100,150,30"));
     Annotation anno2 = new Annotation("http://example.org/identifier/annotation/anno-are",
-        Motivation.PAINTING);
+      Motivation.PAINTING);
     anno2.setResource(new ContentAsText("is worth two in the bush"));
     anno2.setOn(new Canvas("http://example.org/identifier/canvas1#xywh=200,140,170,30"));
     result.addResource(anno1, anno2);
 
     SearchHit hit = new SearchHit();
     hit.addAnnotation(new Annotation(anno1.getIdentifier().toString()),
-                      new Annotation(anno2.getIdentifier().toString()));
+      new Annotation(anno2.getIdentifier().toString()));
     hit.setMatch("hand is");
     hit.setBefore("A bird in the ");
     hit.setAfter(" worth two in the bush");
@@ -121,7 +122,7 @@ public class SpecExamplesSerializationTest {
   public void testComplexTargetResource() throws Exception {
     AnnotationList annos = new AnnotationList("http://example.org/service/manifest/search?q=bird&motivation=painting");
     Annotation anno = new Annotation("http://example.org/identifier/annotation/anno-line",
-                                     Motivation.PAINTING);
+      Motivation.PAINTING);
     anno.setResource(new ContentAsText("A bird in the hand is worth two in the bush"));
 
     Canvas target = new Canvas("http://example.org/identifier/canvas1#xywh=100,100,250,20");

@@ -33,7 +33,7 @@ public class ParsingTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-            Resources.getResource(filename), clz);
+      Resources.getResource(filename), clz);
   }
 
   @Test
@@ -54,8 +54,7 @@ public class ParsingTest {
     ChoiceImpl choice = (ChoiceImpl) anno.getResource();
     assertThat(anno.getResource().getAlternatives().get(0)).isNull();
   }
-  */
-
+   */
   @Test
   public void testManifestWithStringLogo() throws Exception {
     Manifest manifest = readFromResources("stringImage.json", Manifest.class);
@@ -67,10 +66,10 @@ public class ParsingTest {
     Manifest manifest = readFromResources("presiV10Manifest.json", Manifest.class);
     assertThat(manifest.getLabelString()).isEqualTo("Book 1");
     assertThat(manifest.getMetadata().stream()
-            .filter(e -> e.getLabel().getFirstValue().equals("Published"))
-            .findFirst()
-            .map(e -> e.getValue().getLocalizations())
-            .get()).containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
+      .filter(e -> e.getLabel().getFirstValue().equals("Published"))
+      .findFirst()
+      .map(e -> e.getValue().getLocalizations())
+      .get()).containsExactlyInAnyOrder(Locale.ENGLISH, Locale.FRENCH);
     assertThat(manifest.getDefaultSequence().getCanvases()).hasSize(3);
     assertThat(manifest.getRanges()).hasSize(1);
     assertThat(manifest.getRanges().get(0).getCanvases()).hasSize(3);
@@ -79,13 +78,13 @@ public class ParsingTest {
     ImageContent imgRes = (ImageContent) canvas.getImages().get(0).getResource();
     assertThat(imgRes.getServices().get(0)).isInstanceOf(ImageService.class);
     ImageService service = (ImageService) manifest.getDefaultSequence().getCanvases().get(1).getImages()
-            .get(0).getResource().getServices().get(0);
+      .get(0).getResource().getServices().get(0);
     assertThat(service.getWidth()).isEqualTo(6000);
     assertThat(service.getHeight()).isEqualTo(8000);
     assertThat(service.getSizes()).containsExactly(
-            new Size(6000, 8000),
-            new Size(3000, 4000),
-            new Size(1500, 2000));
+      new Size(6000, 8000),
+      new Size(3000, 4000),
+      new Size(1500, 2000));
     assertThat(service.getTiles()).hasSize(1);
     assertThat(service.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
     assertThat(service.getTiles().get(0).getWidth()).isEqualTo(1024);
@@ -105,7 +104,7 @@ public class ParsingTest {
     assertThat(imgContent.getAlternatives()).isNotEmpty();
     assertThat(imgContent.getServices().get(0)).isInstanceOf(ImageService.class);
     assertThat(imgContent.getServices().get(0).getProfiles()).containsExactly(
-            ImageApiProfile.fromUrl("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
+      ImageApiProfile.fromUrl("http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1"));
     assertThat(imgContent.getAlternatives()).hasSize(2);
     assertThat(imgContent.getAlternatives()).allMatch(ImageContent.class::isInstance);
   }
@@ -121,16 +120,16 @@ public class ParsingTest {
     assertThat(info.getWidth()).isEqualTo(6000);
     assertThat(info.getHeight()).isEqualTo(4000);
     assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
-            "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0");
     assertThat(info.getSizes()).containsExactly(
-            new Size(6000, 4000),
-            new Size(3000, 2000),
-            new Size(1500, 1000));
+      new Size(6000, 4000),
+      new Size(3000, 2000),
+      new Size(1500, 1000));
     assertThat(info.getTiles()).hasSize(1);
     assertThat(info.getTiles().get(0).getScaleFactors()).containsExactly(1, 2, 4);
     assertThat(info.getTiles().get(0))
-            .hasFieldOrPropertyWithValue("width", 1024)
-            .hasFieldOrPropertyWithValue("height", 1024);
+      .hasFieldOrPropertyWithValue("width", 1024)
+      .hasFieldOrPropertyWithValue("height", 1024);
     assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
     ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(Format.JPG, Format.PNG);
@@ -141,20 +140,20 @@ public class ParsingTest {
   public void testParseImageApiFeatures() throws Exception {
     ImageApiProfile profile = readFromResources("featureProfile.json", ImageApiProfile.class);
     assertThat(profile.getFeatures()).containsExactlyInAnyOrder(
-        ImageApiProfile.Feature.BASE_URI_REDIRECT,
-        ImageApiProfile.Feature.CORS,
-        ImageApiProfile.Feature.JSONLD_MEDIA_TYPE,
-        ImageApiProfile.Feature.MIRRORING,
-        ImageApiProfile.Feature.PROFILE_LINK_HEADER,
-        ImageApiProfile.Feature.REGION_BY_PX,
-        ImageApiProfile.Feature.REGION_SQUARE,
-        ImageApiProfile.Feature.REGION_BY_PCT,
-        ImageApiProfile.Feature.ROTATION_BY_90S,
-        ImageApiProfile.Feature.SIZE_BY_CONFINED_WH,
-        ImageApiProfile.Feature.SIZE_BY_H,
-        ImageApiProfile.Feature.SIZE_BY_PCT,
-        ImageApiProfile.Feature.SIZE_BY_W,
-        ImageApiProfile.Feature.SIZE_BY_WH
+      ImageApiProfile.Feature.BASE_URI_REDIRECT,
+      ImageApiProfile.Feature.CORS,
+      ImageApiProfile.Feature.JSONLD_MEDIA_TYPE,
+      ImageApiProfile.Feature.MIRRORING,
+      ImageApiProfile.Feature.PROFILE_LINK_HEADER,
+      ImageApiProfile.Feature.REGION_BY_PX,
+      ImageApiProfile.Feature.REGION_SQUARE,
+      ImageApiProfile.Feature.REGION_BY_PCT,
+      ImageApiProfile.Feature.ROTATION_BY_90S,
+      ImageApiProfile.Feature.SIZE_BY_CONFINED_WH,
+      ImageApiProfile.Feature.SIZE_BY_H,
+      ImageApiProfile.Feature.SIZE_BY_PCT,
+      ImageApiProfile.Feature.SIZE_BY_W,
+      ImageApiProfile.Feature.SIZE_BY_WH
     );
   }
 }

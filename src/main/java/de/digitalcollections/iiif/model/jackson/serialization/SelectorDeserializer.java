@@ -16,12 +16,13 @@ import java.util.Map;
 import java.util.stream.StreamSupport;
 
 public class SelectorDeserializer extends JsonDeserializer<Selector> {
-  private static final Map<String, Class<? extends Selector>> MAPPING =
-      new ImmutableMap.Builder<String, Class<? extends Selector>>()
-        .put(ImageApiSelector.TYPE, ImageApiSelector.class)
-        .put(SvgSelector.TYPE, SvgSelector.class)
-        .put(TextQuoteSelector.TYPE, TextQuoteSelector.class)
-        .build();
+
+  private static final Map<String, Class<? extends Selector>> MAPPING
+      = new ImmutableMap.Builder<String, Class<? extends Selector>>()
+      .put(ImageApiSelector.TYPE, ImageApiSelector.class)
+      .put(SvgSelector.TYPE, SvgSelector.class)
+      .put(TextQuoteSelector.TYPE, TextQuoteSelector.class)
+      .build();
 
   public Selector deserialize(JsonParser p, DeserializationContext ctxt)
       throws IOException {

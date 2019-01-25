@@ -15,6 +15,7 @@ import java.util.Locale;
 import java.util.stream.StreamSupport;
 
 public class PropertyValueDeserializer extends JsonDeserializer<PropertyValue> {
+
   @Override
   public PropertyValue deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
     ObjectMapper mapper = (ObjectMapper) jp.getCodec();

@@ -28,7 +28,7 @@ public class ExternalTest {
 
   private <T> T readFromResources(String filename, Class<T> clz) throws IOException {
     return mapper.readValue(
-            Resources.getResource("external/" + filename), clz);
+      Resources.getResource("external/" + filename), clz);
   }
 
   @Test
@@ -42,7 +42,7 @@ public class ExternalTest {
     Manifest manifest = readFromResources("biblissima_reconstructed.json", Manifest.class);
     // Two images per canvas, one page the other miniature
     assertThat(manifest.getDefaultSequence().getCanvases())
-            .allMatch(c -> c.getImages().size() == 2);
+      .allMatch(c -> c.getImages().size() == 2);
   }
 
   @Test
@@ -50,15 +50,15 @@ public class ExternalTest {
     Manifest manifest = readFromResources("yale_decretum.json", Manifest.class);
     assertThat(manifest).isNotNull();
     ImageService service = manifest.getDefaultSequence().getCanvases().get(0).getImages().stream()
-            .map(a -> (ImageContent) a.getResource())
-            .flatMap(r -> r.getServices().stream())
-            .filter(ImageService.class::isInstance)
-            .map(ImageService.class::cast)
-            .findFirst().orElse(null);
+      .map(a -> (ImageContent) a.getResource())
+      .flatMap(r -> r.getServices().stream())
+      .filter(ImageService.class::isInstance)
+      .map(ImageService.class::cast)
+      .findFirst().orElse(null);
     ImageContent thumb;
     boolean isV1 = service.getProfiles().stream()
-            .map(p -> p.getIdentifier().toString())
-            .anyMatch(ImageApiProfile.V1_PROFILES::contains);
+      .map(p -> p.getIdentifier().toString())
+      .anyMatch(ImageApiProfile.V1_PROFILES::contains);
     if (isV1) {
       thumb = new ImageContent(String.format("%s/full/280,/0/native.jpg", service.getIdentifier()));
     } else {
@@ -76,12 +76,12 @@ public class ExternalTest {
     assertThat(info.getWidth()).isEqualTo(648);
     assertThat(info.getHeight()).isEqualTo(1024);
     assertThat(info.getProfiles().get(0).getIdentifier().toString()).isEqualTo(
-            "http://iiif.io/api/image/2/level0.json");
+      "http://iiif.io/api/image/2/level0.json");
     assertThat(info.getSizes()).containsExactly(
-            new Size(648, 1024),
-            new Size(253, 400),
-            new Size(127, 200),
-            new Size(63, 100));
+      new Size(648, 1024),
+      new Size(253, 400),
+      new Size(127, 200),
+      new Size(63, 100));
     assertThat(info.getProfiles().get(1)).isInstanceOf(ImageApiProfile.class);
     ImageApiProfile profile = (ImageApiProfile) info.getProfiles().get(1);
     assertThat(profile.getFormats()).containsExactlyInAnyOrder(ImageApiProfile.Format.JPG);
@@ -93,18 +93,18 @@ public class ExternalTest {
   public void testGallicaPropValsWithNoLanguage() throws Exception {
     Manifest manifest = readFromResources("gallica_propvals_without_language.json", Manifest.class);
     PropertyValue creator = manifest.getMetadata().stream()
-            .filter(me -> me.getLabelString().equals("Creator"))
-            .map(me -> me.getValue())
-            .findFirst()
-            .orElseThrow(() -> new Exception("Could not find 'Creator' in metadata"));
+      .filter(me -> me.getLabelString().equals("Creator"))
+      .map(me -> me.getValue())
+      .findFirst()
+      .orElseThrow(() -> new Exception("Could not find 'Creator' in metadata"));
     assertThat(creator.getValues()).hasSize(5);
     assertThat(creator.getLocalizations()).containsOnly(Locale.forLanguageTag(""));
     assertThat(creator.getValues()).containsExactly(
-            "Vincentius Bellovacensis (1190?-1264). Auteur du texte",
-            "Jean de Vignay (1282?-13..). Traducteur",
-            "Maître de Papeleu. Enlumineur",
-            "Maître de Cambrai. Enlumineur",
-            "Mahiet. Enlumineur");
+      "Vincentius Bellovacensis (1190?-1264). Auteur du texte",
+      "Jean de Vignay (1282?-13..). Traducteur",
+      "Maître de Papeleu. Enlumineur",
+      "Maître de Cambrai. Enlumineur",
+      "Mahiet. Enlumineur");
   }
 
   @Test

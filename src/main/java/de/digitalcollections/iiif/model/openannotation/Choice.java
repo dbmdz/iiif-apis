@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Choice<T> {
+
   List<T> getAlternatives();
 
   void setAlternatives(List<T> alternatives);

@@ -15,6 +15,7 @@ import java.net.URI;
  */
 @JsonTypeName(LogoutService.PROFILE)
 public class LogoutService extends Service implements AuthService {
+
   public static final String PROFILE = "http://iiif.io/api/auth/1/logout";
 
   @JsonCreator

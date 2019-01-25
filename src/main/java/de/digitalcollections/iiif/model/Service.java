@@ -15,6 +15,7 @@ import java.util.List;
  */
 @JsonPropertyOrder({"@context", "@id", "@type"})
 public abstract class Service {
+
   @JsonProperty("@context")
   private URI context;
 

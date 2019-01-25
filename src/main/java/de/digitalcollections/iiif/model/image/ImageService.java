@@ -19,8 +19,8 @@ import java.util.List;
  */
 public class ImageService extends Service {
 
-  // FIXME: This should be static, but for some reason Jackson ignores it if it's not
-  //        on the instance...
+  // FIXME: This should be static, but for some reason Jackson ignores it if it's not on the instance...
+  @SuppressWarnings("checkstyle:membername")
   @JsonProperty("protocol")
   public final String PROTOCOL = "http://iiif.io/api/image";
 

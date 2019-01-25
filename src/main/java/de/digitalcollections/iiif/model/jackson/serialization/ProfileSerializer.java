@@ -10,6 +10,7 @@ import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import java.io.IOException;
 
 public class ProfileSerializer extends JsonSerializer<Profile> {
+
   private final JsonSerializer<Object> defaultSerializer;
 
   public ProfileSerializer(JsonSerializer<Object> defaultSerializer) {

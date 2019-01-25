@@ -34,21 +34,21 @@ import java.io.IOException;
  * if we left the type resolving to Jackson.
  */
 public class ResourceDeserializer extends JsonDeserializer<Resource> {
-  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING =
-      new ImmutableMap.Builder<String, Class<? extends Resource>>()
-        .put(Annotation.TYPE, Annotation.class)
-        .put(AnnotationList.TYPE, AnnotationList.class)
-        .put(Canvas.TYPE, Canvas.class)
-        .put(Collection.TYPE, Collection.class)
-        .put(Layer.TYPE, Layer.class)
-        .put(Manifest.TYPE, Manifest.class)
-        .put(Range.TYPE, Range.class)
-        .put(Sequence.TYPE, Sequence.class)
-        .put(ImageContent.TYPE, ImageContent.class)
-        .put(SpecificResource.TYPE, SpecificResource.class)
-        .put(ContentAsText.TYPE, ContentAsText.class)
-        .put(CssStyle.TYPE, CssStyle.class)
-        .build();
+
+  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING = new ImmutableMap.Builder<String, Class<? extends Resource>>()
+      .put(Annotation.TYPE, Annotation.class)
+      .put(AnnotationList.TYPE, AnnotationList.class)
+      .put(Canvas.TYPE, Canvas.class)
+      .put(Collection.TYPE, Collection.class)
+      .put(Layer.TYPE, Layer.class)
+      .put(Manifest.TYPE, Manifest.class)
+      .put(Range.TYPE, Range.class)
+      .put(Sequence.TYPE, Sequence.class)
+      .put(ImageContent.TYPE, ImageContent.class)
+      .put(SpecificResource.TYPE, SpecificResource.class)
+      .put(ContentAsText.TYPE, ContentAsText.class)
+      .put(CssStyle.TYPE, CssStyle.class)
+      .build();
 
   public Resource deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();

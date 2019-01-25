@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 public class SpecExamplesSerializationTest {
+
   private ObjectMapper mapper;
 
   @BeforeEach
@@ -30,7 +31,7 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-        Resources.getResource("spec/auth/" + filename), Charset.defaultCharset());
+      Resources.getResource("spec/auth/" + filename), Charset.defaultCharset());
   }
 
   private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
@@ -42,7 +43,7 @@ public class SpecExamplesSerializationTest {
   @Test
   public void testClickthroughPattern() throws IOException, JSONException {
     AccessCookieService service = new AccessCookieService("https://authentication.example.org/clickthrough",
-                                                          AuthPattern.CLICKTHROUGH);
+      AuthPattern.CLICKTHROUGH);
     service.setLabel("Terms of Use for Example Institution");
     service.setHeader("Restricted Material with Terms of Use");
     service.setDescription("<span>... terms of use ... </span>");
@@ -107,8 +108,8 @@ public class SpecExamplesSerializationTest {
     AccessCookieService authService = new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
     authService.setLabel("Login to Example Institution");
     authService.addService(
-        new AccessTokenService("https://authentication.example.org/token"),
-        new LogoutService("https://authentication.example.org/logout"));
+      new AccessTokenService("https://authentication.example.org/token"),
+      new LogoutService("https://authentication.example.org/logout"));
     ((LogoutService) authService.getServices().get(1)).setLabel("Logout from Example Institution");
     service.addService(authService);
 
@@ -120,8 +121,8 @@ public class SpecExamplesSerializationTest {
     AccessCookieService authService = new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
     authService.setLabel("Login to Example Institution");
     authService.addService(
-        new AccessTokenService("https://authentication.example.org/token"),
-        new LogoutService("https://authentication.example.org/logout"));
+      new AccessTokenService("https://authentication.example.org/token"),
+      new LogoutService("https://authentication.example.org/logout"));
     ((LogoutService) authService.getServices().get(1)).setLabel("Logout from Example Institution");
     assertSerializationEqualsSpec(authService, "loginWithLogout.json");
   }

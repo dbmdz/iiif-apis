@@ -11,7 +11,8 @@ import java.net.URI;
  * See http://iiif.io/api/search/1.0/#autocomplete
  */
 public class AutocompleteService extends Service {
-  public final static String PROFILE = "http://iiif.io/api/search/1/autocomplete";
+
+  public static final String PROFILE = "http://iiif.io/api/search/1/autocomplete";
 
   @JsonCreator
   public AutocompleteService(@JsonProperty("@id") URI identifier) {
