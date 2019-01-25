@@ -18,7 +18,7 @@ public class GenericService extends Service {
 
   @JsonCreator
   public GenericService(@JsonProperty("@context") URI context,
-    @JsonProperty("@id") String identifier) {
+                        @JsonProperty("@id") String identifier) {
     super(context, identifier);
   }
 

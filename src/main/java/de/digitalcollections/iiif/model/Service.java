@@ -71,7 +71,7 @@ public abstract class Service {
 
   public Service addProfile(String first, String... rest) {
     return this.addProfile(new Profile(URI.create(first)),
-      Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
+                           Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
   }
 
   public PropertyValue getLabel() {

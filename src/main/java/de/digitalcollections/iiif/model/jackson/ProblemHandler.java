@@ -23,13 +23,11 @@ public class ProblemHandler extends DeserializationProblemHandler {
 
   @Override
   public Object handleMissingInstantiator(DeserializationContext ctxt, Class<?> instClass, ValueInstantiator valueInsta,
-    JsonParser p, String msg) throws IOException {
+                                          JsonParser p, String msg) throws IOException {
     /* FIXME: For some reason Jackson can't find the {@link Canvas(String)} constructor, so we do it ourselves:
      * 1. Check if the deserializer bails out on a JSON string
      * 2. Find a String-constructor on the target class
      * 3. Build the object */
-//    if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
-//    }
     try {
       // Special case for empty strings in collection fields.
       if (p.getValueAsString().isEmpty() && Collection.class.isAssignableFrom(instClass)) {
@@ -46,15 +44,15 @@ public class ProblemHandler extends DeserializationProblemHandler {
 
   @Override
   public Object handleUnexpectedToken(DeserializationContext ctxt, Class<?> targetType, JsonToken t, JsonParser p,
-    String failureMsg) throws IOException {
+                                      String failureMsg) throws IOException {
     if (p.getCurrentName().equals("@type") && t == JsonToken.START_ARRAY) {
       // Handle multi-valued @types, only current known cases are oa:SvgSelector and oa:CssStyle
       // in combination with cnt:ContentAsText
       ObjectMapper mapper = (ObjectMapper) p.getCodec();
       String typeName = StreamSupport.stream(((ArrayNode) mapper.readTree(p)).spliterator(), false)
-        .map(JsonNode::textValue)
-        .filter(v -> !v.equals(ContentAsText.TYPE))
-        .findFirst().orElse(null);
+          .map(JsonNode::textValue)
+          .filter(v -> !v.equals(ContentAsText.TYPE))
+          .findFirst().orElse(null);
       if (typeName != null) {
         return typeName;
       }
@@ -64,7 +62,7 @@ public class ProblemHandler extends DeserializationProblemHandler {
 
   @Override
   public JavaType handleMissingTypeId(DeserializationContext ctxt, JavaType baseType, TypeIdResolver idResolver,
-    String failureMsg) throws IOException {
+                                      String failureMsg) throws IOException {
     if (baseType.getRawClass() == Feature.class) {
       return idResolver.typeFromId(ctxt, "Feature");
     }
@@ -76,8 +74,8 @@ public class ProblemHandler extends DeserializationProblemHandler {
     if (targetType.isEnum()) {
       String lowerCased = valueToConvert.toLowerCase();
       Optional<?> match = Arrays.stream(targetType.getEnumConstants())
-        .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))
-        .findFirst();
+          .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))
+          .findFirst();
       if (match.isPresent()) {
         return match.get();
       }

@@ -136,7 +136,7 @@ public class ViewingHint {
     }
     ViewingHint that = (ViewingHint) o;
     return this.type == that.type
-      && (uri != null ? uri.equals(that.uri) : that.uri == null);
+           && (uri != null ? uri.equals(that.uri) : that.uri == null);
   }
 
   @Override

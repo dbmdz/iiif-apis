@@ -96,8 +96,8 @@ public class Canvas extends Resource<Canvas> {
     }
     this.images.add(wrapImageInAnnotation(first));
     this.images.addAll(Arrays.stream(rest)
-      .map(this::wrapImageInAnnotation)
-      .collect(Collectors.toList()));
+         .map(this::wrapImageInAnnotation)
+         .collect(Collectors.toList()));
     // If we only have one image, set width/height from the image content by default
     if (this.images.size() == 1 && this.getWidth() == null && this.getHeight() == null) {
       this.setWidthFromImage(this.images.get(0));

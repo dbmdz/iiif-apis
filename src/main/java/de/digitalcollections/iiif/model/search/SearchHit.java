@@ -13,8 +13,9 @@ import java.util.List;
  */
 public class SearchHit {
 
+  @SuppressWarnings("checkstyle:membername")
   @JsonProperty("@type")
-  public final String type = "search:Hit";
+  public final String TYPE = "search:Hit";
 
   private List<Annotation> annotations;
   private List<TextQuoteSelector> selectors;

@@ -170,7 +170,7 @@ public class ImageApiProfile extends Profile {
       }
       Feature other = (Feature) obj;
       return Objects.equals(this.imageApiFeature, other.imageApiFeature)
-        && Objects.equals(this.customFeature, other.customFeature);
+             && Objects.equals(this.customFeature, other.customFeature);
     }
   }
 
@@ -185,13 +185,13 @@ public class ImageApiProfile extends Profile {
 
   static {
     LEVEL_ONE.addFeature(
-      Feature.REGION_BY_PX,
-      Feature.SIZE_BY_W,
-      Feature.SIZE_BY_H,
-      Feature.SIZE_BY_PCT,
-      Feature.BASE_URI_REDIRECT,
-      Feature.CORS,
-      Feature.JSONLD_MEDIA_TYPE);
+        Feature.REGION_BY_PX,
+        Feature.SIZE_BY_W,
+        Feature.SIZE_BY_H,
+        Feature.SIZE_BY_PCT,
+        Feature.BASE_URI_REDIRECT,
+        Feature.CORS,
+        Feature.JSONLD_MEDIA_TYPE);
     LEVEL_ONE.addFormat(Format.JPG);
     LEVEL_ONE.addQuality(Quality.DEFAULT);
   }
@@ -200,32 +200,32 @@ public class ImageApiProfile extends Profile {
 
   static {
     LEVEL_TWO.addFeature(
-      Feature.REGION_BY_PX,
-      Feature.REGION_BY_PCT,
-      Feature.SIZE_BY_W,
-      Feature.SIZE_BY_H,
-      Feature.SIZE_BY_PCT,
-      Feature.SIZE_BY_CONFINED_WH,
-      Feature.SIZE_BY_DISTORTED_WH,
-      Feature.SIZE_BY_WH,
-      Feature.ROTATION_BY_90S,
-      Feature.BASE_URI_REDIRECT,
-      Feature.CORS,
-      Feature.JSONLD_MEDIA_TYPE);
+        Feature.REGION_BY_PX,
+        Feature.REGION_BY_PCT,
+        Feature.SIZE_BY_W,
+        Feature.SIZE_BY_H,
+        Feature.SIZE_BY_PCT,
+        Feature.SIZE_BY_CONFINED_WH,
+        Feature.SIZE_BY_DISTORTED_WH,
+        Feature.SIZE_BY_WH,
+        Feature.ROTATION_BY_90S,
+        Feature.BASE_URI_REDIRECT,
+        Feature.CORS,
+        Feature.JSONLD_MEDIA_TYPE);
     LEVEL_TWO.addFormat(Format.JPG, Format.PNG);
     LEVEL_TWO.addQuality(Quality.DEFAULT, Quality.COLOR, Quality.GRAY, Quality.BITONAL);
   }
 
   public static final Set<String> V1_PROFILES = ImmutableSet.of(
-    "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
-    "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
-    "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
-    "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
-    "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
-    "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
-    "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
-    "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-    "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
+      "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
+      "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
+      "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
+      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
 
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
@@ -364,13 +364,14 @@ public class ImageApiProfile extends Profile {
    */
   public static ImageApiProfile merge(List<Profile> profiles) {
     return profiles.stream()
-      .filter(ImageApiProfile.class::isInstance)
-      .map(ImageApiProfile.class::cast)
-      .reduce(new ImageApiProfile(), ImageApiProfile::merge);
+        .filter(ImageApiProfile.class::isInstance)
+        .map(ImageApiProfile.class::cast)
+        .reduce(new ImageApiProfile(), ImageApiProfile::merge);
   }
 
   /**
    * Merge two profiles.
+   *
    * @param other profile to be merged
    * @return merged profile
    */

@@ -70,7 +70,7 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
 
   public Layer addOtherContent(String first, String... rest) {
     return this.addOtherContent(new AnnotationList(first),
-      Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
+                                Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
   }
 
   public Layer addOtherContent(AnnotationList first, AnnotationList... rest) {

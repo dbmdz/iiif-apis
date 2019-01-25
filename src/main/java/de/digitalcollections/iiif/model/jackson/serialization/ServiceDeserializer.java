@@ -91,8 +91,7 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
     if (obj.has("scale_factors") && (service.getWidth() != null && service.getHeight() != null)) {
       obj.withArray("scale_factors").forEach(
         fnode -> service.addSize(new Size(service.getWidth() / fnode.asInt(),
-          service.getHeight() / fnode.asInt()))
-      );
+                                          service.getHeight() / fnode.asInt())));
     }
     if (obj.has("tile_width") && obj.has("scale_factors")) {
       TileInfo tinfo = new TileInfo(obj.get("tile_width").asInt());
@@ -112,9 +111,9 @@ public class ServiceDeserializer extends JsonDeserializer<Service> {
       if (obj.has("qualities")) {
         List<String> qualities = StreamSupport.stream(
           obj.withArray("qualities").spliterator(), false)
-          .map(q -> q.asText().equals("native") ? "default" : q.asText())
-          .map(q -> q.equals("grey") ? "gray" : q)
-          .collect(Collectors.toList());
+              .map(q -> q.asText().equals("native") ? "default" : q.asText())
+              .map(q -> q.equals("grey") ? "gray" : q)
+              .collect(Collectors.toList());
         qualities.forEach(q -> profile.addQuality(ImageApiProfile.Quality.valueOf(q.toUpperCase())));
       }
       service.addProfile(profile);

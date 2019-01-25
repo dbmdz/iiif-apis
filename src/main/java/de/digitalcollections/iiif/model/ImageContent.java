@@ -19,8 +19,9 @@ public class ImageContent extends Resource<ImageContent> {
   public static final String TYPE = "dctypes:Image";
 
   // We sometimes want to set this to null during serialization, hence the copy in an instance variable
+  @SuppressWarnings("checkstyle:membername")
   @JsonIgnore
-  public String type = TYPE;
+  public String _type = TYPE;
 
   private MimeType format;
   private Integer width;
@@ -41,7 +42,7 @@ public class ImageContent extends Resource<ImageContent> {
 
   @Override
   public String getType() {
-    return type;
+    return _type;
   }
 
   public MimeType getFormat() {

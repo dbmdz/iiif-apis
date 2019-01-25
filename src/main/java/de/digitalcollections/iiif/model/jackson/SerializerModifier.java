@@ -25,7 +25,7 @@ public class SerializerModifier extends BeanSerializerModifier {
 
   @Override
   public JsonSerializer<?> modifyCollectionSerializer(SerializationConfig config, CollectionType valueType,
-    BeanDescription beanDesc, JsonSerializer<?> serializer) {
+                                                      BeanDescription beanDesc, JsonSerializer<?> serializer) {
     if (valueType.getRawClass() == ArrayList.class) {
       return new IiifIndexedListSerializer((IndexedListSerializer) serializer, config.getTypeFactory());
     }
@@ -34,7 +34,7 @@ public class SerializerModifier extends BeanSerializerModifier {
 
   @Override
   public JsonSerializer<?> modifySerializer(SerializationConfig config, BeanDescription beanDesc,
-    JsonSerializer<?> serializer) {
+                                            JsonSerializer<?> serializer) {
     if (Resource.class.isAssignableFrom(beanDesc.getBeanClass())) {
       return new ResourceSerializer((JsonSerializer<Object>) serializer);
     } else if (Profile.class.isAssignableFrom(beanDesc.getBeanClass())) {

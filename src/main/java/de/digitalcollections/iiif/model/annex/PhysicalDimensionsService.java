@@ -37,7 +37,7 @@ public class PhysicalDimensionsService extends Service {
 
   @JsonCreator
   public PhysicalDimensionsService(@JsonProperty("physicalScale") double physicalScale,
-    @JsonProperty("physicalUnits") Unit units) {
+                                   @JsonProperty("physicalUnits") Unit units) {
     super(URI.create(CONTEXT));
     this.addProfile(PROFILE);
     this.physicalScale = physicalScale;

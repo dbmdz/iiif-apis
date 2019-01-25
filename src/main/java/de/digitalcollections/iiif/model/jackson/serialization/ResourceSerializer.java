@@ -29,7 +29,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
   public void serialize(Resource value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
     // Add @context to top-level object
     if (gen.getOutputContext().getParent() == null) {
-      value.context = Resource.CONTEXT;
+      value._context = Resource.CONTEXT;
     }
 
     if (value.getAlternatives() != null && !value.getAlternatives().isEmpty()) {
@@ -53,8 +53,8 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     String typeBackup = null;
     if (ImmutableSet.of("thumbnail", "logo").contains(containingField)) {
       ImageContent imgContent = (ImageContent) value;
-      typeBackup = imgContent.type;
-      imgContent.type = null;
+      typeBackup = imgContent._type;
+      imgContent._type = null;
     }
 
     Completeness completeness = ModelUtilities.getCompleteness(value, value.getClass());
@@ -70,22 +70,22 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       }
       String withinType = value.getType();
       boolean skipType = (("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType))
-        || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
-        || ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
+          || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
+          || ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else if (Objects.equals(containingField, "on") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       boolean skipType = (value instanceof Canvas
-        && gen.getCurrentValue() instanceof Annotation
-        && Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
+          && gen.getCurrentValue() instanceof Annotation
+          && Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else {
       ImmutableSet<String> skipParents = ImmutableSet.of("otherContent", "contentLayer", "ranges", "annotations");
       boolean shouldSkip = (Arrays.asList("prev", "next", "first", "last").contains(containingField)
-        || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
+                            || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
       if (shouldSkip) {
         completeness = Completeness.ID_ONLY;
       }
@@ -106,7 +106,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
 
     // Set the type back on the value if it was removed
     if (typeBackup != null) {
-      ((ImageContent) value).type = typeBackup;
+      ((ImageContent) value)._type = typeBackup;
     }
   }
 

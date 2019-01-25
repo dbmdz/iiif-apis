@@ -96,7 +96,7 @@ public class Range extends Resource<Range> {
     Completeness completeness = ModelUtilities.getCompleteness(res, res.getClass());
     if (completeness != Completeness.ID_AND_TYPE && completeness != Completeness.ID_ONLY) {
       throw new IllegalArgumentException(
-        "Member resource must only have an identifier and no other field."
+          "Member resource must only have an identifier and no other field."
         + " Use add<Resource>(URI first, URI... rest) for convenience.");
     }
   }
@@ -118,7 +118,7 @@ public class Range extends Resource<Range> {
 
   public Range addCanvas(String idOfFirst, String... idsOfRest) {
     return this.addCanvas(new Canvas(idOfFirst),
-      Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
+                          Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
   }
 
   public List<Range> getRanges() {
@@ -142,7 +142,7 @@ public class Range extends Resource<Range> {
 
   public Range addRange(String first, String... rest) {
     return this.addRange(new Range(first),
-      Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
+                         Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
   }
 
   public List<Resource> getMembers() {

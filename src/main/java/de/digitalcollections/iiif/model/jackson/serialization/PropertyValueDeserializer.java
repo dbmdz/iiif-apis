@@ -50,8 +50,8 @@ public class PropertyValueDeserializer extends JsonDeserializer<PropertyValue> {
           } else if (valueNode instanceof ArrayNode) {
             // Multiple values
             StreamSupport.stream(((ArrayNode) valueNode).spliterator(), false)
-              .map(JsonNode::textValue)
-              .forEach(v -> propVal.addValue(locale, v));
+                .map(JsonNode::textValue)
+                .forEach(v -> propVal.addValue(locale, v));
           }
         } else if (TextNode.class.isAssignableFrom(arr.get(i).getClass())) {
           // Simple string

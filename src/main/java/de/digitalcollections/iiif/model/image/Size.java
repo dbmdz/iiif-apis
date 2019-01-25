@@ -13,7 +13,7 @@ public class Size {
 
   @JsonCreator
   public Size(@JsonProperty("width") int width,
-    @JsonProperty("height") int height) {
+              @JsonProperty("height") int height) {
     this.width = width;
     this.height = height;
   }
