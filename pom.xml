@@ -57,26 +57,26 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.assertj>3.8.0</version.assertj>
-    <version.assertj-json>1.1.0</version.assertj-json>
-    <version.dc-model>2.0.0</version.dc-model>
-    <version.geojson>1.8</version.geojson>
+    <version.assertj>3.11.1</version.assertj>
+    <version.assertj-json>1.2.0</version.assertj-json>
+    <version.dc-model>2.2.0</version.dc-model>
+    <version.geojson>1.8.1</version.geojson>
     <version.guava>23.0</version.guava>
     <version.jackson>2.9.8</version.jackson>
     <version.jsonassert>1.5.0</version.jsonassert>
     <version.junit>5.3.2</version.junit>
-    <version.reflections>0.9.10</version.reflections>
+    <version.reflections>0.9.11</version.reflections>
     <version.uri-toolkit>0.8</version.uri-toolkit>
 
     <!-- plugins -->
-    <version.jacoco-maven-plugin>0.8.2</version.jacoco-maven-plugin>
+    <version.jacoco-maven-plugin>0.8.3</version.jacoco-maven-plugin>
     <version.maven-checkstyle-plugin>3.0.0</version.maven-checkstyle-plugin>
-    <version.maven-compiler-plugin>3.7.0</version.maven-compiler-plugin>
+    <version.maven-compiler-plugin>3.8.0</version.maven-compiler-plugin>
     <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
     <version.maven-javadoc-plugin>3.0.1</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
     <version.maven-surefire-plugin>2.22.1</version.maven-surefire-plugin>
-    <version.nexus-staging-maven-plugin>1.6.7</version.nexus-staging-maven-plugin>
+    <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
   </properties>
 
   <dependencies>
