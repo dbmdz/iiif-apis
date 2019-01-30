@@ -57,8 +57,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.assertj>3.11.1</version.assertj>
-    <version.assertj-json>1.2.0</version.assertj-json>
+    <version.assertj>3.10.0</version.assertj>
+    <version.assertj-json>1.1.0</version.assertj-json>
     <version.dc-model>2.2.0</version.dc-model>
     <version.geojson>1.8.1</version.geojson>
     <version.guava>23.0</version.guava>
