@@ -66,6 +66,7 @@
     <version.jsonassert>1.5.0</version.jsonassert>
     <version.junit>5.3.2</version.junit>
     <version.reflections>0.9.11</version.reflections>
+    <version.spotbugs>3.1.10</version.spotbugs>
     <version.uri-toolkit>0.8</version.uri-toolkit>
 
     <!-- plugins -->
@@ -77,6 +78,7 @@
     <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
     <version.maven-surefire-plugin>2.22.1</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
+    <version.spotbugs-maven-plugin>3.1.10</version.spotbugs-maven-plugin>
   </properties>
 
   <dependencies>
@@ -159,6 +161,29 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${version.spotbugs-maven-plugin}</version>
+        <dependencies>
+          <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>${version.spotbugs}</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
