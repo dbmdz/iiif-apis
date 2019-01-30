@@ -37,10 +37,10 @@ public class JsonMappingTest {
 
   @Test
   public void testCopyConstructor() {
-    IiifObjectMapper test_mapper = new IiifObjectMapper();
+    IiifObjectMapper testMapper = new IiifObjectMapper();
 
     // in newer jackson versions the `copy()` method needs to be public
-    ObjectMapper cloned_mapper = test_mapper.copy();
+    testMapper.copy();
   }
 
   @Test
