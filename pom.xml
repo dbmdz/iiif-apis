@@ -179,9 +179,6 @@
             <version>${version.spotbugs}</version>
           </dependency>
         </dependencies>
-        <configuration>
-          <failOnError>false</failOnError>
-        </configuration>
         <executions>
           <execution>
             <goals>
