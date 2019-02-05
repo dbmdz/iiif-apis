@@ -10,10 +10,10 @@ addons:
 before_script:
 - PROJECT_VERSION=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml)
 script:
-- mvn clean install
+- mvn clean install -U
 after_success:
 - bash <(curl -s https://codecov.io/bash)
-- if [[ "$PROJECT_VERSION" == *SNAPSHOT ]]; then mvn deploy -B -DskipTests=true --settings settings.xml; fi
+- if [[ "$PROJECT_VERSION" == *SNAPSHOT ]] && [[ "$TRAVIS_BRANCH" == "master" ]]; then mvn deploy -B -DskipTests=true --settings settings.xml; fi
 deploy:
   provider: releases
   api_key:
