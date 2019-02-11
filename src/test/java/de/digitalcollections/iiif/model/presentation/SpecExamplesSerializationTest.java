@@ -171,6 +171,28 @@ public class SpecExamplesSerializationTest {
   }
 
   @Test
+  public void testAnnotationListWithTranscription() throws Exception {
+    AnnotationList annotationList = new AnnotationList("http://example.org/iiif/book1/list/p1");
+
+    Annotation annotation = new Annotation("http://example.org/iiif/book1/annotation/anno1", Motivation.PAINTING);
+    annotation.setOn(new Canvas("http://example.org/iiif/book1/canvas/p1#xywh=100,100,300,300"));
+
+    SpecificResource specificResource = new SpecificResource();
+    ContentAsText full = new ContentAsText("Here starts book one...");
+    full.setFormat(MimeType.fromTypename("text/plain"));
+    full.setLanguage(Locale.ENGLISH);
+    SvgSelector selector = new SvgSelector("<svg xmlns=\"...\"><path d=\"...\"/></svg>");
+    specificResource.setFull(full);
+    specificResource.setSelector(selector);
+
+    annotation.setResource(specificResource);
+
+    annotationList.addResource(annotation);
+
+    assertSerializationEqualsSpec(annotationList, "annotationListWithTranscription.json");
+  }
+
+  @Test
   public void testAnnotationListPage() throws Exception {
     AnnotationList list = new AnnotationList("http://example.org/iiif/book1/list/l1");
     list.setStartIndex(0);

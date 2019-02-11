@@ -124,6 +124,26 @@ public class SpecExamplesDeserializationTest {
   }
 
   @Test
+  public void testAnnotationListWithTranscription() throws IOException {
+    AnnotationList annoList = readFromResources("annotationListWithTranscription.json", AnnotationList.class);
+    assertThat(annoList).isNotNull();
+    assertThat(annoList.getResources().get(0).getIdentifier().toString())
+      .isEqualTo("http://example.org/iiif/book1/annotation/anno1");
+    assertThat(annoList.getResources().get(0).getOn().getIdentifier().toString())
+      .isEqualTo("http://example.org/iiif/book1/canvas/p1#xywh=100,100,300,300");
+    assertThat(annoList.getResources().get(0).getResource())
+      .isInstanceOf(SpecificResource.class);
+
+    SpecificResource specificResource = (SpecificResource) annoList.getResources().get(0).getResource();
+    ContentAsText full = (ContentAsText) specificResource.getFull();
+    assertThat(full.getChars()).isEqualTo("Here starts book one...");
+    assertThat(full.getFormat().getTypeName()).isEqualTo("text/plain");
+    assertThat(full.getLanguage().toString()).isEqualTo("en");
+    SvgSelector selector = (SvgSelector) specificResource.getSelector();
+    assertThat(selector.getChars()).isEqualTo("<svg xmlns=\"...\"><path d=\"...\"/></svg>");
+  }
+
+  @Test
   public void testAnnotationListWithinLayer() throws IOException {
     AnnotationList annoList = readFromResources("annotationListWithinLayer.json", AnnotationList.class);
     assertThat(annoList).isNotNull();
