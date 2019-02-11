@@ -3,7 +3,6 @@
 	"@id": "http://example.org/iiif/book1/list/p1",
 	"@type": "sc:AnnotationList",
 	"resources": [{
-		"@context": "http://iiif.io/api/presentation/2/context.json",
 		"@id": "http://example.org/iiif/book1/annotation/anno1",
 		"@type": "oa:Annotation",
 		"motivation": "sc:painting",

@@ -174,7 +174,7 @@ public class SpecExamplesSerializationTest {
   public void testAnnotationListWithTranscription() throws Exception {
     AnnotationList annotationList = new AnnotationList("http://example.org/iiif/book1/list/p1");
 
-    Annotation annotation = new Annotation(Motivation.PAINTING);
+    Annotation annotation = new Annotation("http://example.org/iiif/book1/annotation/anno1", Motivation.PAINTING);
     annotation.setOn(new Canvas("http://example.org/iiif/book1/canvas/p1#xywh=100,100,300,300"));
 
     SpecificResource specificResource = new SpecificResource();
