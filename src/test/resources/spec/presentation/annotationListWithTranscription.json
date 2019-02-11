@@ -1,24 +1,24 @@
 {
-	"@context": "http://iiif.io/api/presentation/2/context.json",
-	"@id": "http://example.org/iiif/book1/list/p1",
-	"@type": "sc:AnnotationList",
-	"resources": [{
-		"@id": "http://example.org/iiif/book1/annotation/anno1",
-		"@type": "oa:Annotation",
-		"motivation": "sc:painting",
-		"resource": {
-			"@type": "oa:SpecificResource",
-			"full": {
-				"@type": "cnt:ContentAsText",
-				"chars": "Here starts book one...",
-				"format": "text/plain",
-				"language": "en"
-			},
-			"selector": {
-				"@type": ["oa:SvgSelector", "cnt:ContentAsText"],
-				"chars": "<svg xmlns=\"...\"><path d=\"...\"/></svg>"
-			}
-		},
-		"on": "http://example.org/iiif/book1/canvas/p1#xywh=100,100,300,300"
-	}]
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@id": "http://example.org/iiif/book1/list/p1",
+  "@type": "sc:AnnotationList",
+  "resources": [{
+    "@id": "http://example.org/iiif/book1/annotation/anno1",
+    "@type": "oa:Annotation",
+    "motivation": "sc:painting",
+    "resource": {
+      "@type": "oa:SpecificResource",
+      "full": {
+        "@type": "cnt:ContentAsText",
+        "chars": "Here starts book one...",
+        "format": "text/plain",
+        "language": "en"
+      },
+      "selector": {
+        "@type": ["oa:SvgSelector", "cnt:ContentAsText"],
+        "chars": "<svg xmlns=\"...\"><path d=\"...\"/></svg>"
+      }
+    },
+    "on": "http://example.org/iiif/book1/canvas/p1#xywh=100,100,300,300"
+  }]
 }
