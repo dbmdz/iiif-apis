@@ -3,7 +3,7 @@ package de.digitalcollections.iiif.model;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import com.revinate.assertj.json.JsonPathAssert;
+import de.digitalcollections.iiif.model.JsonPathAssert;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
