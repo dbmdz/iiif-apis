@@ -57,6 +57,19 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
       imgContent._type = null;
     }
 
+    String parentType = null;
+    if (gen.getCurrentValue() != null) {
+      Object parent = gen.getCurrentValue();
+      if (parent instanceof Resource) {
+        parentType = ((Resource) parent).getType();
+      }
+    } else if (gen.getOutputContext() != null && gen.getOutputContext().getParent() != null) {
+      Object parent = gen.getOutputContext().getParent().getCurrentValue();
+      if (parent instanceof Resource) {
+        parentType = ((Resource) parent).getType();
+      }
+    }
+
     Completeness completeness = ModelUtilities.getCompleteness(value, value.getClass());
     if (Objects.equals(containingField, "canvases") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       // It's redundant to specify the @type here, since it's clear we have canvases from the field name
@@ -64,10 +77,6 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     }
     if (Objects.equals(containingField, "within") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       // It's also redundant in these cases, since the specification prescribes a convention
-      String parentType = null;
-      if (gen.getCurrentValue() != null) {
-        parentType = ((Resource) gen.getCurrentValue()).getType();
-      }
       String withinType = value.getType();
       boolean skipType = (("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType))
           || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
@@ -83,9 +92,10 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else {
-      ImmutableSet<String> skipParents = ImmutableSet.of("otherContent", "contentLayer", "ranges", "annotations");
+      ImmutableSet<String> skipParents = ImmutableSet.of("contentLayer", "ranges", "annotations");
       boolean shouldSkip = (Arrays.asList("prev", "next", "first", "last").contains(containingField)
-                            || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField)));
+                            || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField))
+                            || ("otherContent".equals(containingField) && "sc:Layer".equals(parentType)));
       if (shouldSkip) {
         completeness = Completeness.ID_ONLY;
       }
