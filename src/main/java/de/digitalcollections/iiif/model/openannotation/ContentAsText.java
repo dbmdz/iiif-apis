@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A resource that contains embedded textual content.
@@ -22,12 +24,12 @@ public class ContentAsText extends Resource<ContentAsText> {
 
   @JsonProperty("@type")
   public List<String> getTypes() {
-    List<String> types = new ArrayList<>();
+    Set<String> types = new HashSet<>();
     if (this.type != null) {
       types.add(this.type);
     }
     types.add(TYPE);
-    return types;
+    return new ArrayList(types);
   }
 
   @JsonCreator
