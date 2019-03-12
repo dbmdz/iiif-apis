@@ -57,7 +57,7 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.assertj>3.10.0</version.assertj>
+    <version.assertj>3.12.0</version.assertj>
     <version.assertj-json>1.1.0</version.assertj-json>
     <version.dc-model>2.2.0</version.dc-model>
     <version.geojson>1.8.1</version.geojson>
@@ -76,7 +76,7 @@
     <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
     <version.maven-javadoc-plugin>3.0.1</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-    <version.maven-surefire-plugin>2.22.1</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>3.0.0-M3</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
     <version.spotbugs-maven-plugin>3.1.11</version.spotbugs-maven-plugin>
   </properties>
