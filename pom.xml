@@ -67,7 +67,7 @@
     <version.junit>5.4.1</version.junit>
     <version.reflections>0.9.11</version.reflections>
     <version.spotbugs>3.1.12</version.spotbugs>
-    <version.uri-toolkit>0.8</version.uri-toolkit>
+    <version.uri-toolkit>0.8.1</version.uri-toolkit>
 
     <!-- plugins -->
     <version.jacoco-maven-plugin>0.8.3</version.jacoco-maven-plugin>
