@@ -220,7 +220,13 @@
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${version.maven-javadoc-plugin}</version>
         <configuration>
-          <source>8</source>
+          <!-- workaround for https://bugs.openjdk.java.net/browse/JDK-8212233 -->
+          <javaApiLinks>
+            <property>
+              <name>foo</name>
+              <value>bar</value>
+            </property>
+          </javaApiLinks>
         </configuration>
         <executions>
           <execution>
