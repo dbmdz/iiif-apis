@@ -78,7 +78,7 @@
     <version.maven-source-plugin>3.1.0</version.maven-source-plugin>
     <version.maven-surefire-plugin>3.0.0-M3</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.6.8</version.nexus-staging-maven-plugin>
-    <version.spotbugs-maven-plugin>3.1.11</version.spotbugs-maven-plugin>
+    <version.spotbugs-maven-plugin>3.1.12</version.spotbugs-maven-plugin>
   </properties>
 
   <dependencies>
