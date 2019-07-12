@@ -59,7 +59,7 @@
 
     <version.assertj>3.12.2</version.assertj>
     <version.assertj-json>1.1.0</version.assertj-json>
-    <version.dc-model>3.0.0</version.dc-model>
+    <version.dc-model>3.1.0-SNAPSHOT</version.dc-model>
     <version.geojson>1.8.1</version.geojson>
     <version.guava>23.0</version.guava>
     <version.jackson>2.9.9</version.jackson>
