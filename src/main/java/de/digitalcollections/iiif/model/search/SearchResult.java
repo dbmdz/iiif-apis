@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * An AnnotationList that contains hits for a given search query.
  *
- * See http://iiif.io/api/search/1.0/#simple-lists
+ * <p>See http://iiif.io/api/search/1.0/#simple-lists
  */
 public class SearchResult extends AnnotationList {
 
@@ -72,7 +72,8 @@ public class SearchResult extends AnnotationList {
    */
   @Override
   public SearchResult addWithin(Resource first, Resource... rest) throws IllegalArgumentException {
-    if (!(first instanceof SearchLayer) || Arrays.stream(rest).anyMatch(r -> !(r instanceof SearchLayer))) {
+    if (!(first instanceof SearchLayer)
+        || Arrays.stream(rest).anyMatch(r -> !(r instanceof SearchLayer))) {
       throw new IllegalArgumentException("SearchResult can only be within a SearchLayer.");
     }
     super.addWithin(first, rest);

@@ -19,13 +19,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A virtual container that represents a page or view and has content resources associated with it or with parts of it.
+ * A virtual container that represents a page or view and has content resources associated with it
+ * or with parts of it.
  *
- * The canvas provides a frame of reference for the layout of the content. The concept of a canvas is borrowed from
- * standards like PDF and HTML, or applications like Photoshop and Powerpoint, where the display starts from a blank
- * canvas and images, text and other resources are “painted” on to it.
+ * <p>The canvas provides a frame of reference for the layout of the content. The concept of a
+ * canvas is borrowed from standards like PDF and HTML, or applications like Photoshop and
+ * Powerpoint, where the display starts from a blank canvas and images, text and other resources are
+ * “painted” on to it.
  *
- * See http://iiif.io/api/presentation/2.1/#canvas
+ * <p>See http://iiif.io/api/presentation/2.1/#canvas
  */
 public class Canvas extends Resource<Canvas> {
 
@@ -59,7 +61,8 @@ public class Canvas extends Resource<Canvas> {
    * Sets the image annotations on this canvas. Must all be instances of {@link ImageContent}
    *
    * @param images image annotations on this canvas
-   * @throws IllegalArgumentException if at least one of the image annotations is not an {@link ImageContent}
+   * @throws IllegalArgumentException if at least one of the image annotations is not an {@link
+   *     ImageContent}
    */
   public void setImages(List<Annotation> images) throws IllegalArgumentException {
     this.images = images;
@@ -95,9 +98,8 @@ public class Canvas extends Resource<Canvas> {
       this.images = new ArrayList<>();
     }
     this.images.add(wrapImageInAnnotation(first));
-    this.images.addAll(Arrays.stream(rest)
-         .map(this::wrapImageInAnnotation)
-         .collect(Collectors.toList()));
+    this.images.addAll(
+        Arrays.stream(rest).map(this::wrapImageInAnnotation).collect(Collectors.toList()));
     // If we only have one image, set width/height from the image content by default
     if (this.images.size() == 1 && this.getWidth() == null && this.getHeight() == null) {
       this.setWidthFromImage(this.images.get(0));

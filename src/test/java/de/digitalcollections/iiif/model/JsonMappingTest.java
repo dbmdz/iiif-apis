@@ -1,9 +1,11 @@
 package de.digitalcollections.iiif.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
-import de.digitalcollections.iiif.model.JsonPathAssert;
 import de.digitalcollections.iiif.model.enums.ViewingHint;
 import de.digitalcollections.iiif.model.image.ImageApiProfile;
 import de.digitalcollections.iiif.model.image.ImageService;
@@ -20,12 +22,7 @@ import net.minidev.json.JSONArray;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-/**
- * Tests for writing out IIIF JSON.
- */
+/** Tests for writing out IIIF JSON. */
 public class JsonMappingTest {
 
   private ObjectMapper mapper;
@@ -82,20 +79,24 @@ public class JsonMappingTest {
 
     // Other stuff
     assertThatThrownBy(() -> canvas.addViewingHint(ViewingHint.INDIVIDUALS))
-      .isInstanceOf(IllegalArgumentException.class)
-      .hasMessage("Resources of type '%s' do not support the '%s' viewing hint.", "sc:Canvas", "individuals");
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(
+            "Resources of type '%s' do not support the '%s' viewing hint.",
+            "sc:Canvas", "individuals");
     canvas.addViewingHint(ViewingHint.NON_PAGED);
 
     // Licensing/Attribution
     canvas.addLicense("http://rightsstatements.org/vocab/NoC-NC/1.0/");
     canvas.addAttribution("Some fictional institution");
     canvas.addLogo("http://some.uri/logo.jpg");
-    canvas.addLogo(new ImageContent(new ImageService(
-      "http://some.uri/iiif/logo", ImageApiProfile.LEVEL_ONE)));
+    canvas.addLogo(
+        new ImageContent(new ImageService("http://some.uri/iiif/logo", ImageApiProfile.LEVEL_ONE)));
 
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(canvas);
     DocumentContext ctx = JsonPath.parse(json);
-    JsonPathAssert.assertThat(ctx).jsonPathAsString("['@context']").isEqualTo("http://iiif.io/api/presentation/2/context.json");
+    JsonPathAssert.assertThat(ctx)
+        .jsonPathAsString("['@context']")
+        .isEqualTo("http://iiif.io/api/presentation/2/context.json");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("['@id']").isEqualTo("http://some.uri");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("['@type']").isEqualTo("sc:Canvas");
     JsonPathAssert.assertThat(ctx).jsonPathAsString("label").isEqualTo("A label");
@@ -104,8 +105,10 @@ public class JsonMappingTest {
     JsonPathAssert.assertThat(ctx).jsonPathAsString("images[0].on").isEqualTo("http://some.uri");
 
     // Only the top-level object should have a IIIF Presentation API context
-    assertThat(((JSONArray) ctx.read("..['@context']")).stream()
-      .filter(c -> c.equals("http://iiif.io/api/presentation/2/context.json"))).hasSize(1);
+    assertThat(
+            ((JSONArray) ctx.read("..['@context']"))
+                .stream().filter(c -> c.equals("http://iiif.io/api/presentation/2/context.json")))
+        .hasSize(1);
 
     Canvas parsedCanvas = mapper.readValue(json, Canvas.class);
     assertThat(parsedCanvas).isEqualToComparingFieldByFieldRecursively(canvas);
@@ -119,7 +122,8 @@ public class JsonMappingTest {
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(manifest);
     DocumentContext ctx = JsonPath.parse(json);
     JsonPathAssert.assertThat(ctx).jsonPathAsString("navDate").isEqualTo("1970-01-01T00:00:00Z");
-    assertThat(mapper.readValue(json, Manifest.class).getNavDate()).isEqualTo(manifest.getNavDate());
+    assertThat(mapper.readValue(json, Manifest.class).getNavDate())
+        .isEqualTo(manifest.getNavDate());
 
     Collection coll = new Collection("http://some.uri", "A label for the Collection");
     coll.setNavDate(navDate);
@@ -139,5 +143,4 @@ public class JsonMappingTest {
     assertThat(parsed.getLabel().getValues()).containsExactly("Key");
     assertThat(parsed.getValue()).isNull();
   }
-
 }

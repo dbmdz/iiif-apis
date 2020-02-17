@@ -13,7 +13,10 @@ import java.util.stream.Stream;
 
 public class RegionRequest {
 
-  /** We use BigDecimals for the relative region, since we want to preserve the precision of the request **/
+  /**
+   * We use BigDecimals for the relative region, since we want to preserve the precision of the
+   * request *
+   */
   private class RelativeBox {
 
     final BigDecimal x;
@@ -53,7 +56,8 @@ public class RegionRequest {
   private RelativeBox relativeBox;
   private boolean square = false;
 
-  private static final Pattern PARSE_PAT = Pattern.compile("^(pct:)?([0-9.]+),([0-9.]+),([0-9.]+),([0-9.]+)$");
+  private static final Pattern PARSE_PAT =
+      Pattern.compile("^(pct:)?([0-9.]+),([0-9.]+),([0-9.]+),([0-9.]+)$");
 
   /**
    * Parse an IIIF Image API compliant region request string
@@ -89,15 +93,14 @@ public class RegionRequest {
     }
   }
 
-  /**
-   * Create a region that encompasses the whole picture, i.e. the 'full' syntax.
-   */
+  /** Create a region that encompasses the whole picture, i.e. the 'full' syntax. */
   public RegionRequest() {
     this(false);
   }
 
   /**
-   * Pass 'true' to create a region that selects a square region from the image, i.e.the 'square' syntax.
+   * Pass 'true' to create a region that selects a square region from the image, i.e.the 'square'
+   * syntax.
    *
    * @param square true, if square region should be selected
    */
@@ -105,7 +108,8 @@ public class RegionRequest {
     this.square = square;
   }
 
-  private RegionRequest(BigDecimal x, BigDecimal y, BigDecimal width, BigDecimal height) throws ResolvingException {
+  private RegionRequest(BigDecimal x, BigDecimal y, BigDecimal width, BigDecimal height)
+      throws ResolvingException {
     if (Stream.of(x, y, width, height).anyMatch(v -> v.doubleValue() > 100.0)) {
       throw new ResolvingException("No parameter can be greater than 100!");
     }
@@ -113,9 +117,10 @@ public class RegionRequest {
   }
 
   /**
-   * Create a RegionRequest request that is expressed using relative values, i.e.the "pct:x,y,w,h" syntax
+   * Create a RegionRequest request that is expressed using relative values, i.e.the "pct:x,y,w,h"
+   * syntax
    *
-   * The values must be between 0.0 and 100.0.
+   * <p>The values must be between 0.0 and 100.0.
    *
    * @param x relative upper left x position of region
    * @param y relative upper left y position of region
@@ -124,7 +129,11 @@ public class RegionRequest {
    * @throws ResolvingException if the values fall outside of the allowed range
    */
   public RegionRequest(double x, double y, double width, double height) throws ResolvingException {
-    this(BigDecimal.valueOf(x), BigDecimal.valueOf(y), BigDecimal.valueOf(width), BigDecimal.valueOf(height));
+    this(
+        BigDecimal.valueOf(x),
+        BigDecimal.valueOf(y),
+        BigDecimal.valueOf(width),
+        BigDecimal.valueOf(height));
   }
 
   /**
@@ -186,18 +195,21 @@ public class RegionRequest {
     if (relativeBox == null && absoluteBox == null) {
       return "full";
     } else if (isRelative()) {
-      return String.format("pct:%s,%s,%s,%s", relativeBox.x, relativeBox.y, relativeBox.w, relativeBox.h);
+      return String.format(
+          "pct:%s,%s,%s,%s", relativeBox.x, relativeBox.y, relativeBox.w, relativeBox.h);
     } else {
-      return String.format("%d,%d,%d,%d", absoluteBox.x, absoluteBox.y, absoluteBox.width, absoluteBox.height);
+      return String.format(
+          "%d,%d,%d,%d", absoluteBox.x, absoluteBox.y, absoluteBox.width, absoluteBox.height);
     }
   }
 
   public String getCanonicalForm(Dimension imageDims) throws ResolvingException {
     Rectangle resolved = this.resolve(imageDims);
-    boolean isFull = resolved.x == 0
-        && resolved.y == 0
-        && resolved.width == imageDims.width
-        && resolved.height == imageDims.height;
+    boolean isFull =
+        resolved.x == 0
+            && resolved.y == 0
+            && resolved.width == imageDims.width
+            && resolved.height == imageDims.height;
     if (isFull) {
       return "full";
     } else {
@@ -210,20 +222,17 @@ public class RegionRequest {
    *
    * @param imageDims actual image dimensions
    * @return Rectangle representing th actual region
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if rectangle is outside image dimensions
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if rectangle is outside image
+   *     dimensions
    */
   public Rectangle resolve(Dimension imageDims) throws ResolvingException {
     if (square) {
       if (imageDims.width > imageDims.height) {
         return new Rectangle(
-            (imageDims.width - imageDims.height) / 2,
-            0,
-            imageDims.height, imageDims.height);
+            (imageDims.width - imageDims.height) / 2, 0, imageDims.height, imageDims.height);
       } else if (imageDims.height > imageDims.width) {
         return new Rectangle(
-            0,
-            (imageDims.height - imageDims.width) / 2,
-            imageDims.width, imageDims.width);
+            0, (imageDims.height - imageDims.width) / 2, imageDims.width, imageDims.width);
       }
     }
     if (absoluteBox == null && relativeBox == null) {
@@ -231,11 +240,12 @@ public class RegionRequest {
     }
     Rectangle rect;
     if (isRelative()) {
-      rect = new Rectangle(
-          (int) Math.round(relativeBox.x.doubleValue() / 100. * imageDims.getWidth()),
-          (int) Math.round(relativeBox.y.doubleValue() / 100. * imageDims.getHeight()),
-          (int) Math.round(relativeBox.w.doubleValue() / 100. * imageDims.getWidth()),
-          (int) Math.round(relativeBox.h.doubleValue() / 100. * imageDims.getHeight()));
+      rect =
+          new Rectangle(
+              (int) Math.round(relativeBox.x.doubleValue() / 100. * imageDims.getWidth()),
+              (int) Math.round(relativeBox.y.doubleValue() / 100. * imageDims.getHeight()),
+              (int) Math.round(relativeBox.w.doubleValue() / 100. * imageDims.getWidth()),
+              (int) Math.round(relativeBox.h.doubleValue() / 100. * imageDims.getHeight()));
     } else {
       rect = absoluteBox;
     }
@@ -261,8 +271,8 @@ public class RegionRequest {
     }
     RegionRequest that = (RegionRequest) o;
     return square == that.square
-       && Objects.equal(absoluteBox, that.absoluteBox)
-       && Objects.equal(relativeBox, that.relativeBox);
+        && Objects.equal(absoluteBox, that.absoluteBox)
+        && Objects.equal(relativeBox, that.relativeBox);
   }
 
   @Override

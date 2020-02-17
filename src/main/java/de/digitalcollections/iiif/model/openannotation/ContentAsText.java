@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-/**
- * A resource that contains embedded textual content.
- */
+/** A resource that contains embedded textual content. */
 public class ContentAsText extends Resource<ContentAsText> {
 
   public static final String TYPE = "cnt:ContentAsText";

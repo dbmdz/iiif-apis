@@ -19,11 +19,12 @@ import java.util.stream.Stream;
 /**
  * An Image API profile.
  *
- * Can be either a simple pre-defined profile (e.g. {@link ImageApiProfile#LEVEL_ZERO}) or a complex profile
- * describing the available features of a given IIIF image.
+ * <p>Can be either a simple pre-defined profile (e.g. {@link ImageApiProfile#LEVEL_ZERO}) or a
+ * complex profile describing the available features of a given IIIF image.
  *
- * See http://iiif.io/api/image/2.1/#profile-description for an overview of all available properties and features
- * and http://iiif.io/api/image/2.1/compliance/ for an overview of the available compliance levels.
+ * <p>See http://iiif.io/api/image/2.1/#profile-description for an overview of all available
+ * properties and features and http://iiif.io/api/image/2.1/compliance/ for an overview of the
+ * available compliance levels.
  */
 public class ImageApiProfile extends Profile {
 
@@ -54,7 +55,10 @@ public class ImageApiProfile extends Profile {
   }
 
   public enum Quality {
-    COLOR, GRAY, BITONAL, DEFAULT;
+    COLOR,
+    GRAY,
+    BITONAL,
+    DEFAULT;
 
     @JsonValue
     @Override
@@ -66,64 +70,98 @@ public class ImageApiProfile extends Profile {
   public static class Feature {
 
     private enum ImageApiFeature {
-      BASE_URI_REDIRECT, CANONICAL_LINK_HEADER, CORS, JSONLD_MEDIA_TYPE, MIRRORING, PROFILE_LINK_HEADER,
-      REGION_BY_PCT, REGION_BY_PX, REGION_SQUARE, ROTATION_ARBITRARY, ROTATION_BY_90S, SIZE_ABOVE_FULL,
-      SIZE_BY_WH_LISTED, SIZE_BY_FORCED_WH, SIZE_BY_H, SIZE_BY_PCT, SIZE_BY_W, SIZE_BY_WH, SIZE_BY_CONFINED_WH,
-      SIZE_BY_DISTORTED_WH, OTHER
+      BASE_URI_REDIRECT,
+      CANONICAL_LINK_HEADER,
+      CORS,
+      JSONLD_MEDIA_TYPE,
+      MIRRORING,
+      PROFILE_LINK_HEADER,
+      REGION_BY_PCT,
+      REGION_BY_PX,
+      REGION_SQUARE,
+      ROTATION_ARBITRARY,
+      ROTATION_BY_90S,
+      SIZE_ABOVE_FULL,
+      SIZE_BY_WH_LISTED,
+      SIZE_BY_FORCED_WH,
+      SIZE_BY_H,
+      SIZE_BY_PCT,
+      SIZE_BY_W,
+      SIZE_BY_WH,
+      SIZE_BY_CONFINED_WH,
+      SIZE_BY_DISTORTED_WH,
+      OTHER
     }
 
-    /** The base URI of the service will redirect to the image information document. **/
+    /** The base URI of the service will redirect to the image information document. * */
     public static final Feature BASE_URI_REDIRECT = new Feature(ImageApiFeature.BASE_URI_REDIRECT);
 
-    /** The canonical image URI HTTP link header is provided on image responses. **/
-    public static final Feature CANONICAL_LINK_HEADER = new Feature(ImageApiFeature.CANONICAL_LINK_HEADER);
+    /** The canonical image URI HTTP link header is provided on image responses. * */
+    public static final Feature CANONICAL_LINK_HEADER =
+        new Feature(ImageApiFeature.CANONICAL_LINK_HEADER);
 
-    /** The CORS HTTP header is provided on all responses. **/
+    /** The CORS HTTP header is provided on all responses. * */
     public static final Feature CORS = new Feature(ImageApiFeature.CORS);
 
-    /** The JSON-LD media type is provided when JSON-LD is requested. **/
+    /** The JSON-LD media type is provided when JSON-LD is requested. * */
     public static final Feature JSONLD_MEDIA_TYPE = new Feature(ImageApiFeature.JSONLD_MEDIA_TYPE);
 
-    /** The image may be rotated around the vertical axis, resulting in a left-to-right mirroring of the content. **/
+    /**
+     * The image may be rotated around the vertical axis, resulting in a left-to-right mirroring of
+     * the content. *
+     */
     public static final Feature MIRRORING = new Feature(ImageApiFeature.MIRRORING);
 
-    /** The profile HTTP link header is provided on image responses. **/
-    public static final Feature PROFILE_LINK_HEADER = new Feature(ImageApiFeature.PROFILE_LINK_HEADER);
+    /** The profile HTTP link header is provided on image responses. * */
+    public static final Feature PROFILE_LINK_HEADER =
+        new Feature(ImageApiFeature.PROFILE_LINK_HEADER);
 
-    /** Regions of images may be requested by percentage. **/
+    /** Regions of images may be requested by percentage. * */
     public static final Feature REGION_BY_PCT = new Feature(ImageApiFeature.REGION_BY_PCT);
 
-    /** Regions of images may be requested by pixel dimensions. **/
+    /** Regions of images may be requested by pixel dimensions. * */
     public static final Feature REGION_BY_PX = new Feature(ImageApiFeature.REGION_BY_PX);
 
-    /** A square region where the width and height are equal to the shorter dimension of the complete image content. **/
+    /**
+     * A square region where the width and height are equal to the shorter dimension of the complete
+     * image content. *
+     */
     public static final Feature REGION_SQUARE = new Feature(ImageApiFeature.REGION_SQUARE);
 
-    /** Rotation of images may be requested by degrees other than multiples of 90. **/
-    public static final Feature ROTATION_ARBITRARY = new Feature(ImageApiFeature.ROTATION_ARBITRARY);
+    /** Rotation of images may be requested by degrees other than multiples of 90. * */
+    public static final Feature ROTATION_ARBITRARY =
+        new Feature(ImageApiFeature.ROTATION_ARBITRARY);
 
-    /** Rotation of images may be requested by degrees in multiples of 90. **/
+    /** Rotation of images may be requested by degrees in multiples of 90. * */
     public static final Feature ROTATION_BY_90S = new Feature(ImageApiFeature.ROTATION_BY_90S);
 
-    /** Size of images may be requested larger than the “full” size. See warning. **/
+    /** Size of images may be requested larger than the “full” size. See warning. * */
     public static final Feature SIZE_ABOVE_FULL = new Feature(ImageApiFeature.SIZE_ABOVE_FULL);
 
-    /** Size of images may be requested in the form “!w,h”. **/
-    public static final Feature SIZE_BY_CONFINED_WH = new Feature(ImageApiFeature.SIZE_BY_CONFINED_WH);
+    /** Size of images may be requested in the form “!w,h”. * */
+    public static final Feature SIZE_BY_CONFINED_WH =
+        new Feature(ImageApiFeature.SIZE_BY_CONFINED_WH);
 
-    /** Size of images may be requested in the form “w,h”, including sizes that would distort the image. **/
-    public static final Feature SIZE_BY_DISTORTED_WH = new Feature(ImageApiFeature.SIZE_BY_DISTORTED_WH);
+    /**
+     * Size of images may be requested in the form “w,h”, including sizes that would distort the
+     * image. *
+     */
+    public static final Feature SIZE_BY_DISTORTED_WH =
+        new Feature(ImageApiFeature.SIZE_BY_DISTORTED_WH);
 
-    /** Size of images may be requested in the form “,h”. **/
+    /** Size of images may be requested in the form “,h”. * */
     public static final Feature SIZE_BY_H = new Feature(ImageApiFeature.SIZE_BY_H);
 
-    /** Size of images may be requested in the form “pct:n”.**/
+    /** Size of images may be requested in the form “pct:n”.* */
     public static final Feature SIZE_BY_PCT = new Feature(ImageApiFeature.SIZE_BY_PCT);
 
-    /** Size of images may be requested in the form “w,”. **/
+    /** Size of images may be requested in the form “w,”. * */
     public static final Feature SIZE_BY_W = new Feature(ImageApiFeature.SIZE_BY_W);
 
-    /** Size of images may be requested in the form “w,h” where the supplied w and h preserve the aspect ratio. **/
+    /**
+     * Size of images may be requested in the form “w,h” where the supplied w and h preserve the
+     * aspect ratio. *
+     */
     public static final Feature SIZE_BY_WH = new Feature(ImageApiFeature.SIZE_BY_WH);
 
     @Deprecated
@@ -170,18 +208,20 @@ public class ImageApiProfile extends Profile {
       }
       Feature other = (Feature) obj;
       return Objects.equals(this.imageApiFeature, other.imageApiFeature)
-             && Objects.equals(this.customFeature, other.customFeature);
+          && Objects.equals(this.customFeature, other.customFeature);
     }
   }
 
-  public static final ImageApiProfile LEVEL_ZERO = new ImageApiProfile("http://iiif.io/api/image/2/level0.json");
+  public static final ImageApiProfile LEVEL_ZERO =
+      new ImageApiProfile("http://iiif.io/api/image/2/level0.json");
 
   static {
     LEVEL_ZERO.addFormat(Format.JPG);
     LEVEL_ZERO.addQuality(Quality.DEFAULT);
   }
 
-  public static final ImageApiProfile LEVEL_ONE = new ImageApiProfile("http://iiif.io/api/image/2/level1.json");
+  public static final ImageApiProfile LEVEL_ONE =
+      new ImageApiProfile("http://iiif.io/api/image/2/level1.json");
 
   static {
     LEVEL_ONE.addFeature(
@@ -196,7 +236,8 @@ public class ImageApiProfile extends Profile {
     LEVEL_ONE.addQuality(Quality.DEFAULT);
   }
 
-  public static final ImageApiProfile LEVEL_TWO = new ImageApiProfile("http://iiif.io/api/image/2/level2.json");
+  public static final ImageApiProfile LEVEL_TWO =
+      new ImageApiProfile("http://iiif.io/api/image/2/level2.json");
 
   static {
     LEVEL_TWO.addFeature(
@@ -216,19 +257,21 @@ public class ImageApiProfile extends Profile {
     LEVEL_TWO.addQuality(Quality.DEFAULT, Quality.COLOR, Quality.GRAY, Quality.BITONAL);
   }
 
-  public static final Set<String> V1_PROFILES = ImmutableSet.of(
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
-      "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
-      "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
-      "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
+  public static final Set<String> V1_PROFILES =
+      ImmutableSet.of(
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level0",
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level1",
+          "http://library.stanford.edu/iiif/image-api/compliance.html#level2",
+          "http://library.stanford.edu/iiif/image-api/1.1/compliance.html#level2",
+          "http://library.stanford.edu/iiif/image-api/1.1/conformance.html#level2");
 
   @JsonProperty("@context")
   public static final String CONTEXT = "http://iiif.io/api/image/2/context.json";
+
   @JsonProperty("@type")
   public static final String TYPE = "iiif:ImageProfile";
 
@@ -357,7 +400,8 @@ public class ImageApiProfile extends Profile {
   }
 
   /**
-   * Merge multiple profiles into one. Useful for image servers that want to consolidate the limits given in a info.json.
+   * Merge multiple profiles into one. Useful for image servers that want to consolidate the limits
+   * given in a info.json.
    *
    * @param profiles profiles to be merged
    * @return merged profile

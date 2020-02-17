@@ -7,8 +7,8 @@ import java.net.URI;
 /**
  * A profile for a {@link OtherContent} or {@link Service}.
  *
- * For image services, please use the more specific {@link ImageApiProfile} that has useful pre-defined constants
- * for the available Image API profiles.
+ * <p>For image services, please use the more specific {@link ImageApiProfile} that has useful
+ * pre-defined constants for the available Image API profiles.
  */
 public class Profile {
 

@@ -8,7 +8,7 @@ import java.net.URI;
 /**
  * A service that describes an endpoint where autocomplete can be performed.
  *
- * See http://iiif.io/api/search/1.0/#autocomplete
+ * <p>See http://iiif.io/api/search/1.0/#autocomplete
  */
 public class AutocompleteService extends Service {
 

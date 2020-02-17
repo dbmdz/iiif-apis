@@ -18,9 +18,11 @@ public class ProfileSerializer extends JsonSerializer<Profile> {
   }
 
   @Override
-  public void serialize(Profile value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+  public void serialize(Profile value, JsonGenerator gen, SerializerProvider serializers)
+      throws IOException {
     Completeness completeness = ModelUtilities.getCompleteness(value, Profile.class);
-    if (completeness == Completeness.ID_ONLY || (value instanceof ImageApiProfile && completeness == Completeness.ID_AND_TYPE)) {
+    if (completeness == Completeness.ID_ONLY
+        || (value instanceof ImageApiProfile && completeness == Completeness.ID_AND_TYPE)) {
       gen.writeString(value.getIdentifier().toString());
     } else {
       defaultSerializer.serialize(value, gen, serializers);

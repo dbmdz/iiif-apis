@@ -1,5 +1,7 @@
 package de.digitalcollections.iiif.model.sharedcanvas;
 
+import static java.util.Arrays.stream;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,17 +17,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Arrays.stream;
-
 /**
  * An ordered list of canvases, and/or further ranges.
  *
- * Ranges allow canvases, or parts thereof, to be grouped together in some way. This could be for textual reasons, such
- * as to distinguish books, chapters, verses, sections, non-content-bearing pages, the table of contents or similar.
- * Equally, physical features might be important such as quires or gatherings, sections that have been added later and
- * so forth.
+ * <p>Ranges allow canvases, or parts thereof, to be grouped together in some way. This could be for
+ * textual reasons, such as to distinguish books, chapters, verses, sections, non-content-bearing
+ * pages, the table of contents or similar. Equally, physical features might be important such as
+ * quires or gatherings, sections that have been added later and so forth.
  *
- * See http://iiif.io/api/presentation/2.1/#range
+ * <p>See http://iiif.io/api/presentation/2.1/#range
  */
 public class Range extends Resource<Range> {
 
@@ -97,7 +97,7 @@ public class Range extends Resource<Range> {
     if (completeness != Completeness.ID_AND_TYPE && completeness != Completeness.ID_ONLY) {
       throw new IllegalArgumentException(
           "Member resource must only have an identifier and no other field."
-        + " Use add<Resource>(URI first, URI... rest) for convenience.");
+              + " Use add<Resource>(URI first, URI... rest) for convenience.");
     }
   }
 
@@ -117,8 +117,8 @@ public class Range extends Resource<Range> {
   }
 
   public Range addCanvas(String idOfFirst, String... idsOfRest) {
-    return this.addCanvas(new Canvas(idOfFirst),
-                          Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
+    return this.addCanvas(
+        new Canvas(idOfFirst), Arrays.stream(idsOfRest).map(Canvas::new).toArray(Canvas[]::new));
   }
 
   public List<Range> getRanges() {
@@ -141,8 +141,8 @@ public class Range extends Resource<Range> {
   }
 
   public Range addRange(String first, String... rest) {
-    return this.addRange(new Range(first),
-                         Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
+    return this.addRange(
+        new Range(first), Arrays.stream(rest).map(Range::new).toArray(Range[]::new));
   }
 
   public List<Resource> getMembers() {
@@ -153,19 +153,21 @@ public class Range extends Resource<Range> {
     if (!(res instanceof Range) && !(res instanceof Canvas)) {
       throw new IllegalArgumentException("Member resources must be either of type Range or Canvas");
     }
-    if (res.getIdentifier() == null || res.getLabel() == null || res.getLabel().getValues().isEmpty()) {
-      throw new IllegalArgumentException("Member resources must have identifier, type and label set.");
+    if (res.getIdentifier() == null
+        || res.getLabel() == null
+        || res.getLabel().getValues().isEmpty()) {
+      throw new IllegalArgumentException(
+          "Member resources must have identifier, type and label set.");
     }
   }
 
   /**
-   * Sets the member resources.
-   * Must be either instances of {@link Range} or {@link Canvas}.
-   * All members must have an identifier and a label.
+   * Sets the member resources. Must be either instances of {@link Range} or {@link Canvas}. All
+   * members must have an identifier and a label.
    *
    * @param members member resources
-   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
-   *         an identifier and a label;
+   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link
+   *     Canvas} or does not have an identifier and a label;
    */
   public void setMembers(List<Resource> members) {
     members.forEach(this::checkMember);
@@ -173,15 +175,14 @@ public class Range extends Resource<Range> {
   }
 
   /**
-   * Adds one or more member resources.
-   * Must be either instances of {@link Range} or {@link Canvas}.
+   * Adds one or more member resources. Must be either instances of {@link Range} or {@link Canvas}.
    * All members must have an identifier and a label.
    *
    * @param first first member
    * @param rest other members
    * @return this instance with added members
-   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link Canvas} or does not have
-   *         an identifier and a label;
+   * @throws IllegalArgumentException if at least one member is not a {@link Range} or {@link
+   *     Canvas} or does not have an identifier and a label;
    */
   public Range addMember(Resource first, Resource... rest) throws IllegalArgumentException {
     if (this.members == null) {

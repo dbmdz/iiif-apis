@@ -31,10 +31,11 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-      Resources.getResource("spec/auth/" + filename), Charset.defaultCharset());
+        Resources.getResource("spec/auth/" + filename), Charset.defaultCharset());
   }
 
-  private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
+  private void assertSerializationEqualsSpec(Object obj, String specFilename)
+      throws IOException, JSONException {
     String specJson = readFromResources(specFilename);
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
     JSONAssert.assertEquals(specJson, json, true);
@@ -42,8 +43,9 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testClickthroughPattern() throws IOException, JSONException {
-    AccessCookieService service = new AccessCookieService("https://authentication.example.org/clickthrough",
-      AuthPattern.CLICKTHROUGH);
+    AccessCookieService service =
+        new AccessCookieService(
+            "https://authentication.example.org/clickthrough", AuthPattern.CLICKTHROUGH);
     service.setLabel("Terms of Use for Example Institution");
     service.setHeader("Restricted Material with Terms of Use");
     service.setDescription("<span>... terms of use ... </span>");
@@ -66,7 +68,9 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testKioskPattern() throws IOException, JSONException {
-    AccessCookieService service = new AccessCookieService("https://authentication.example.org/cookiebaker", AuthPattern.KIOSK);
+    AccessCookieService service =
+        new AccessCookieService(
+            "https://authentication.example.org/cookiebaker", AuthPattern.KIOSK);
     service.setLabel("Internal cookie granting service");
     service.setFailureHeader("Ooops!");
     service.setFailureDescription("Call Bob at ext. 1234 to reboot the cookie server");
@@ -76,10 +80,12 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testLoginPattern() throws IOException, JSONException {
-    AccessCookieService service = new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
+    AccessCookieService service =
+        new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
     service.setLabel("Login to Example Institution");
     service.setHeader("Please Log In");
-    service.setDescription("Example Institution requires that you log in with your example account to view this content.");
+    service.setDescription(
+        "Example Institution requires that you log in with your example account to view this content.");
     service.setConfirmLabel("Login");
     service.setFailureHeader("Authentication Failed");
     service.setFailureDescription("<a href=\"http://example.org/policy\">Access Policy</a>");
@@ -89,13 +95,15 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testErrorCondition() throws IOException, JSONException {
-    InvalidCredentials err = new InvalidCredentials("The request had credentials that are not valid for the service.");
+    InvalidCredentials err =
+        new InvalidCredentials("The request had credentials that are not valid for the service.");
     assertSerializationEqualsSpec(err, "errorCondition.json");
   }
 
   @Test
   public void testImageInfoWithAuth() throws IOException, JSONException {
-    ImageService service = new ImageService("https://www.example.org/images/image1", ImageApiProfile.LEVEL_TWO);
+    ImageService service =
+        new ImageService("https://www.example.org/images/image1", ImageApiProfile.LEVEL_TWO);
     service.setWidth(600);
     service.setHeight(400);
     service.addSize(new Size(150, 100), new Size(600, 400));
@@ -105,11 +113,12 @@ public class SpecExamplesSerializationTest {
     profile.addFeature(Feature.CANONICAL_LINK_HEADER, Feature.ROTATION_ARBITRARY);
     service.addProfile(profile);
 
-    AccessCookieService authService = new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
+    AccessCookieService authService =
+        new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
     authService.setLabel("Login to Example Institution");
     authService.addService(
-      new AccessTokenService("https://authentication.example.org/token"),
-      new LogoutService("https://authentication.example.org/logout"));
+        new AccessTokenService("https://authentication.example.org/token"),
+        new LogoutService("https://authentication.example.org/logout"));
     ((LogoutService) authService.getServices().get(1)).setLabel("Logout from Example Institution");
     service.addService(authService);
 
@@ -118,11 +127,12 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testLoginWithLogout() throws IOException, JSONException {
-    AccessCookieService authService = new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
+    AccessCookieService authService =
+        new AccessCookieService("https://authentication.example.org/login", AuthPattern.LOGIN);
     authService.setLabel("Login to Example Institution");
     authService.addService(
-      new AccessTokenService("https://authentication.example.org/token"),
-      new LogoutService("https://authentication.example.org/logout"));
+        new AccessTokenService("https://authentication.example.org/token"),
+        new LogoutService("https://authentication.example.org/logout"));
     ((LogoutService) authService.getServices().get(1)).setLabel("Logout from Example Institution");
     assertSerializationEqualsSpec(authService, "loginWithLogout.json");
   }

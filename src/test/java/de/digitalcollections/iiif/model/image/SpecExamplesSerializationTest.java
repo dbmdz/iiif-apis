@@ -31,10 +31,11 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-      Resources.getResource("spec/image/" + filename), Charset.defaultCharset());
+        Resources.getResource("spec/image/" + filename), Charset.defaultCharset());
   }
 
-  private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
+  private void assertSerializationEqualsSpec(Object obj, String specFilename)
+      throws IOException, JSONException {
     String specJson = readFromResources(specFilename);
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
     JSONAssert.assertEquals(specJson, json, true);
@@ -42,13 +43,13 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testFullResponse() throws Exception {
-    ImageService service = new ImageService("http://www.example.org/image-service/abcd1234/1E34750D-38DB-4825-A38A-B60A345E591C", ImageApiProfile.LEVEL_TWO);
+    ImageService service =
+        new ImageService(
+            "http://www.example.org/image-service/abcd1234/1E34750D-38DB-4825-A38A-B60A345E591C",
+            ImageApiProfile.LEVEL_TWO);
     service.setWidth(6000);
     service.setHeight(4000);
-    service.addSize(
-      new Size(150, 100),
-      new Size(600, 400),
-      new Size(3000, 2000));
+    service.addSize(new Size(150, 100), new Size(600, 400), new Size(3000, 2000));
 
     TileInfo ti1 = new TileInfo(512);
     ti1.addScaleFactor(1, 2, 4);
@@ -59,27 +60,34 @@ public class SpecExamplesSerializationTest {
 
     PropertyValue attribution = new PropertyValue();
     attribution.addValue(Locale.ENGLISH, "<span>Provided by Example Organization</span>");
-    attribution.addValue(Locale.forLanguageTag("cy"), "<span>Darparwyd gan Enghraifft Sefydliad</span>");
+    attribution.addValue(
+        Locale.forLanguageTag("cy"), "<span>Darparwyd gan Enghraifft Sefydliad</span>");
     service.setAttribution(attribution);
 
-    ImageContent logo = new ImageContent("http://example.org/image-service/logo/full/200,/0/default.png");
-    logo.addService(new ImageService("http://example.org/image-service/logo", ImageApiProfile.LEVEL_TWO));
+    ImageContent logo =
+        new ImageContent("http://example.org/image-service/logo/full/200,/0/default.png");
+    logo.addService(
+        new ImageService("http://example.org/image-service/logo", ImageApiProfile.LEVEL_TWO));
     logo.setFormat((MimeType) null);
     service.addLogo(logo);
 
-    service.addLicense("http://example.org/rights/license1.html",
-      "http://rightsstatements.org/vocab/InC-EDU/1.0/");
+    service.addLicense(
+        "http://example.org/rights/license1.html",
+        "http://rightsstatements.org/vocab/InC-EDU/1.0/");
 
     ImageApiProfile profile = new ImageApiProfile();
     profile.addFormat(Format.GIF, Format.PDF);
     profile.addQuality(Quality.COLOR, Quality.GRAY);
-    profile.addFeature(Feature.CANONICAL_LINK_HEADER, Feature.ROTATION_ARBITRARY, Feature.PROFILE_LINK_HEADER,
-      new Feature("http://example.com/feature/"));
+    profile.addFeature(
+        Feature.CANONICAL_LINK_HEADER,
+        Feature.ROTATION_ARBITRARY,
+        Feature.PROFILE_LINK_HEADER,
+        new Feature("http://example.com/feature/"));
     service.addProfile(profile);
 
     service.addService(
-      new PhysicalDimensionsService(0.0025, Unit.INCHES),
-      new GeoService("http://www.example.org/geojson/paris.json"));
+        new PhysicalDimensionsService(0.0025, Unit.INCHES),
+        new GeoService("http://www.example.org/geojson/paris.json"));
 
     assertSerializationEqualsSpec(service, "fullResponse.json");
   }

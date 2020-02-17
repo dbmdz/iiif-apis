@@ -1,5 +1,8 @@
 package de.digitalcollections.iiif.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Lists;
@@ -16,14 +19,11 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Type for strings that are intended to be displayed to the user.
  *
- * Is organized as a mapping of languages to one or more values.
- * See http://iiif.io/api/presentation/2.1/#language-of-property-values and
+ * <p>Is organized as a mapping of languages to one or more values. See
+ * http://iiif.io/api/presentation/2.1/#language-of-property-values and
  * http://iiif.io/api/presentation/2.1/#html-markup-in-property-values for more information.
  */
 @JsonSerialize(using = PropertyValueSerializer.class)
@@ -32,8 +32,7 @@ public class PropertyValue {
 
   private Map<Locale, List<String>> localizations = new LinkedHashMap<>();
 
-  public PropertyValue() {
-  }
+  public PropertyValue() {}
 
   public PropertyValue(String first, String... rest) {
     this(Locale.ROOT, first, rest);

@@ -35,10 +35,11 @@ public class SpecExamplesSerializationTest {
 
   private String readFromResources(String filename) throws IOException {
     return Resources.toString(
-      Resources.getResource("spec/annex/" + filename), Charset.defaultCharset());
+        Resources.getResource("spec/annex/" + filename), Charset.defaultCharset());
   }
 
-  private void assertSerializationEqualsSpec(Object obj, String specFilename) throws IOException, JSONException {
+  private void assertSerializationEqualsSpec(Object obj, String specFilename)
+      throws IOException, JSONException {
     String specJson = readFromResources(specFilename);
     String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
     JSONAssert.assertEquals(specJson, json, true);
@@ -46,21 +47,22 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testAdditionalInfo() throws Exception {
-    ImageService service = new ImageService("http://www.example.org/image-service/abcd1234",
-      ImageApiProfile.LEVEL_TWO);
+    ImageService service =
+        new ImageService(
+            "http://www.example.org/image-service/abcd1234", ImageApiProfile.LEVEL_TWO);
 
     ImageApiProfile profile = new ImageApiProfile();
     profile.addFormat(Format.GIF, Format.PDF);
     profile.addQuality(Quality.COLOR, Quality.GRAY);
-    profile.addFeature(Feature.CANONICAL_LINK_HEADER, Feature.ROTATION_ARBITRARY,
-      new Feature("http://example.com/feature"));
+    profile.addFeature(
+        Feature.CANONICAL_LINK_HEADER,
+        Feature.ROTATION_ARBITRARY,
+        new Feature("http://example.com/feature"));
     service.addProfile(profile);
 
     service.setWidth(6000);
     service.setHeight(4000);
-    service.addSize(new Size(150, 100),
-      new Size(600, 400),
-      new Size(3000, 2000));
+    service.addSize(new Size(150, 100), new Size(600, 400), new Size(3000, 2000));
 
     TileInfo tileInfo = new TileInfo(512);
     tileInfo.addScaleFactor(1, 2, 4, 8, 16);
@@ -73,10 +75,14 @@ public class SpecExamplesSerializationTest {
   public void testEmbeddedService() throws Exception {
     // FIXME: We had to modify the spec example by adding a @context to the logo service
     //        We should instead find a way to avoid duplicate @contexts in the tree
-    ImageService service = new ImageService("http://www.example.org/image-service/baseImage", ImageApiProfile.LEVEL_TWO);
+    ImageService service =
+        new ImageService(
+            "http://www.example.org/image-service/baseImage", ImageApiProfile.LEVEL_TWO);
     service.addAttribution("Provided by Example Organization");
-    ImageContent logo = new ImageContent("http://example.org/image-service/logo/full/full/0/default.png");
-    logo.addService(new ImageService("http://example.org/image-service/logo", ImageApiProfile.LEVEL_TWO));
+    ImageContent logo =
+        new ImageContent("http://example.org/image-service/logo/full/full/0/default.png");
+    logo.addService(
+        new ImageService("http://example.org/image-service/logo", ImageApiProfile.LEVEL_TWO));
     logo.setFormat((MimeType) null);
     service.addLogo(logo);
     assertSerializationEqualsSpec(service, "embeddedService.json");
@@ -84,9 +90,11 @@ public class SpecExamplesSerializationTest {
 
   @Test
   public void testGenericService() throws Exception {
-    GenericService service = new GenericService("http://example.org/ns/jsonld/context.json",
-      "http://example.org/service/example.json",
-      "http://example.org/docs/example-service.html");
+    GenericService service =
+        new GenericService(
+            "http://example.org/ns/jsonld/context.json",
+            "http://example.org/service/example.json",
+            "http://example.org/docs/example-service.html");
     service.setLabel(new PropertyValue("Example Service"));
     assertSerializationEqualsSpec(service, "genericService.json");
   }

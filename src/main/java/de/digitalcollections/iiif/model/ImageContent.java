@@ -11,14 +11,15 @@ import java.net.URI;
 /**
  * An image resource.
  *
- * This entity is what is contained in the "resource" field of annotations with motivation "sc:painting":
- * http://iiif.io/api/presentation/2.1/#image-resources
+ * <p>This entity is what is contained in the "resource" field of annotations with motivation
+ * "sc:painting": http://iiif.io/api/presentation/2.1/#image-resources
  */
 public class ImageContent extends Resource<ImageContent> {
 
   public static final String TYPE = "dctypes:Image";
 
-  // We sometimes want to set this to null during serialization, hence the copy in an instance variable
+  // We sometimes want to set this to null during serialization, hence the copy in an instance
+  // variable
   @SuppressWarnings("checkstyle:membername")
   @JsonIgnore
   public String _type = TYPE;
@@ -31,7 +32,8 @@ public class ImageContent extends Resource<ImageContent> {
   @JsonCreator
   public ImageContent(@JsonProperty("@id") String identifier) {
     super(identifier);
-    // Since the image ID is supposed to resolve to a real image, we can try guessing the format from it
+    // Since the image ID is supposed to resolve to a real image, we can try guessing the format
+    // from it
     this.setFormat(MimeType.fromURI(this.getIdentifier()));
   }
 

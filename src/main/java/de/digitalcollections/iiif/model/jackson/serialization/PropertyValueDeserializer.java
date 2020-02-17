@@ -63,5 +63,4 @@ public class PropertyValueDeserializer extends JsonDeserializer<PropertyValue> {
       throw new IllegalArgumentException("Property values must be strings, objects or arrays");
     }
   }
-
 }

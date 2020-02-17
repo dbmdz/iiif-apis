@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * An ordered list of annotation lists.
  *
- * Layers allow higher level groupings of annotations to be recorded. For example, all of the English translation
- * annotations of a medieval French document could be kept separate from the transcription or an edition in modern
- * French.
+ * <p>Layers allow higher level groupings of annotations to be recorded. For example, all of the
+ * English translation annotations of a medieval French document could be kept separate from the
+ * transcription or an edition in modern French.
  *
- * May be paged, see http://iiif.io/api/presentation/2.1/#paging
+ * <p>May be paged, see http://iiif.io/api/presentation/2.1/#paging
  *
- * See http://iiif.io/api/presentation/2.1/#annotation-list
+ * <p>See http://iiif.io/api/presentation/2.1/#annotation-list
  */
 public class AnnotationList extends Resource<Annotation> implements Pageable<AnnotationList> {
 

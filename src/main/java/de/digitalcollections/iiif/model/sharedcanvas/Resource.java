@@ -1,5 +1,7 @@
 package de.digitalcollections.iiif.model.sharedcanvas;
 
+import static com.google.common.collect.Lists.asList;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,20 +22,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.collect.Lists.asList;
-
 /**
  * Abstract IIIF resource, most other resources are based on this.
  *
  * @param <T> a resource type, e.g. Canvas, Annotation
  */
-@JsonPropertyOrder({"@context", "@id", "@type", "label", "description", "metadata", "thumbnail", "service"})
+@JsonPropertyOrder({
+  "@context",
+  "@id",
+  "@type",
+  "label",
+  "description",
+  "metadata",
+  "thumbnail",
+  "service"
+})
 public abstract class Resource<T> implements Choice<T> {
 
   public static final String CONTEXT = "http://iiif.io/api/presentation/2/context.json";
 
-  /** Only used during serialization,
-   *  @see SerializerModifier **/
+  /**
+   * Only used during serialization,
+   *
+   * @see SerializerModifier *
+   */
   @SuppressWarnings("checkstyle:membername")
   @JsonProperty("@context")
   public String _context;
@@ -45,11 +57,9 @@ public abstract class Resource<T> implements Choice<T> {
 
   private PropertyValue description;
 
-  @JsonIgnore
-  private boolean isDefault;
+  @JsonIgnore private boolean isDefault;
 
-  @JsonIgnore
-  private List<T> alternatives;
+  @JsonIgnore private List<T> alternatives;
 
   @JsonProperty("service")
   private List<Service> services;
@@ -98,7 +108,7 @@ public abstract class Resource<T> implements Choice<T> {
 
   @JsonProperty("@type")
   public String getType() {
-    return null;  // Does not have a type
+    return null; // Does not have a type
   }
 
   public URI getIdentifier() {
@@ -303,12 +313,14 @@ public abstract class Resource<T> implements Choice<T> {
    */
   public void setViewingHints(List<ViewingHint> viewingHints) throws IllegalArgumentException {
     for (ViewingHint hint : viewingHints) {
-      boolean supportsHint = (hint.getType() == ViewingHint.Type.OTHER
-                              || this.getSupportedViewingHintTypes().contains(hint.getType()));
+      boolean supportsHint =
+          (hint.getType() == ViewingHint.Type.OTHER
+              || this.getSupportedViewingHintTypes().contains(hint.getType()));
       if (!supportsHint) {
-        throw new IllegalArgumentException(String.format(
-            "Resources of type '%s' do not support the '%s' viewing hint.",
-            this.getType(), hint.toString()));
+        throw new IllegalArgumentException(
+            String.format(
+                "Resources of type '%s' do not support the '%s' viewing hint.",
+                this.getType(), hint.toString()));
       }
     }
     this.viewingHints = viewingHints;
@@ -322,7 +334,8 @@ public abstract class Resource<T> implements Choice<T> {
    * @return this resource with added viewing hints
    * @throws IllegalArgumentException if the resources not not support one of the viewing hints.
    */
-  public Resource addViewingHint(ViewingHint first, ViewingHint... rest) throws IllegalArgumentException {
+  public Resource addViewingHint(ViewingHint first, ViewingHint... rest)
+      throws IllegalArgumentException {
     List<ViewingHint> hints = this.viewingHints;
     if (hints == null) {
       hints = new ArrayList<>();
@@ -356,7 +369,8 @@ public abstract class Resource<T> implements Choice<T> {
    * Sets the renderings. All renderings must have both a profile and a format.
    *
    * @param renderings list of renderings with profile and format
-   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
+   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a
+   *     format.
    */
   public void setRenderings(List<OtherContent> renderings) throws IllegalArgumentException {
     renderings.forEach(this::verifyRendering);
@@ -369,7 +383,8 @@ public abstract class Resource<T> implements Choice<T> {
    * @param first first rendering
    * @param rest list of other renderings
    * @return current instance
-   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a format.
+   * @throws IllegalArgumentException if at least one rendering does not have both a profile and a
+   *     format.
    */
   public Resource addRendering(OtherContent first, OtherContent... rest) {
     if (renderings == null) {
