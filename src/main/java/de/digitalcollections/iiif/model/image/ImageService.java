@@ -15,11 +15,12 @@ import java.util.List;
 /**
  * A IIIF Image API service.
  *
- * See http://iiif.io/api/presentation/2.1/#image-resources
+ * <p>See http://iiif.io/api/presentation/2.1/#image-resources
  */
 public class ImageService extends Service {
 
-  // FIXME: This should be static, but for some reason Jackson ignores it if it's not on the instance...
+  // FIXME: This should be static, but for some reason Jackson ignores it if it's not on the
+  // instance...
   @SuppressWarnings("checkstyle:membername")
   @JsonProperty("protocol")
   public final String PROTOCOL = "http://iiif.io/api/image";
@@ -31,6 +32,7 @@ public class ImageService extends Service {
   private Integer height;
   private List<TileInfo> tiles;
   private List<Size> sizes;
+
   @JsonProperty("service")
   private List<Service> services;
 

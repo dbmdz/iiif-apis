@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Abstract base type for services.
- */
+/** Abstract base type for services. */
 @JsonPropertyOrder({"@context", "@id", "@type"})
 public abstract class Service {
 
@@ -70,8 +68,9 @@ public abstract class Service {
   }
 
   public Service addProfile(String first, String... rest) {
-    return this.addProfile(new Profile(URI.create(first)),
-                           Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
+    return this.addProfile(
+        new Profile(URI.create(first)),
+        Arrays.stream(rest).map(p -> new Profile(URI.create(p))).toArray(Profile[]::new));
   }
 
   public PropertyValue getLabel() {
@@ -90,5 +89,4 @@ public abstract class Service {
   public void setLabel(String label) {
     setLabel(new PropertyValue(label));
   }
-
 }

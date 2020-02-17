@@ -18,7 +18,8 @@ public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
     super(t);
   }
 
-  private void writeSingleLocalization(JsonGenerator jgen, Locale language, String value) throws IOException {
+  private void writeSingleLocalization(JsonGenerator jgen, Locale language, String value)
+      throws IOException {
     jgen.writeStartObject();
     jgen.writeStringField("@language", language.toLanguageTag());
     jgen.writeStringField("@value", value);
@@ -26,7 +27,8 @@ public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
   }
 
   @Override
-  public void serialize(PropertyValue value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+  public void serialize(PropertyValue value, JsonGenerator jgen, SerializerProvider provider)
+      throws IOException {
     if (value.getLocalizations().size() == 1 && value.getLocalizations().contains(Locale.ROOT)) {
       // Simple property value
       if (value.getValues().size() == 1) {
@@ -44,7 +46,8 @@ public class PropertyValueSerializer extends StdSerializer<PropertyValue> {
       if (localizations.size() == 1 && value.getValues().size() == 1) {
         Locale lang = localizations.iterator().next();
         this.writeSingleLocalization(jgen, lang, value.getFirstValue());
-      } else if (localizations.size() > 1 || (value.getValues() != null && value.getValues().size() > 1)) {
+      } else if (localizations.size() > 1
+          || (value.getValues() != null && value.getValues().size() > 1)) {
         jgen.writeStartArray();
         for (Locale language : localizations) {
           for (String v : value.getValues(language)) {

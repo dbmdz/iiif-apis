@@ -1,10 +1,10 @@
 package de.digitalcollections.iiif.model;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import de.digitalcollections.iiif.model.jackson.IiifObjectMapper;
 import java.util.Locale;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class PropertyValueTest {
 
@@ -35,11 +35,12 @@ public class PropertyValueTest {
     PropertyValue propVal = new PropertyValue();
     propVal.addValue(Locale.ENGLISH, "one", "two");
     String json = mapper.writeValueAsString(propVal);
-    assertThat(json).isEqualTo(
-      "[{'@language':'en','@value':'one'},{'@language':'en','@value':'two'}]".replace("'", "\""));
+    assertThat(json)
+        .isEqualTo(
+            "[{'@language':'en','@value':'one'},{'@language':'en','@value':'two'}]"
+                .replace("'", "\""));
     PropertyValue deserialized = mapper.readValue(json, PropertyValue.class);
     assertThat(deserialized.getLocalizations()).containsOnly(Locale.ENGLISH);
     assertThat(deserialized.getValues(Locale.ENGLISH)).containsExactly("one", "two");
   }
-
 }

@@ -6,9 +6,10 @@ import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 
 /**
- * A service that describes and endpoint that can be used to perform a search over the contents of a IIIF resource.
+ * A service that describes and endpoint that can be used to perform a search over the contents of a
+ * IIIF resource.
  *
- * See http://iiif.io/api/search/1.0/#search
+ * <p>See http://iiif.io/api/search/1.0/#search
  */
 public class ContentSearchService extends Service {
 

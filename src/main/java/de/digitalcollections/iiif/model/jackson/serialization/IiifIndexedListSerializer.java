@@ -15,36 +15,53 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * This is a custom serializer for `List&lt;Object&gt;` that has some special cases required by
- * the IIIF specification, namely that some fields should not be encoded as arrays if
- * they only contain a single element.
+ * This is a custom serializer for `List&lt;Object&gt;` that has some special cases required by the
+ * IIIF specification, namely that some fields should not be encoded as arrays if they only contain
+ * a single element.
  *
- * Apart from this, the code is identical to {@link IndexedListSerializer} and delegates
- * to it where possible.
+ * <p>Apart from this, the code is identical to {@link IndexedListSerializer} and delegates to it
+ * where possible.
  */
 public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<?>> {
 
-  private static final ImmutableSet<String> UNWRAP_FIELDS = ImmutableSet.of(
-      "service", "profile", "within", "logo", "description", "viewingHint",
-      "@type", "license", "rendering", "seeAlso", "related", "thumbnail");
+  private static final ImmutableSet<String> UNWRAP_FIELDS =
+      ImmutableSet.of(
+          "service",
+          "profile",
+          "within",
+          "logo",
+          "description",
+          "viewingHint",
+          "@type",
+          "license",
+          "rendering",
+          "seeAlso",
+          "related",
+          "thumbnail");
 
   private final IndexedListSerializer defaultSerializer;
 
   public IiifIndexedListSerializer(IndexedListSerializer defaultSerializer, TypeFactory tf) {
-    super(List.class, tf.constructSimpleType(Object.class, new JavaType[]{}), false, null, null);
+    super(List.class, tf.constructSimpleType(Object.class, new JavaType[] {}), false, null, null);
     this.defaultSerializer = defaultSerializer;
   }
 
-  private IiifIndexedListSerializer(IiifIndexedListSerializer src, BeanProperty prop,
-                                    TypeSerializer vts, JsonSerializer<?> valueSerializer,
-                                    Boolean unwrapSingle) {
+  private IiifIndexedListSerializer(
+      IiifIndexedListSerializer src,
+      BeanProperty prop,
+      TypeSerializer vts,
+      JsonSerializer<?> valueSerializer,
+      Boolean unwrapSingle) {
     super(src, prop, vts, valueSerializer, unwrapSingle);
     this.defaultSerializer = src.defaultSerializer;
   }
 
   @Override
-  public AsArraySerializerBase<List<?>> withResolved(BeanProperty property, TypeSerializer vts,
-                                                     JsonSerializer<?> elementSerializer, Boolean unwrapSingle) {
+  public AsArraySerializerBase<List<?>> withResolved(
+      BeanProperty property,
+      TypeSerializer vts,
+      JsonSerializer<?> elementSerializer,
+      Boolean unwrapSingle) {
     return new IiifIndexedListSerializer(this, property, vts, elementSerializer, unwrapSingle);
   }
 
@@ -66,9 +83,9 @@ public final class IiifIndexedListSerializer extends AsArraySerializerBase<List<
   }
 
   @Override
-  protected void serializeContents(List<?> value, JsonGenerator gen, SerializerProvider provider) throws IOException {
+  protected void serializeContents(List<?> value, JsonGenerator gen, SerializerProvider provider)
+      throws IOException {
     defaultSerializer.serializeContents(value, gen, provider);
-
   }
 
   @Override

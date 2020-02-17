@@ -22,8 +22,13 @@ import org.geojson.Feature;
 public class ProblemHandler extends DeserializationProblemHandler {
 
   @Override
-  public Object handleMissingInstantiator(DeserializationContext ctxt, Class<?> instClass, ValueInstantiator valueInsta,
-                                          JsonParser p, String msg) throws IOException {
+  public Object handleMissingInstantiator(
+      DeserializationContext ctxt,
+      Class<?> instClass,
+      ValueInstantiator valueInsta,
+      JsonParser p,
+      String msg)
+      throws IOException {
     /* FIXME: For some reason Jackson can't find the {@link Canvas(String)} constructor, so we do it ourselves:
      * 1. Check if the deserializer bails out on a JSON string
      * 2. Find a String-constructor on the target class
@@ -43,16 +48,23 @@ public class ProblemHandler extends DeserializationProblemHandler {
   }
 
   @Override
-  public Object handleUnexpectedToken(DeserializationContext ctxt, Class<?> targetType, JsonToken t, JsonParser p,
-                                      String failureMsg) throws IOException {
+  public Object handleUnexpectedToken(
+      DeserializationContext ctxt,
+      Class<?> targetType,
+      JsonToken t,
+      JsonParser p,
+      String failureMsg)
+      throws IOException {
     if (p.getCurrentName().equals("@type") && t == JsonToken.START_ARRAY) {
       // Handle multi-valued @types, only current known cases are oa:SvgSelector and oa:CssStyle
       // in combination with cnt:ContentAsText
       ObjectMapper mapper = (ObjectMapper) p.getCodec();
-      String typeName = StreamSupport.stream(((ArrayNode) mapper.readTree(p)).spliterator(), false)
-          .map(JsonNode::textValue)
-          .filter(v -> !v.equals(ContentAsText.TYPE))
-          .findFirst().orElse(null);
+      String typeName =
+          StreamSupport.stream(((ArrayNode) mapper.readTree(p)).spliterator(), false)
+              .map(JsonNode::textValue)
+              .filter(v -> !v.equals(ContentAsText.TYPE))
+              .findFirst()
+              .orElse(null);
       if (typeName != null) {
         return typeName;
       }
@@ -61,8 +73,9 @@ public class ProblemHandler extends DeserializationProblemHandler {
   }
 
   @Override
-  public JavaType handleMissingTypeId(DeserializationContext ctxt, JavaType baseType, TypeIdResolver idResolver,
-                                      String failureMsg) throws IOException {
+  public JavaType handleMissingTypeId(
+      DeserializationContext ctxt, JavaType baseType, TypeIdResolver idResolver, String failureMsg)
+      throws IOException {
     if (baseType.getRawClass() == Feature.class) {
       return idResolver.typeFromId(ctxt, "Feature");
     }
@@ -70,12 +83,15 @@ public class ProblemHandler extends DeserializationProblemHandler {
   }
 
   @Override
-  public Object handleWeirdStringValue(DeserializationContext ctxt, Class<?> targetType, String valueToConvert, String failureMsg) throws IOException {
+  public Object handleWeirdStringValue(
+      DeserializationContext ctxt, Class<?> targetType, String valueToConvert, String failureMsg)
+      throws IOException {
     if (targetType.isEnum()) {
       String lowerCased = valueToConvert.toLowerCase();
-      Optional<?> match = Arrays.stream(targetType.getEnumConstants())
-          .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))
-          .findFirst();
+      Optional<?> match =
+          Arrays.stream(targetType.getEnumConstants())
+              .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))
+              .findFirst();
       if (match.isPresent()) {
         return match.get();
       }

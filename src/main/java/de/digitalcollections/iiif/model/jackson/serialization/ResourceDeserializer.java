@@ -28,27 +28,29 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 import de.digitalcollections.iiif.model.sharedcanvas.Sequence;
 import java.io.IOException;
 
-/** Custom deserializer for Resource types.
+/**
+ * Custom deserializer for Resource types.
  *
- * Needed since we need to preserve the @type for OtherContent, which would get lost
- * if we left the type resolving to Jackson.
+ * <p>Needed since we need to preserve the @type for OtherContent, which would get lost if we left
+ * the type resolving to Jackson.
  */
 public class ResourceDeserializer extends JsonDeserializer<Resource> {
 
-  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING = new ImmutableMap.Builder<String, Class<? extends Resource>>()
-      .put(Annotation.TYPE, Annotation.class)
-      .put(AnnotationList.TYPE, AnnotationList.class)
-      .put(Canvas.TYPE, Canvas.class)
-      .put(Collection.TYPE, Collection.class)
-      .put(Layer.TYPE, Layer.class)
-      .put(Manifest.TYPE, Manifest.class)
-      .put(Range.TYPE, Range.class)
-      .put(Sequence.TYPE, Sequence.class)
-      .put(ImageContent.TYPE, ImageContent.class)
-      .put(SpecificResource.TYPE, SpecificResource.class)
-      .put(ContentAsText.TYPE, ContentAsText.class)
-      .put(CssStyle.TYPE, CssStyle.class)
-      .build();
+  private static final ImmutableMap<String, Class<? extends Resource>> MAPPING =
+      new ImmutableMap.Builder<String, Class<? extends Resource>>()
+          .put(Annotation.TYPE, Annotation.class)
+          .put(AnnotationList.TYPE, AnnotationList.class)
+          .put(Canvas.TYPE, Canvas.class)
+          .put(Collection.TYPE, Collection.class)
+          .put(Layer.TYPE, Layer.class)
+          .put(Manifest.TYPE, Manifest.class)
+          .put(Range.TYPE, Range.class)
+          .put(Sequence.TYPE, Sequence.class)
+          .put(ImageContent.TYPE, ImageContent.class)
+          .put(SpecificResource.TYPE, SpecificResource.class)
+          .put(ContentAsText.TYPE, ContentAsText.class)
+          .put(CssStyle.TYPE, CssStyle.class)
+          .build();
 
   public Resource deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
@@ -64,8 +66,7 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     } else if (p.getCurrentToken() == JsonToken.VALUE_STRING) {
       String stringValue = p.getValueAsString();
       String typeName = getMissingType(ctxt, containingField);
-      return resourceFromString(MAPPING.getOrDefault(typeName, OtherContent.class),
-                                stringValue);
+      return resourceFromString(MAPPING.getOrDefault(typeName, OtherContent.class), stringValue);
     } else if (p.getCurrentToken() == JsonToken.START_ARRAY) {
       // TODO
       throw new RuntimeException("Could not deserialize Resource.");
@@ -83,11 +84,12 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     }
   }
 
-  private Resource parseChoice(String containingField, ObjectMapper mapper, ObjectNode tree,
-                               DeserializationContext ctxt) throws JsonProcessingException {
+  private Resource parseChoice(
+      String containingField, ObjectMapper mapper, ObjectNode tree, DeserializationContext ctxt)
+      throws JsonProcessingException {
     ObjectNode defaultTree = (ObjectNode) tree.get("default");
-    Class<? extends Resource> resourceType = MAPPING.getOrDefault(
-        getTypeName(containingField, ctxt, defaultTree), OtherContent.class);
+    Class<? extends Resource> resourceType =
+        MAPPING.getOrDefault(getTypeName(containingField, ctxt, defaultTree), OtherContent.class);
     Resource defaultResource = mapper.treeToValue(defaultTree, resourceType);
     ArrayNode alternativesArray = (ArrayNode) tree.get("item");
     for (JsonNode subNode : alternativesArray) {
@@ -123,22 +125,27 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     }
   }
 
-  /** Get type for  "on" values that are plain URIs by deducing the type from their parent. */
+  /** Get type for "on" values that are plain URIs by deducing the type from their parent. */
   private String getOnType(DeserializationContext ctxt) {
     // Easiest way: The parser has already constructed an annotation object with a motivation.
-    // This is highly dependendant on the order of keys in the JSON, i.e. if "on" is the first key in the annotation
+    // This is highly dependendant on the order of keys in the JSON, i.e. if "on" is the first key
+    // in the annotation
     // object, this won't work.
     Object curVal = ctxt.getParser().getCurrentValue();
-    boolean isPaintingAnno = (curVal != null && curVal instanceof Annotation
-                              && ((Annotation) curVal).getMotivation() != null
-                              && ((Annotation) curVal).getMotivation().equals(Motivation.PAINTING));
+    boolean isPaintingAnno =
+        (curVal != null
+            && curVal instanceof Annotation
+            && ((Annotation) curVal).getMotivation() != null
+            && ((Annotation) curVal).getMotivation().equals(Motivation.PAINTING));
     if (isPaintingAnno) {
       return "sc:Canvas";
     }
-    // More reliable way: Walk up the parsing context until we hit a IIIF resource that we can deduce the type from
+    // More reliable way: Walk up the parsing context until we hit a IIIF resource that we can
+    // deduce the type from
     // Usually this shouldn't be more than two levels up
     JsonStreamContext parent = ctxt.getParser().getParsingContext().getParent();
-    while (parent != null && (parent.getCurrentValue() == null || !(parent.getCurrentValue() instanceof Resource))) {
+    while (parent != null
+        && (parent.getCurrentValue() == null || !(parent.getCurrentValue() instanceof Resource))) {
       parent = parent.getParent();
     }
     if (parent != null) {
@@ -152,9 +159,8 @@ public class ResourceDeserializer extends JsonDeserializer<Resource> {
     try {
       return clz.getConstructor(String.class).newInstance(resourceString);
     } catch (Exception e) {
-      throw new IllegalArgumentException(String.format(
-          "Could not construct %s from '%s'",
-          clz.getName(), resourceString));
+      throw new IllegalArgumentException(
+          String.format("Could not construct %s from '%s'", clz.getName(), resourceString));
     }
   }
 

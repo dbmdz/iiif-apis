@@ -1,4 +1,3 @@
 package de.digitalcollections.iiif.model.interfaces;
 
-public interface Selector {
-}
+public interface Selector {}

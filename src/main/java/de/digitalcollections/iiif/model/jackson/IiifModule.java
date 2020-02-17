@@ -19,11 +19,13 @@ public class IiifModule extends SimpleModule {
     this.setDeserializerModifier(new DeserializerModifier());
 
     // Just use MimeType's getTypeName and String constructor for serializing/deserializing it
-    this.addSerializer(new StdDelegatingSerializer(MimeType.class, toString(MimeType::getTypeName)));
-    this.addDeserializer(MimeType.class, new StdDelegatingDeserializer<>(fromString(MimeType::fromTypename)));
+    this.addSerializer(
+        new StdDelegatingSerializer(MimeType.class, toString(MimeType::getTypeName)));
+    this.addDeserializer(
+        MimeType.class, new StdDelegatingDeserializer<>(fromString(MimeType::fromTypename)));
   }
 
-  /** Helper function to create Converter from lambda **/
+  /** Helper function to create Converter from lambda * */
   private <T> Converter<String, T> fromString(Function<String, ? extends T> fun) {
     return new StdConverter<String, T>() {
       @Override
@@ -33,7 +35,7 @@ public class IiifModule extends SimpleModule {
     };
   }
 
-  /** Helper function to create Converter from lambda **/
+  /** Helper function to create Converter from lambda * */
   private <T> Converter<T, String> toString(Function<T, String> fun) {
     return new StdConverter<T, String>() {
       @Override

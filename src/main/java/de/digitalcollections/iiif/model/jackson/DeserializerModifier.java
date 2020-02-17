@@ -19,8 +19,11 @@ import java.util.Arrays;
 public class DeserializerModifier extends BeanDeserializerModifier {
 
   @Override
-  public JsonDeserializer<?> modifyEnumDeserializer(DeserializationConfig config, JavaType type,
-                                                    BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+  public JsonDeserializer<?> modifyEnumDeserializer(
+      DeserializationConfig config,
+      JavaType type,
+      BeanDescription beanDesc,
+      JsonDeserializer<?> deserializer) {
     if (Arrays.asList(Quality.class, Format.class).contains(type.getRawClass())) {
       return new EnumDeserializer((Class<? extends Enum>) type.getRawClass());
     }
@@ -28,8 +31,8 @@ public class DeserializerModifier extends BeanDeserializerModifier {
   }
 
   @Override
-  public JsonDeserializer<?> modifyDeserializer(DeserializationConfig config, BeanDescription beanDesc,
-                                                JsonDeserializer<?> deserializer) {
+  public JsonDeserializer<?> modifyDeserializer(
+      DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
     // We don't use the @JsonDeserialize annotation since we only want the
     // custom deserializer for the abstract type and not for the actual types.
     if (Service.class == beanDesc.getBeanClass()) {

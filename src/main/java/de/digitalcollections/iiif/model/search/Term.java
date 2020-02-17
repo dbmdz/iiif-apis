@@ -9,7 +9,7 @@ import java.net.URI;
 /**
  * A term in an autocomplete query response.
  *
- * See http://iiif.io/api/search/1.0/#response
+ * <p>See http://iiif.io/api/search/1.0/#response
  */
 public class Term {
 

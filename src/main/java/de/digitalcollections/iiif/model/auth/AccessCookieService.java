@@ -12,17 +12,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The client uses this service to obtain a cookie that will be used when interacting with content such as images,
- * and with the access token service.
+ * The client uses this service to obtain a cookie that will be used when interacting with content
+ * such as images, and with the access token service.
  *
- * There are several different interaction patterns in which the client will use this service, based on the user
- * interface that must be rendered for the user, indicated by a profile URI. The client obtains the link to the access
- * cookie service from a service block in a description of the protected resource.
+ * <p>There are several different interaction patterns in which the client will use this service,
+ * based on the user interface that must be rendered for the user, indicated by a profile URI. The
+ * client obtains the link to the access cookie service from a service block in a description of the
+ * protected resource.
  *
- * See http://iiif.io/api/auth/1.0/#access-cookie-service
+ * <p>See http://iiif.io/api/auth/1.0/#access-cookie-service
  */
-@JsonPropertyOrder({"@context", "@id", "profile", "label", "header", "description", "confirmLabel",
-                    "failureHeader", "failureDescription", "service"})
+@JsonPropertyOrder({
+  "@context",
+  "@id",
+  "profile",
+  "label",
+  "header",
+  "description",
+  "confirmLabel",
+  "failureHeader",
+  "failureDescription",
+  "service"
+})
 public class AccessCookieService extends Service {
 
   public static final String CONTEXT = "http://iiif.io/api/auth/1/context.json";
@@ -44,7 +55,8 @@ public class AccessCookieService extends Service {
   private List<AuthService> services;
 
   @JsonCreator
-  public AccessCookieService(@JsonProperty("@id") String identifier, @JsonProperty("profile") AuthPattern pattern) {
+  public AccessCookieService(
+      @JsonProperty("@id") String identifier, @JsonProperty("profile") AuthPattern pattern) {
     this(identifier == null ? null : URI.create(identifier), pattern);
   }
 
@@ -53,7 +65,8 @@ public class AccessCookieService extends Service {
    *
    * @param identifier (optional) identifier
    * @param pattern authentication pattern
-   * @throws IllegalArgumentException If the auth pattern is not "external" and no identifier is provided.
+   * @throws IllegalArgumentException If the auth pattern is not "external" and no identifier is
+   *     provided.
    */
   public AccessCookieService(URI identifier, AuthPattern pattern) throws IllegalArgumentException {
     super(URI.create(CONTEXT));

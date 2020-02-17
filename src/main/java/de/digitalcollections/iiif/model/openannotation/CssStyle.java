@@ -7,9 +7,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * A resource that contains embedded CSS Stylesheet definitions
- */
+/** A resource that contains embedded CSS Stylesheet definitions */
 public class CssStyle extends ContentAsText {
 
   public static final String TYPE = "oa:CssStyle";

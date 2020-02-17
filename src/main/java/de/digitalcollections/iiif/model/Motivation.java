@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * A motivation for an annotation.
  *
- * Try to use the defined constants and only fall back to the constructor if your motivation is not covered by these.
+ * <p>Try to use the defined constants and only fall back to the constructor if your motivation is
+ * not covered by these.
  */
 public class Motivation {
 

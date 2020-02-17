@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Describes a search hit on a single annotation or across multiple annotations.
  *
- * See http://iiif.io/api/search/1.0/#search-api-specific-responses
+ * <p>See http://iiif.io/api/search/1.0/#search-api-specific-responses
  */
 public class SearchHit {
 

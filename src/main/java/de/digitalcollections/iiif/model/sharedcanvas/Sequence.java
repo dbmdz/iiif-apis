@@ -15,10 +15,11 @@ import java.util.Set;
 /**
  * The order of the views of the object.
  *
- * Multiple sequences are allowed to cover situations when there are multiple equally valid orders through the content,
- * such as when a manuscript’s pages are rebound or archival collections are reordered.
+ * <p>Multiple sequences are allowed to cover situations when there are multiple equally valid
+ * orders through the content, such as when a manuscript’s pages are rebound or archival collections
+ * are reordered.
  *
- * See http://iiif.io/api/presentation/2.1/#sequence
+ * <p>See http://iiif.io/api/presentation/2.1/#sequence
  */
 public class Sequence extends Resource<Sequence> {
 

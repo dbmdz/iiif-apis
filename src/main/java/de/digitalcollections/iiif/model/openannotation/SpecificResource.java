@@ -8,10 +8,8 @@ import de.digitalcollections.iiif.model.sharedcanvas.Resource;
 /**
  * A resource that applies complex styles and/or selectors to a given resource.
  *
- * See:
- * - http://iiif.io/api/presentation/2.1/#non-rectangular-segments
- * - http://iiif.io/api/presentation/2.1/#style
- * - http://iiif.io/api/presentation/2.1/#rotation
+ * <p>See: - http://iiif.io/api/presentation/2.1/#non-rectangular-segments -
+ * http://iiif.io/api/presentation/2.1/#style - http://iiif.io/api/presentation/2.1/#rotation
  */
 public class SpecificResource extends Resource<SpecificResource> {
 
@@ -23,8 +21,7 @@ public class SpecificResource extends Resource<SpecificResource> {
   @JsonDeserialize(using = SelectorDeserializer.class)
   private Selector selector;
 
-  public SpecificResource() {
-  }
+  public SpecificResource() {}
 
   public SpecificResource(String identifier) {
     super(identifier);

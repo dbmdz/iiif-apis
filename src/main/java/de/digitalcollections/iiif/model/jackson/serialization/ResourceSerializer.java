@@ -26,7 +26,8 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
   }
 
   @Override
-  public void serialize(Resource value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+  public void serialize(Resource value, JsonGenerator gen, SerializerProvider serializers)
+      throws IOException {
     // Add @context to top-level object
     if (gen.getOutputContext().getParent() == null) {
       value._context = Resource.CONTEXT;
@@ -71,31 +72,39 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
     }
 
     Completeness completeness = ModelUtilities.getCompleteness(value, value.getClass());
-    if (Objects.equals(containingField, "canvases") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
-      // It's redundant to specify the @type here, since it's clear we have canvases from the field name
+    if (Objects.equals(containingField, "canvases")
+        && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
+      // It's redundant to specify the @type here, since it's clear we have canvases from the field
+      // name
       completeness = ModelUtilities.Completeness.ID_ONLY;
     }
-    if (Objects.equals(containingField, "within") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
+    if (Objects.equals(containingField, "within")
+        && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
       // It's also redundant in these cases, since the specification prescribes a convention
       String withinType = value.getType();
-      boolean skipType = (("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType))
-          || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
-          || ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
+      boolean skipType =
+          (("sc:Manifest".equals(parentType) && "sc:Collection".equals(withinType))
+              || ("sc:AnnotationList".equals(parentType) && "sc:Layer".equals(withinType))
+              || ("sc:Collection".equals(parentType) && "sc:Collection".equals(withinType)));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
-    } else if (Objects.equals(containingField, "on") && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
-      boolean skipType = (value instanceof Canvas
-          && gen.getCurrentValue() instanceof Annotation
-          && Objects.equals(((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
+    } else if (Objects.equals(containingField, "on")
+        && completeness == ModelUtilities.Completeness.ID_AND_TYPE) {
+      boolean skipType =
+          (value instanceof Canvas
+              && gen.getCurrentValue() instanceof Annotation
+              && Objects.equals(
+                  ((Annotation) gen.getCurrentValue()).getMotivation(), Motivation.PAINTING));
       if (skipType) {
         completeness = ModelUtilities.Completeness.ID_ONLY;
       }
     } else {
       ImmutableSet<String> skipParents = ImmutableSet.of("contentLayer", "ranges", "annotations");
-      boolean shouldSkip = (Arrays.asList("prev", "next", "first", "last").contains(containingField)
-                            || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField))
-                            || ("otherContent".equals(containingField) && "sc:Layer".equals(parentType)));
+      boolean shouldSkip =
+          (Arrays.asList("prev", "next", "first", "last").contains(containingField)
+              || (completeness == Completeness.ID_AND_TYPE && skipParents.contains(containingField))
+              || ("otherContent".equals(containingField) && "sc:Layer".equals(parentType)));
       if (shouldSkip) {
         completeness = Completeness.ID_ONLY;
       }

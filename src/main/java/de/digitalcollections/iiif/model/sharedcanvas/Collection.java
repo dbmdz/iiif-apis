@@ -1,5 +1,7 @@
 package de.digitalcollections.iiif.model.sharedcanvas;
 
+import static java.util.Arrays.stream;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,18 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Arrays.stream;
-
 /**
  * An ordered list of manifests, and/or further collections.
  *
- * Collections allow easy advertising and browsing of the manifests in a hierarchical structure, potentially with its
- * own descriptive information. They can also provide clients with a means to locate all of the manifests known to the
- * publishing institution.
+ * <p>Collections allow easy advertising and browsing of the manifests in a hierarchical structure,
+ * potentially with its own descriptive information. They can also provide clients with a means to
+ * locate all of the manifests known to the publishing institution.
  *
- * See http://iiif.io/api/presentation/2.1/#collection
+ * <p>See http://iiif.io/api/presentation/2.1/#collection
  */
-public class Collection extends Resource<Collection> implements Pageable<Collection>, PageContainer<Collection> {
+public class Collection extends Resource<Collection>
+    implements Pageable<Collection>, PageContainer<Collection> {
 
   public static final String TYPE = "sc:Collection";
 
@@ -123,18 +124,20 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
         throw new IllegalArgumentException("Collection members must have a viewingHint.");
       }
     } else if (!(member instanceof Manifest)) {
-      throw new IllegalArgumentException("Members must be either Manifest or Collection resources.");
+      throw new IllegalArgumentException(
+          "Members must be either Manifest or Collection resources.");
     }
   }
 
   /**
-   * Set the list of member resources.
-   * Must be either instances of {@link Manifest} or {@link Collection}.
-   * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
+   * Set the list of member resources. Must be either instances of {@link Manifest} or {@link
+   * Collection}. All {@link Collection} members must have at least one {@link
+   * de.digitalcollections.iiif.model.enums.ViewingHint}.
    *
    * @param members member resources
-   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
-   *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
+   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link
+   *     Collection} or is a {@link Collection} and does not have at least one {@link
+   *     de.digitalcollections.iiif.model.enums.ViewingHint}
    */
   public void setMembers(List<Resource> members) {
     members.forEach(this::checkMember);
@@ -142,15 +145,16 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
   }
 
   /**
-   * Adds one or more member resources.
-   * Must be either instances of {@link Manifest} or {@link Collection}.
-   * All {@link Collection} members must have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}.
+   * Adds one or more member resources. Must be either instances of {@link Manifest} or {@link
+   * Collection}. All {@link Collection} members must have at least one {@link
+   * de.digitalcollections.iiif.model.enums.ViewingHint}.
    *
    * @param first first member
    * @param rest other members
    * @return this collection with added members
-   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link Collection} or is a
-   *         {@link Collection} and does not have at least one {@link de.digitalcollections.iiif.model.enums.ViewingHint}
+   * @throws IllegalArgumentException if at least one member is not a {@link Manifest} or {@link
+   *     Collection} or is a {@link Collection} and does not have at least one {@link
+   *     de.digitalcollections.iiif.model.enums.ViewingHint}
    */
   public Collection addMember(Resource first, Resource... rest) {
     if (this.members == null) {
@@ -188,7 +192,6 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
   @Override
   public void setLast(Collection last) {
     this.lastPage = last;
-
   }
 
   @Override
@@ -230,5 +233,4 @@ public class Collection extends Resource<Collection> implements Pageable<Collect
   public void setStartIndex(int startIndex) {
     this.startIndex = startIndex;
   }
-
 }

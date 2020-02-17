@@ -19,7 +19,7 @@ import org.dmfs.rfc3986.encoding.Precoded;
 /**
  * A selector that describes a region on an IIIF Image API resource.
  *
- * See http://iiif.io/api/annex/openannotation/#iiif-image-api-selector
+ * <p>See http://iiif.io/api/annex/openannotation/#iiif-image-api-selector
  */
 @JsonTypeName(ImageApiSelector.TYPE)
 public class ImageApiSelector implements Selector {
@@ -27,12 +27,13 @@ public class ImageApiSelector implements Selector {
   public static String CONTEXT = "http://iiif.io/api/annex/openannotation/context.json";
   public static final String TYPE = "iiif:ImageApiSelector";
 
-  private static final Pattern REQUEST_PAT = Pattern.compile(
-      "/?(?<identifier>[^/]+)"
-      + "/(?<region>[^/]+)"
-      + "/(?<size>[^/]+)"
-      + "/(?<rotation>[^/]+)"
-      + "/(?<quality>[^/]+?)\\.(?<format>[^/]+?)$");
+  private static final Pattern REQUEST_PAT =
+      Pattern.compile(
+          "/?(?<identifier>[^/]+)"
+              + "/(?<region>[^/]+)"
+              + "/(?<size>[^/]+)"
+              + "/(?<rotation>[^/]+)"
+              + "/(?<quality>[^/]+?)\\.(?<format>[^/]+?)$");
 
   private String identifier;
   private RegionRequest region;
@@ -98,13 +99,15 @@ public class ImageApiSelector implements Selector {
         Objects.toString(format, "jpg"));
   }
 
-  /** The spec says we have to urlencode values, but only characters outside of the US ASCII range and gen-delims
-   * from RFC3986. However, our URL library can only encode the full set of gen-delims (EXCEPT the colon) and sub-delims,
-   * which iswhy we have to manually decode the encoded sub-delims...
-   * Great and pragmatic choice for readability, more code for us :-) */
+  /**
+   * The spec says we have to urlencode values, but only characters outside of the US ASCII range
+   * and gen-delims from RFC3986. However, our URL library can only encode the full set of
+   * gen-delims (EXCEPT the colon) and sub-delims, which iswhy we have to manually decode the
+   * encoded sub-delims... Great and pragmatic choice for readability, more code for us :-)
+   */
   private static String urlEncode(String str) {
-    Set<String> excluded = ImmutableSet.of(
-        ":", "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=");
+    Set<String> excluded =
+        ImmutableSet.of(":", "!", "$", "&", "'", "(", ")", "*", "+", ",", ";", "=");
     String encoded = new Encoded(str).toString();
     for (String ex : excluded) {
       encoded = encoded.replaceAll(new Encoded(ex).toString(), ex);
@@ -113,19 +116,25 @@ public class ImageApiSelector implements Selector {
   }
 
   /**
-   *  Create the canonical of the Image API request.See http://iiif.io/api/image/2.1/#canonical-uri-syntax
+   * Create the canonical of the Image API request.See
+   * http://iiif.io/api/image/2.1/#canonical-uri-syntax
    *
-   * @param nativeSize      Native size of the image the selector is applied to
-   * @param profile         Image API profile used
-   * @param defaultQuality  The native/default quality of the image the selector is applied to
+   * @param nativeSize Native size of the image the selector is applied to
+   * @param profile Image API profile used
+   * @param defaultQuality The native/default quality of the image the selector is applied to
    * @return The canonical form of the Image API request
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if RegionRequest can not be instantiated from canonical form of region
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if RegionRequest can not be
+   *     instantiated from canonical form of region
    */
-  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality) throws ResolvingException {
+  public String getCanonicalForm(
+      Dimension nativeSize, ImageApiProfile profile, Quality defaultQuality)
+      throws ResolvingException {
     Dimension scaleReference = nativeSize;
-    Rectangle2D canonicalRegion = RegionRequest.fromString(region.getCanonicalForm(nativeSize)).getRegion();
+    Rectangle2D canonicalRegion =
+        RegionRequest.fromString(region.getCanonicalForm(nativeSize)).getRegion();
     if (canonicalRegion != null) {
-      scaleReference = new Dimension((int) canonicalRegion.getWidth(), (int) canonicalRegion.getHeight());
+      scaleReference =
+          new Dimension((int) canonicalRegion.getWidth(), (int) canonicalRegion.getHeight());
     }
     return String.format(
         "%s%s/%s/%s/%s.%s",

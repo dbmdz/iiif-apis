@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * An ordered list of annotation lists.
  *
- * Layers allow higher level groupings of annotations to be recorded. For example, all of the English translation
- * annotations of a medieval French document could be kept separate from the transcription or an edition in modern
- * French.
+ * <p>Layers allow higher level groupings of annotations to be recorded. For example, all of the
+ * English translation annotations of a medieval French document could be kept separate from the
+ * transcription or an edition in modern French.
  *
- * See http://iiif.io/api/presentation/2.1/#layer
+ * <p>See http://iiif.io/api/presentation/2.1/#layer
  */
 public class Layer extends Resource<Layer> implements PageContainer<AnnotationList> {
 
@@ -32,6 +32,7 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
 
   @JsonProperty("total")
   private Integer totalAnnotations;
+
   private List<AnnotationList> otherContent;
 
   @JsonCreator
@@ -44,8 +45,7 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
     this.addLabel(label);
   }
 
-  public Layer() {
-  }
+  public Layer() {}
 
   @Override
   public String getType() {
@@ -69,8 +69,9 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
   }
 
   public Layer addOtherContent(String first, String... rest) {
-    return this.addOtherContent(new AnnotationList(first),
-                                Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
+    return this.addOtherContent(
+        new AnnotationList(first),
+        Arrays.stream(rest).map(AnnotationList::new).toArray(AnnotationList[]::new));
   }
 
   public Layer addOtherContent(AnnotationList first, AnnotationList... rest) {
@@ -99,7 +100,6 @@ public class Layer extends Resource<Layer> implements PageContainer<AnnotationLi
   @Override
   public void setLast(AnnotationList last) {
     this.lastAnnotationPage = last;
-
   }
 
   @Override

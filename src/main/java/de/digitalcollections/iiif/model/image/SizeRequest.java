@@ -14,7 +14,8 @@ import java.util.regex.Pattern;
 
 public class SizeRequest {
 
-  private static final Pattern PARSE_PAT = Pattern.compile("^(!|pct:)?(?:([0-9]+)?,([0-9]+)?|([0-9.]+))$");
+  private static final Pattern PARSE_PAT =
+      Pattern.compile("^(!|pct:)?(?:([0-9]+)?,([0-9]+)?|([0-9.]+))$");
   private boolean max = false;
   private boolean bestFit = false;
   private Integer width = null;
@@ -43,9 +44,7 @@ public class SizeRequest {
     if (matcher.group(1) != null) {
       if (matcher.group(1).equals("!")) {
         return new SizeRequest(
-            Integer.valueOf(matcher.group(2)),
-            Integer.valueOf(matcher.group(3)),
-            true);
+            Integer.valueOf(matcher.group(2)), Integer.valueOf(matcher.group(3)), true);
       } else if (matcher.group(1).equals("pct:")) {
         return new SizeRequest(new BigDecimal(matcher.group(4)));
       }
@@ -61,16 +60,14 @@ public class SizeRequest {
     return new SizeRequest(width, height);
   }
 
-  /**
-   * Create a size request for the full native resolution of the image region.
-   */
+  /** Create a size request for the full native resolution of the image region. */
   public SizeRequest() {
     this(false);
   }
 
   /**
-   * Create a size request for the maximum supported size of the image region, if isMax is true.
-   * If isMax is false, it behaves identically to the default constructor.
+   * Create a size request for the maximum supported size of the image region, if isMax is true. If
+   * isMax is false, it behaves identically to the default constructor.
    *
    * @param isMax true causes a size request for the maximum supported size of the image region
    */
@@ -79,8 +76,8 @@ public class SizeRequest {
   }
 
   /**
-   * Create a size request for a given width or height.
-   * One of both can be null (the other value will be determined based on the aspect ratio of the image region), but not both at once.
+   * Create a size request for a given width or height. One of both can be null (the other value
+   * will be determined based on the aspect ratio of the image region), but not both at once.
    *
    * @param width width of size request
    * @param height height of size request
@@ -95,12 +92,14 @@ public class SizeRequest {
   }
 
   /**
-   * Create a size request for a given width and height and signal that the server can decide to render smaller
-   * resolutions as it deems neccessary.
+   * Create a size request for a given width and height and signal that the server can decide to
+   * render smaller resolutions as it deems neccessary.
+   *
    * @param width width of size request
    * @param height height of size request
    * @param bestFit true, if server can decide to render smaller resolutions as it deems neccessary
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved to Size Request
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved
+   *     to Size Request
    */
   public SizeRequest(int width, int height, boolean bestFit) throws ResolvingException {
     this(width, height);
@@ -108,7 +107,8 @@ public class SizeRequest {
   }
 
   /**
-   * Create a size request that scaled both dimensions according to a fixed percentage, maintaining the aspect ratio.
+   * Create a size request that scaled both dimensions according to a fixed percentage, maintaining
+   * the aspect ratio.
    *
    * @param percentage scaling percentage, maintaining aspect ratio
    * @throws ResolvingException if the percentage is not between 0 and 100
@@ -167,14 +167,17 @@ public class SizeRequest {
 
   /**
    * Get the canonical form of this request.
-   * @see <a href="http://iiif.io/api/image/2.1/#canonical-uri-syntax">IIIF Image API specification</a>
    *
+   * @see <a href="http://iiif.io/api/image/2.1/#canonical-uri-syntax">IIIF Image API
+   *     specification</a>
    * @param nativeSize native size of request
    * @param profile image api profile
    * @return canonical form of this request
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if nativeSize can not be converted to canonical form
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if nativeSize can not be
+   *     converted to canonical form
    */
-  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile) throws ResolvingException {
+  public String getCanonicalForm(Dimension nativeSize, ImageApiProfile profile)
+      throws ResolvingException {
     Dimension resolved = this.resolve(nativeSize, profile);
     // "w," requests are already canonical
     double nativeRatio = nativeSize.getWidth() / nativeSize.getHeight();
@@ -184,38 +187,45 @@ public class SizeRequest {
     } else if (this.width != null && this.height == null) {
       return this.toString();
     } else if (Math.floor(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()
-               || Math.ceil(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
+        || Math.ceil(resolvedRatio * nativeSize.getHeight()) == nativeSize.getWidth()) {
       return String.format("%d,", resolved.width);
     } else {
       return String.format("%d,%d", resolved.width, resolved.height);
     }
   }
 
-  public Dimension resolve(Dimension nativeSize, ImageApiProfile profile) throws ResolvingException {
+  public Dimension resolve(Dimension nativeSize, ImageApiProfile profile)
+      throws ResolvingException {
     return resolve(nativeSize, Collections.emptyList(), profile);
   }
 
   /**
-   * Resolve the request to dimensions that can be used for scaling, based on the native size of the image region and the available profile.
+   * Resolve the request to dimensions that can be used for scaling, based on the native size of the
+   * image region and the available profile.
    *
    * @param nativeSize native size of the image region
    * @param availableSizes available sizes
    * @param profile image api profile
    * @return resolved dimension
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved to Dimension
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if params can not be resolved
+   *     to Dimension
    */
-  public Dimension resolve(Dimension nativeSize, List<Dimension> availableSizes, ImageApiProfile profile) throws ResolvingException {
+  public Dimension resolve(
+      Dimension nativeSize, List<Dimension> availableSizes, ImageApiProfile profile)
+      throws ResolvingException {
     double aspect = (double) nativeSize.width / (double) nativeSize.height;
     // "max"
     if (max) {
-      // By default, identical to the largest available size or the native size if no sizes were specified
-      Dimension dim = availableSizes.stream()
-          // Avoid upscaling when dealing with region requests
-          .filter(s -> s.width <= nativeSize.width && s.height <= nativeSize.height)
-          // Select the largest available size
-          .max(Comparator.comparing(Dimension::getWidth).thenComparing(Dimension::getHeight))
-          // Otherwise, fall back to the native size
-          .orElse(new Dimension(nativeSize.width, nativeSize.height));
+      // By default, identical to the largest available size or the native size if no sizes were
+      // specified
+      Dimension dim =
+          availableSizes.stream()
+              // Avoid upscaling when dealing with region requests
+              .filter(s -> s.width <= nativeSize.width && s.height <= nativeSize.height)
+              // Select the largest available size
+              .max(Comparator.comparing(Dimension::getWidth).thenComparing(Dimension::getHeight))
+              // Otherwise, fall back to the native size
+              .orElse(new Dimension(nativeSize.width, nativeSize.height));
       if (profile != null && profile.maxWidth != null) {
         if (dim.width > profile.maxWidth) {
           // If maximum width is set, width cannot exceed it
@@ -236,16 +246,17 @@ public class SizeRequest {
           dim.width = (int) Math.sqrt(aspect * (double) profile.maxArea);
           dim.height = (int) (dim.width / aspect);
           if (dim.width <= 0 || dim.height <= 0) {
-            throw new ResolvingException(String.format(
-                "Cannot fit image with dimensions %dx%d into maximum area of %d pixels.",
-                nativeSize.width, nativeSize.height, profile.maxArea));
+            throw new ResolvingException(
+                String.format(
+                    "Cannot fit image with dimensions %dx%d into maximum area of %d pixels.",
+                    nativeSize.width, nativeSize.height, profile.maxArea));
           }
         }
       }
       return dim;
     }
     Dimension out;
-    if (percentage != null || bestFit) {  // "pct:"
+    if (percentage != null || bestFit) { // "pct:"
       double ratio;
       if (percentage != null) {
         ratio = percentage.doubleValue() / 100.0;
@@ -253,7 +264,7 @@ public class SizeRequest {
         ratio = Math.min(width / nativeSize.getWidth(), height / nativeSize.getHeight());
       }
       out = new Dimension((int) (ratio * nativeSize.width), (int) (ratio * nativeSize.height));
-    } else if (width == null && height == null) {  // "full"
+    } else if (width == null && height == null) { // "full"
       out = nativeSize;
     } else {
       out = new Dimension();
@@ -263,7 +274,7 @@ public class SizeRequest {
       if (height != null) {
         out.height = height;
       }
-      if (width == null) {  // ",h"
+      if (width == null) { // ",h"
         out.width = (int) (out.height * aspect);
       }
       if (height == null) { // "w,"
@@ -272,36 +283,43 @@ public class SizeRequest {
     }
     Integer maxHeight = profile.maxHeight != null ? profile.maxHeight : profile.maxWidth;
     if (profile.maxWidth != null && out.width > profile.maxWidth) {
-      throw new ResolvingException(String.format(
-          "Requested width (%d) exceeds maximum width (%d) as specified in the profile.", out.width, profile.maxWidth));
+      throw new ResolvingException(
+          String.format(
+              "Requested width (%d) exceeds maximum width (%d) as specified in the profile.",
+              out.width, profile.maxWidth));
     } else if (maxHeight != null && out.height > maxHeight) {
-      throw new ResolvingException(String.format(
-          "Requested height (%d) exceeds maximum height (%d) as specified in the profile.", out.height, maxHeight));
+      throw new ResolvingException(
+          String.format(
+              "Requested height (%d) exceeds maximum height (%d) as specified in the profile.",
+              out.height, maxHeight));
     } else if (profile.maxArea != null && out.height * out.width > profile.maxArea) {
-      throw new ResolvingException(String.format(
-          "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",
-          out.width, out.height, out.width * out.height, profile.maxArea));
-    } else if ((profile.features == null || !profile.features.contains(ImageApiProfile.Feature.SIZE_ABOVE_FULL))
-               && (out.width > nativeSize.width || out.height > nativeSize.height)) {
-      throw new ResolvingException(String.format(
-          "Requested dimensions (%dx%d) exceed native dimensions (%dx%d), profile states that upscaling is not supported.",
-          out.width, out.height, nativeSize.width, nativeSize.height));
+      throw new ResolvingException(
+          String.format(
+              "Requested area (%d*%d = %d) exceeds maximum area (%d) as specified in the profile",
+              out.width, out.height, out.width * out.height, profile.maxArea));
+    } else if ((profile.features == null
+            || !profile.features.contains(ImageApiProfile.Feature.SIZE_ABOVE_FULL))
+        && (out.width > nativeSize.width || out.height > nativeSize.height)) {
+      throw new ResolvingException(
+          String.format(
+              "Requested dimensions (%dx%d) exceed native dimensions (%dx%d), profile states that upscaling is not supported.",
+              out.width, out.height, nativeSize.width, nativeSize.height));
     }
     return out;
   }
 
   /**
-   * Like {@link #resolve(Dimension, ImageApiProfile)}, but can be used with a {@link Rectangle}, e.g. as returned from {@link RegionRequest#resolve(Dimension)}.
+   * Like {@link #resolve(Dimension, ImageApiProfile)}, but can be used with a {@link Rectangle},
+   * e.g. as returned from {@link RegionRequest#resolve(Dimension)}.
    *
    * @param region image region
    * @param profile image api profile
    * @return resolved size dimension
-   * @throws de.digitalcollections.iiif.model.image.ResolvingException if rectangle region can not be resolved
+   * @throws de.digitalcollections.iiif.model.image.ResolvingException if rectangle region can not
+   *     be resolved
    */
   public Dimension resolve(Rectangle region, ImageApiProfile profile) throws ResolvingException {
-    return resolve(
-        new Dimension(region.width, region.height),
-        profile);
+    return resolve(new Dimension(region.width, region.height), profile);
   }
 
   /**

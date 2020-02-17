@@ -27,9 +27,7 @@ public class RotationRequest {
     if (!matcher.matches()) {
       throw new ResolvingException("Bad format: " + str);
     }
-    return new RotationRequest(
-        new BigDecimal(matcher.group(2)),
-        !(matcher.group(1) == null));
+    return new RotationRequest(new BigDecimal(matcher.group(2)), !(matcher.group(1) == null));
   }
 
   public RotationRequest(int rotation) throws ResolvingException {
@@ -83,8 +81,7 @@ public class RotationRequest {
       return false;
     }
     RotationRequest that = (RotationRequest) o;
-    return mirror == that.mirror
-           && Objects.equal(rotation, that.rotation);
+    return mirror == that.mirror && Objects.equal(rotation, that.rotation);
   }
 
   @Override

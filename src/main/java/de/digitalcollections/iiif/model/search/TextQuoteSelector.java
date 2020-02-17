@@ -7,7 +7,7 @@ import de.digitalcollections.iiif.model.interfaces.Selector;
 /**
  * A selector for highlighting parts of a text.
  *
- * See http://iiif.io/api/search/1.0/#search-term-highlighting
+ * <p>See http://iiif.io/api/search/1.0/#search-term-highlighting
  */
 public class TextQuoteSelector implements Selector {
 

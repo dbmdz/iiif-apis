@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * A list of result terms for an autocomplete query.
  *
- * See http://iiif.io/api/search/1.0/#response
+ * <p>See http://iiif.io/api/search/1.0/#response
  */
 public class TermList {
 

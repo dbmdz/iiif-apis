@@ -8,8 +8,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 /**
  * An entry in a IIIF resource's "metadata" list.
  *
- * Consists of a label and a value, both of which can be multi-valued and multi-lingual (see {@link PropertyValue}.
- * The value should be either simple HTML, including links and text markup, or plain text, and the label should be plain text.
+ * <p>Consists of a label and a value, both of which can be multi-valued and multi-lingual (see
+ * {@link PropertyValue}. The value should be either simple HTML, including links and text markup,
+ * or plain text, and the label should be plain text.
  */
 @JsonPropertyOrder({"label", "value"})
 public class MetadataEntry {
@@ -18,8 +19,8 @@ public class MetadataEntry {
   private PropertyValue value;
 
   @JsonCreator
-  public MetadataEntry(@JsonProperty("label") PropertyValue label,
-                       @JsonProperty("value") PropertyValue value) {
+  public MetadataEntry(
+      @JsonProperty("label") PropertyValue label, @JsonProperty("value") PropertyValue value) {
     this.label = label;
     this.value = value;
   }
@@ -49,7 +50,7 @@ public class MetadataEntry {
 
   @Override
   public String toString() {
-    return String.format("MetadataEntry(label=[%s],value=[%s]",
-                         getLabel().toString(), getValue().toString());
+    return String.format(
+        "MetadataEntry(label=[%s],value=[%s]", getLabel().toString(), getValue().toString());
   }
 }

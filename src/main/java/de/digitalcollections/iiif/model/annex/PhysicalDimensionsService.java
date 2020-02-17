@@ -7,13 +7,15 @@ import de.digitalcollections.iiif.model.Service;
 import java.net.URI;
 
 /**
- * A service that describes  the physical dimensions of the resource it is associated to
+ * A service that describes the physical dimensions of the resource it is associated to
  * (http://iiif.io/api/annex/services/#physical-dimensions).
  */
 public class PhysicalDimensionsService extends Service {
 
   public enum Unit {
-    MILLIMETERS("mm"), CENTIMETERS("cm"), INCHES("in");
+    MILLIMETERS("mm"),
+    CENTIMETERS("cm"),
+    INCHES("in");
 
     private final String unit;
 
@@ -36,8 +38,9 @@ public class PhysicalDimensionsService extends Service {
   private final Unit physicalUnits;
 
   @JsonCreator
-  public PhysicalDimensionsService(@JsonProperty("physicalScale") double physicalScale,
-                                   @JsonProperty("physicalUnits") Unit units) {
+  public PhysicalDimensionsService(
+      @JsonProperty("physicalScale") double physicalScale,
+      @JsonProperty("physicalUnits") Unit units) {
     super(URI.create(CONTEXT));
     this.addProfile(PROFILE);
     this.physicalScale = physicalScale;

@@ -17,23 +17,25 @@ import java.util.stream.StreamSupport;
 
 public class SelectorDeserializer extends JsonDeserializer<Selector> {
 
-  private static final Map<String, Class<? extends Selector>> MAPPING
-      = new ImmutableMap.Builder<String, Class<? extends Selector>>()
-      .put(ImageApiSelector.TYPE, ImageApiSelector.class)
-      .put(SvgSelector.TYPE, SvgSelector.class)
-      .put(TextQuoteSelector.TYPE, TextQuoteSelector.class)
-      .build();
+  private static final Map<String, Class<? extends Selector>> MAPPING =
+      new ImmutableMap.Builder<String, Class<? extends Selector>>()
+          .put(ImageApiSelector.TYPE, ImageApiSelector.class)
+          .put(SvgSelector.TYPE, SvgSelector.class)
+          .put(TextQuoteSelector.TYPE, TextQuoteSelector.class)
+          .build();
 
-  public Selector deserialize(JsonParser p, DeserializationContext ctxt)
-      throws IOException {
+  public Selector deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
     ObjectMapper mapper = (ObjectMapper) p.getCodec();
     ObjectNode obj = mapper.readTree(p);
     String typeName;
     if (obj.get("@type").isArray()) {
       // Find the actual selector type
-      typeName = StreamSupport.stream(obj.get("@type").spliterator(), false)
-          .filter(v -> !v.textValue().equals("cnt:ContentAsText"))
-          .findFirst().orElse(new TextNode("UNKNOWN")).textValue();
+      typeName =
+          StreamSupport.stream(obj.get("@type").spliterator(), false)
+              .filter(v -> !v.textValue().equals("cnt:ContentAsText"))
+              .findFirst()
+              .orElse(new TextNode("UNKNOWN"))
+              .textValue();
       // Make @type a text value so that Jackson doesn't bail out further down the line
       obj.set("@type", new TextNode(typeName));
     } else {
