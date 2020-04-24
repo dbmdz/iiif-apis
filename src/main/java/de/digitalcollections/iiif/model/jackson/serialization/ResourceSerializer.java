@@ -116,7 +116,7 @@ public class ResourceSerializer extends JsonSerializer<Resource> {
         break;
       case ID_ONLY:
         // Resources with only an identifier should be a string
-        gen.writeObject(value.getIdentifier().toString());
+        gen.writeString(value.getIdentifier().toString());
         break;
       default:
         // Otherwise delegate to default serializer
