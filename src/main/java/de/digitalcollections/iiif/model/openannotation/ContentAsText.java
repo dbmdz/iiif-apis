@@ -2,8 +2,8 @@ package de.digitalcollections.iiif.model.openannotation;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import de.digitalcollections.iiif.model.MimeType;
 import de.digitalcollections.iiif.model.sharedcanvas.Resource;
-import de.digitalcollections.model.api.identifiable.resource.MimeType;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
