@@ -59,7 +59,6 @@
 
     <version.assertj>3.16.1</version.assertj>
     <version.assertj-json>1.1.0</version.assertj-json>
-    <version.dc-model>4.0.2</version.dc-model>
     <version.geojson>1.14</version.geojson>
     <version.guava>23.0</version.guava>
     <version.jackson>2.11.0</version.jackson>
@@ -112,11 +111,6 @@
       <artifactId>assertj-json</artifactId>
       <version>${version.assertj-json}</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>de.digitalcollections.model</groupId>
-      <artifactId>dc-model</artifactId>
-      <version>${version.dc-model}</version>
     </dependency>
     <dependency>
       <groupId>de.grundid.opendatalab</groupId>

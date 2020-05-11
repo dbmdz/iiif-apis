@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.StdDelegatingSerializer;
 import com.fasterxml.jackson.databind.util.Converter;
 import com.fasterxml.jackson.databind.util.StdConverter;
-import de.digitalcollections.model.api.identifiable.resource.MimeType;
+import de.digitalcollections.iiif.model.MimeType;
 import java.util.function.Function;
 
 public class IiifModule extends SimpleModule {
