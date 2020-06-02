@@ -180,7 +180,6 @@ public class SizeRequest {
       throws ResolvingException {
     Dimension resolved = this.resolve(nativeSize, profile);
     // "w," requests are already canonical
-    double nativeRatio = nativeSize.getWidth() / nativeSize.getHeight();
     double resolvedRatio = resolved.getWidth() / resolved.getHeight();
     if (resolved.equals(nativeSize)) {
       return "full";

@@ -111,7 +111,7 @@ public class JsonMappingTest {
         .hasSize(1);
 
     Canvas parsedCanvas = mapper.readValue(json, Canvas.class);
-    assertThat(parsedCanvas).isEqualToComparingFieldByFieldRecursively(canvas);
+    assertThat(parsedCanvas).usingRecursiveComparison().isEqualTo(canvas);
   }
 
   @Test

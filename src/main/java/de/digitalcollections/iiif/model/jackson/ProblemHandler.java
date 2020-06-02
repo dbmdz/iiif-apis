@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.deser.ValueInstantiator;
 import com.fasterxml.jackson.databind.jsontype.TypeIdResolver;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import de.digitalcollections.iiif.model.openannotation.ContentAsText;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -22,6 +23,9 @@ import org.geojson.Feature;
 public class ProblemHandler extends DeserializationProblemHandler {
 
   @Override
+  @SuppressFBWarnings(
+      value = "REC_CATCH_EXCEPTION",
+      justification = "Multicatch seems to be ok here")
   public Object handleMissingInstantiator(
       DeserializationContext ctxt,
       Class<?> instClass,
@@ -50,7 +54,7 @@ public class ProblemHandler extends DeserializationProblemHandler {
   @Override
   public Object handleUnexpectedToken(
       DeserializationContext ctxt,
-      Class<?> targetType,
+      JavaType targetType,
       JsonToken t,
       JsonParser p,
       String failureMsg)
@@ -87,7 +91,6 @@ public class ProblemHandler extends DeserializationProblemHandler {
       DeserializationContext ctxt, Class<?> targetType, String valueToConvert, String failureMsg)
       throws IOException {
     if (targetType.isEnum()) {
-      String lowerCased = valueToConvert.toLowerCase();
       Optional<?> match =
           Arrays.stream(targetType.getEnumConstants())
               .filter(v -> v.toString().toLowerCase().equals(valueToConvert.toLowerCase()))

@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -30,20 +30,13 @@ public class MimeType {
       Pattern.compile(
           "^(?<primaryType>[-a-z]+?)/(?<subType>[-\\\\.a-z0-9*]+?)(?:\\+(?<suffix>\\w+))?$");
 
-  private static String getMimeTypeColumn(String line) {
-    return Arrays.stream(line.split("\t"))
-        .map(String::trim)
-        .filter(l -> !l.isEmpty())
-        .findFirst()
-        .orElseThrow(NoSuchElementException::new);
-  }
-
   static {
     // Load list of known MIME types and their extensions from the IANA list in the
     // package resources (obtained from
     // https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)
     InputStream mimeStream = MimeType.class.getClassLoader().getResourceAsStream("mime.types");
-    BufferedReader mimeReader = new BufferedReader(new InputStreamReader(mimeStream));
+    BufferedReader mimeReader =
+        new BufferedReader(new InputStreamReader(mimeStream, StandardCharsets.US_ASCII));
 
     Function<String[], String[]> substituteMissingExtensions =
         columns -> {
@@ -98,7 +91,8 @@ public class MimeType {
 
   public static final MimeType MIME_IMAGE = knownTypes.get("image/*");;
   public static final MimeType MIME_APPLICATION_JSON = knownTypes.get("application/json");
-  public static final MimeType MIME_APPLICATION_OCTET_STREAM = knownTypes.get("application/octet-stream");
+  public static final MimeType MIME_APPLICATION_OCTET_STREAM =
+      knownTypes.get("application/octet-stream");
   public static final MimeType MIME_APPLICATION_XML = knownTypes.get("application/xml");
   public static final MimeType MIME_IMAGE_JPEG = knownTypes.get("image/jpeg");
   public static final MimeType MIME_IMAGE_TIF = knownTypes.get("image/tiff");

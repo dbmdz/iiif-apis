@@ -210,6 +210,14 @@ public class ImageApiProfile extends Profile {
       return Objects.equals(this.imageApiFeature, other.imageApiFeature)
           && Objects.equals(this.customFeature, other.customFeature);
     }
+
+    @Override
+    public int hashCode() {
+      int hash = 7;
+      hash = 53 * hash + Objects.hashCode(this.imageApiFeature);
+      hash = 53 * hash + Objects.hashCode(this.customFeature);
+      return hash;
+    }
   }
 
   public static final ImageApiProfile LEVEL_ZERO =

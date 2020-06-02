@@ -2,6 +2,7 @@ package de.digitalcollections.iiif.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Objects;
 
 /**
  * A motivation for an annotation.
@@ -31,5 +32,12 @@ public class Motivation {
   @Override
   public boolean equals(Object other) {
     return (other instanceof Motivation && other.toString().equals(this.motivation));
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 89 * hash + Objects.hashCode(this.motivation);
+    return hash;
   }
 }
