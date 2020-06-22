@@ -65,7 +65,7 @@
     <version.jsonassert>1.5.0</version.jsonassert>
     <version.junit>5.6.2</version.junit>
     <version.reflections>0.9.12</version.reflections>
-    <version.spotbugs>4.0.4</version.spotbugs>
+    <version.spotbugs>4.0.5</version.spotbugs>
     <version.uri-toolkit>0.8.1</version.uri-toolkit>
 
     <!-- plugins -->
