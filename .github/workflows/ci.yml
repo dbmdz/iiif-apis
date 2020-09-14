@@ -23,6 +23,6 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
       - name: Build with Maven
-        run: mvn -B -Pintegration verify
+        run: mvn -B verify
       - name: Report Coverage
         uses: codecov/codecov-action@v1
