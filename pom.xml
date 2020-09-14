@@ -60,7 +60,7 @@
     <version.assertj>3.17.2</version.assertj>
     <version.assertj-json>1.1.0</version.assertj-json>
     <version.geojson>1.14</version.geojson>
-    <version.guava>23.0</version.guava>
+    <version.guava>29.0-jre</version.guava>
     <version.jackson>2.11.2</version.jackson>
     <version.jsonassert>1.5.0</version.jsonassert>
     <version.junit>5.7.0</version.junit>
