@@ -22,6 +22,8 @@ jobs:
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+      - name: Build with Maven
+        run: mvn -B verify
   publish:
     if: github.event_name == 'push' && contains(github.ref, 'main')
     runs-on: ubuntu-latest
