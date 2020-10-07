@@ -6,8 +6,6 @@
 [![Search API 1.0 compliant](https://img.shields.io/badge/iiif--search--api-1.0-blue.svg)](https://iiif.io/api/search/1.0/)
 
 [![Javadocs](https://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](https://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
-[![Build Status](https://img.shields.io/travis/dbmdz/iiif-apis/master.svg)](https://travis-ci.org/dbmdz/iiif-apis)
-[![Codecov](https://img.shields.io/codecov/c/github/dbmdz/iiif-apis/master.svg)](https://codecov.io/gh/dbmdz/iiif-apis)
 [![License](https://img.shields.io/github/license/dbmdz/iiif-apis.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg)](https://github.com/dbmdz/iiif-apis/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg)](https://search.maven.org/search?q=a:iiif-apis)
