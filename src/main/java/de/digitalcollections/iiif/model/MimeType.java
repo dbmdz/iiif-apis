@@ -96,7 +96,7 @@ public class MimeType {
   /** Convenience definitions for commonly used MIME types */
   public static final MimeType MIME_WILDCARD = new MimeType("*", Collections.emptyList());
 
-  public static final MimeType MIME_IMAGE = knownTypes.get("image/*");;
+  public static final MimeType MIME_IMAGE = knownTypes.get("image/*");
   public static final MimeType MIME_APPLICATION_JSON = knownTypes.get("application/json");
   public static final MimeType MIME_APPLICATION_OCTET_STREAM =
       knownTypes.get("application/octet-stream");
