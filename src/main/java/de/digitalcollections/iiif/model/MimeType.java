@@ -98,7 +98,8 @@ public class MimeType {
 
   public static final MimeType MIME_IMAGE = knownTypes.get("image/*");;
   public static final MimeType MIME_APPLICATION_JSON = knownTypes.get("application/json");
-  public static final MimeType MIME_APPLICATION_OCTET_STREAM = knownTypes.get("application/octet-stream");
+  public static final MimeType MIME_APPLICATION_OCTET_STREAM =
+      knownTypes.get("application/octet-stream");
   public static final MimeType MIME_APPLICATION_XML = knownTypes.get("application/xml");
   public static final MimeType MIME_IMAGE_JPEG = knownTypes.get("image/jpeg");
   public static final MimeType MIME_IMAGE_TIF = knownTypes.get("image/tiff");
