@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Enums;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import de.digitalcollections.iiif.model.MimeType;
@@ -54,17 +55,73 @@ public class ImageApiProfile extends Profile {
     }
   }
 
-  public enum Quality {
-    COLOR,
-    GRAY,
-    BITONAL,
-    DEFAULT;
+  /** See https://iiif.io/api/image/3.0/#quality */
+  public static class Quality {
+
+    private enum ImageApiQuality {
+      COLOR,
+      GRAY,
+      BITONAL,
+      DEFAULT,
+      OTHER
+    }
+
+    /** The image is returned with all of its color information. */
+    public static final Quality COLOR = new Quality(ImageApiQuality.COLOR);
+
+    /** The image is returned in grayscale, where each pixel is black, white or any shade of gray in between. */
+    public static final Quality GRAY = new Quality(ImageApiQuality.GRAY);
+
+    /** The image returned is bitonal, where each pixel is either black or white. */
+    public static final Quality BITONAL = new Quality(ImageApiQuality.BITONAL);
+
+    /** The image is returned using the server’s default quality (e.g. color, gray or bitonal) for the image. */
+    public static final Quality DEFAULT = new Quality(ImageApiQuality.DEFAULT);
+
+    private final ImageApiQuality imageApiQuality;
+    private final String customQuality;
+
+    private Quality(ImageApiQuality quality) {
+      this.imageApiQuality = quality;
+      this.customQuality = null;
+    }
+
+    @JsonCreator
+    public Quality(String qualityName) {
+      if (!Enums.getIfPresent(ImageApiQuality.class, qualityName).isPresent()) {
+        this.imageApiQuality = ImageApiQuality.OTHER;
+        this.customQuality = qualityName.toUpperCase();
+      } else {
+        String name = qualityName.toUpperCase();
+        this.imageApiQuality = ImageApiQuality.valueOf(name);
+        this.customQuality = null;
+      }
+    }
 
     @JsonValue
     @Override
     public String toString() {
-      return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
+      if (this.imageApiQuality == ImageApiQuality.OTHER) {
+        return this.customQuality.toString();
+      } else {
+        return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.imageApiQuality.name());
+      }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+      if (!(obj instanceof Quality)) {
+        return false;
+      }
+      Quality other = (Quality) obj;
+      return Objects.equals(this.imageApiQuality, other.imageApiQuality)
+          && Objects.equals(this.customQuality, other.customQuality);
+    }
+
+    public static Quality valueOf(String qualityName) {
+        return new Quality(qualityName);
+    }
+
   }
 
   public static class Feature {
