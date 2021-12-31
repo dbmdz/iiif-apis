@@ -138,3 +138,23 @@ For more information on how to use the API, consult the
 and the [comprehensive test suite](https://github.com/dbmdz/iiif-apis/tree/master/src/test/java/de/digitalcollections/iiif/model).
 Since the large majority of the tests are based on the examples from the  specifications, they should be very easy to
 follow along.
+
+## Building
+
+To build a Jar file containing all classes you need to run `mvn package`.
+
+### Possible errors
+
+Note that additional Maven arguments (`-D`) an be chained, to ignore multiple problems at once (like in `mvn package -Dfmt.skip -DskipTests`).
+
+#### `fmt-maven-plugin` not working
+
+```
+[ERROR] Failed to execute goal com.coveo:fmt-maven-plugin:2.13:format (default) on project iiif-apis: Execution default of goal com.coveo:fmt-maven-plugin:2.13:format failed: An API incompatibility was encountered while executing com.coveo:fmt-maven-plugin:2.13:format: java.lang.IllegalAccessError: null
+```
+
+If you get the error message above (on newer Java versions), consider skipping the `fmt-maven-plugin` by passing `-Dfmt.skip`, like in `mvn package -Dfmt.skip`.
+
+#### Tests fail
+
+Sometimes the tests won't pass, especially when you're using a development version, just pass `-DskipTests` to Maven, like in `mvn package -DskipTests`.
