@@ -63,7 +63,12 @@ public class ImageApiProfile extends Profile {
       GRAY,
       BITONAL,
       DEFAULT,
-      OTHER
+      OTHER;
+
+      @Override
+      public String toString() {
+        return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.name());
+      }
     }
 
     /** The image is returned with all of its color information. */
@@ -88,7 +93,7 @@ public class ImageApiProfile extends Profile {
 
     @JsonCreator
     public Quality(String qualityName) {
-      if (!Enums.getIfPresent(ImageApiQuality.class, qualityName).isPresent()) {
+      if (!Enums.getIfPresent(ImageApiQuality.class, qualityName.toUpperCase()).isPresent()) {
         this.imageApiQuality = ImageApiQuality.OTHER;
         this.customQuality = qualityName.toUpperCase();
       } else {
@@ -102,9 +107,9 @@ public class ImageApiProfile extends Profile {
     @Override
     public String toString() {
       if (this.imageApiQuality == ImageApiQuality.OTHER) {
-        return this.customQuality.toString();
+        return this.customQuality.toLowerCase();
       } else {
-        return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, this.imageApiQuality.name());
+        return this.imageApiQuality.toString();
       }
     }
 
