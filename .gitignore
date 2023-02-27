@@ -2,3 +2,6 @@ target
 .idea
 *.iml
 /nb-configuration.xml
+**/.classpath
+**/.project
+**/.settings
