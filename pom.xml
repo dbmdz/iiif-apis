@@ -52,7 +52,6 @@
   </scm>
 
   <properties>
-    <java.version>1.8</java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,7 +70,7 @@
     <!-- plugins -->
     <version.jacoco-maven-plugin>0.8.8</version.jacoco-maven-plugin>
     <version.maven-compiler-plugin>3.11.0</version.maven-compiler-plugin>
-    <version.maven-fmt-plugin>2.13</version.maven-fmt-plugin>
+    <version.maven-fmt-plugin>2.19</version.maven-fmt-plugin>
     <version.maven-gpg-plugin>3.0.1</version.maven-gpg-plugin>
     <version.maven-javadoc-plugin>3.5.0</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.2.1</version.maven-source-plugin>
@@ -156,36 +155,13 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>com.coveo</groupId>
+        <groupId>com.spotify.fmt</groupId>
         <artifactId>fmt-maven-plugin</artifactId>
         <version>${version.maven-fmt-plugin}</version>
         <executions>
           <execution>
             <goals>
               <goal>format</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.github.spotbugs</groupId>
-        <artifactId>spotbugs-maven-plugin</artifactId>
-        <version>${version.spotbugs-maven-plugin}</version>
-        <dependencies>
-          <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
-          <dependency>
-            <groupId>com.github.spotbugs</groupId>
-            <artifactId>spotbugs</artifactId>
-            <version>${version.spotbugs}</version>
-          </dependency>
-        </dependencies>
-        <configuration>
-          <failOnError>false</failOnError>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
             </goals>
           </execution>
         </executions>
