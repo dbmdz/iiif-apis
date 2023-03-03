@@ -111,7 +111,17 @@ public class JsonMappingTest {
         .hasSize(1);
 
     Canvas parsedCanvas = mapper.readValue(json, Canvas.class);
-    assertThat(parsedCanvas).isEqualToComparingFieldByFieldRecursively(canvas);
+
+    assertThat(parsedCanvas).usingRecursiveComparison().isEqualTo(canvas);
+
+    // Add some new metadata, which was not serialized
+    canvas.addMetadata("Nothing", "Special");
+
+    // Now it is no longer equal
+    assertThat(parsedCanvas).usingRecursiveComparison().isNotEqualTo(canvas);
+
+    // But when ignoring metadata field, they are equal
+    assertThat(parsedCanvas).usingRecursiveComparison().ignoringFields("metadata").isEqualTo(canvas);
   }
 
   @Test
