@@ -121,7 +121,10 @@ public class JsonMappingTest {
     assertThat(parsedCanvas).usingRecursiveComparison().isNotEqualTo(canvas);
 
     // But when ignoring metadata field, they are equal
-    assertThat(parsedCanvas).usingRecursiveComparison().ignoringFields("metadata").isEqualTo(canvas);
+    assertThat(parsedCanvas)
+        .usingRecursiveComparison()
+        .ignoringFields("metadata")
+        .isEqualTo(canvas);
   }
 
   @Test
