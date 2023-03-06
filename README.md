@@ -8,7 +8,7 @@
 [![Javadocs](https://javadoc.io/badge/de.digitalcollections.iiif/iiif-apis.svg)](https://javadoc.io/doc/de.digitalcollections.iiif/iiif-apis)
 [![License](https://img.shields.io/github/license/dbmdz/iiif-apis.svg)](LICENSE)
 [![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg)](https://github.com/dbmdz/iiif-apis/releases)
-[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg)](https://search.maven.org/search?q=a:iiif-apis)
+[![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg)](https://central.sonatype.com/search?q=iiif-apis)
 
 This module contains model classes for all currently available IIIF API entities, namely for the
 [Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
