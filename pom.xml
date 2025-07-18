@@ -56,26 +56,26 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <version.assertj>3.26.3</version.assertj>
-    <version.assertj-json>1.1.0</version.assertj-json>
+    <version.assertj>3.27.3</version.assertj>
+    <version.assertj-json>1.2.0</version.assertj-json>
     <version.geojson>1.14</version.geojson>
-    <version.guava>33.3.0-jre</version.guava>
-    <version.jackson>2.17.2</version.jackson>
+    <version.guava>33.4.8-jre</version.guava>
+    <version.jackson>2.19.2</version.jackson>
     <version.jsonassert>1.5.3</version.jsonassert>
-    <version.junit>5.11.0</version.junit>
-    <version.reflections>0.9.12</version.reflections>
+    <version.junit>5.13.3</version.junit>
+    <version.reflections>0.10.2</version.reflections>
     <version.spotbugs>4.7.2</version.spotbugs>
     <version.uri-toolkit>0.8.1</version.uri-toolkit>
 
     <!-- plugins -->
-    <version.jacoco-maven-plugin>0.8.12</version.jacoco-maven-plugin>
-    <version.maven-compiler-plugin>3.13.0</version.maven-compiler-plugin>
-    <version.maven-fmt-plugin>2.24</version.maven-fmt-plugin>
+    <version.jacoco-maven-plugin>0.8.13</version.jacoco-maven-plugin>
+    <version.maven-compiler-plugin>3.14.0</version.maven-compiler-plugin>
+    <version.maven-fmt-plugin>2.27</version.maven-fmt-plugin>
     <version.maven-githook-plugin>1.0.5</version.maven-githook-plugin>
-    <version.maven-gpg-plugin>3.2.5</version.maven-gpg-plugin>
-    <version.maven-javadoc-plugin>3.10.0</version.maven-javadoc-plugin>
+    <version.maven-gpg-plugin>3.2.8</version.maven-gpg-plugin>
+    <version.maven-javadoc-plugin>3.11.2</version.maven-javadoc-plugin>
     <version.maven-source-plugin>3.3.1</version.maven-source-plugin>
-    <version.maven-surefire-plugin>3.5.0</version.maven-surefire-plugin>
+    <version.maven-surefire-plugin>3.5.3</version.maven-surefire-plugin>
     <version.nexus-staging-maven-plugin>1.7.0</version.nexus-staging-maven-plugin>
     <version.spotbugs-maven-plugin>4.7.2.1</version.spotbugs-maven-plugin>
   </properties>
