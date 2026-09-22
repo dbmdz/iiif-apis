@@ -10,6 +10,9 @@
 [![GitHub release](https://img.shields.io/github/release/dbmdz/iiif-apis.svg)](https://github.com/dbmdz/iiif-apis/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/de.digitalcollections.iiif/iiif-apis.svg)](https://central.sonatype.com/search?q=iiif-apis)
 
+> [!CAUTION]
+> This library is no longer actively maintained. Consider switching to an alternative library if you need a domain model, or consider simply switching to `Map.of(...)`-style literals for parsing and serialization, which is often enough for many use cases that don't require type checking.
+
 This module contains model classes for all currently available IIIF API entities, namely for the
 [Presentation](http://iiif.io/api/presentation/2.1/), [Image](http://iiif.io/api/image/2.1/),
 [Content Search](http://iiif.io/api/search/1.0/) and [Authentication](http://iiif.io/api/auth/1.0/) APIs, as well as
